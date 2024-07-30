@@ -1,5 +1,6 @@
  Created by https://www.gitignore.io/api/node,bower,webstorm,visualstudio,visualstudiocode,sublimetext,netbeans,sass
 
+.server/dist
 ### Node ###
 # Logs
 logs
