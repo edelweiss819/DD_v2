@@ -359,7 +359,7 @@ build/
 nbbuild/
 dist/
 nbdist/
-nbactions.xml
+nbactions.xmlgit status
 .nb-gradle/
 
 
@@ -368,5 +368,5 @@ nbactions.xml
 *.css.map
 
 ### Ignore server-specific directories ###
-server/dist/
-server/node_modules/
+/server/node_modules/
+/server/dist/
