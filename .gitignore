@@ -1,6 +1,3 @@
- Created by https://www.gitignore.io/api/node,bower,webstorm,visualstudio,visualstudiocode,sublimetext,netbeans,sass
-
-.server/dist
 ### Node ###
 # Logs
 logs
@@ -369,3 +366,7 @@ nbactions.xml
 ### Sass ###
 .sass-cache/
 *.css.map
+
+### Ignore server-specific directories ###
+server/dist/
+server/node_modules/
