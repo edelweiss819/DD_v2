@@ -1,0 +1,36 @@
+$color-green: #28a745;
+$color-red: #dc3545;
+$color-blue: #007bff;
+
+.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: 1.35rem;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+
+  &--green {
+    background-color: $color-green;
+    color: #fff;
+  }
+
+  &--red {
+    background-color: $color-red;
+    color: #fff;
+  }
+
+  &--blue {
+    background-color: $color-blue;
+    color: #fff;
+  }
+
+  &:hover {
+    opacity: 0.8;
+    color: #fff;
+  }
+}

@@ -1,0 +1,21 @@
+.search-input-container {
+  display: flex;
+  width: 100%;
+  justify-content: center; /* Центрирует по горизонтали */
+}
+
+.search-input {
+  flex: 1; /* Растягивается и сужается в пределах контейнера */
+  min-width: 600px; /* Минимальная ширина 600px */
+  max-width: 100%; /* Не больше, чем ширина контейнера */
+  margin: 10px 0; /* Отступы сверху и снизу */
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 0.3rem;
+  box-sizing: border-box; /* Учитывает padding и border в ширину элемента */
+
+  &:focus {
+    outline: none;
+    border-color: #0056b3;
+  }
+}

@@ -1,0 +1,13 @@
+.footer {
+  background-color: gainsboro;
+  color: gray;
+  text-align: center;
+  padding: 1rem;
+  max-height: 100px;
+
+  &-icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+}
