@@ -20,13 +20,32 @@
     color: #00008b;
   }
 
-  &-genres {
-    margin-top: 10px;
+  &-genres-container {
     background-color: gainsboro;
+    margin-top: 10px;
     border-radius: 5px;
     padding: 5px;
-    font-size: 20px;
 
+  }
+
+  &-single-genre {
+    display: inline-flex;
+    font-size: 20px;
+    border: 1px solid gray;
+    padding: 5px;
+    align-content: center;
+    border-radius: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    cursor: pointer;
+  }
+
+  &-single-genre:first-child {
+    margin-left: 0px;
+  }
+
+  &-single-genre:hover {
+    color: #00008b;
   }
 
   &-content {

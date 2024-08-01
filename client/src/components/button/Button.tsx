@@ -5,7 +5,7 @@ import styles from './Button.module.scss';
 interface ButtonProps {
     onClick?: () => void;
     text: string;
-    color: 'green' | 'red' | 'blue';
+    color: 'green' | 'red' | 'blue' | 'search';
 }
 
 const Button: React.FC<ButtonProps> = ({

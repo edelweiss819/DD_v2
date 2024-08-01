@@ -5,7 +5,9 @@ import styles from './ArticlesList.module.scss';
 import {truncateText} from '../../../../utils';
 
 const ArticlesList: React.FC<IArticlesList> = ({articlesList, onClick}) => (
+
     <div className={styles['articles-container']}>
+
         {articlesList.map((article: IArticle) => (
             <SingleArticle
                 key={article.index}

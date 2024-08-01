@@ -1,21 +1,24 @@
 .search-input-container {
   display: flex;
   width: 100%;
-  justify-content: center; /* Центрирует по горизонтали */
+  justify-content: center;
 }
 
 .search-input {
-  flex: 1; /* Растягивается и сужается в пределах контейнера */
-  min-width: 600px; /* Минимальная ширина 600px */
-  max-width: 100%; /* Не больше, чем ширина контейнера */
-  margin: 10px 0; /* Отступы сверху и снизу */
-  border: 2px solid #007bff;
-  border-radius: 5px;
-  padding: 0.3rem;
-  box-sizing: border-box; /* Учитывает padding и border в ширину элемента */
+  flex: 1;
+  min-width: 600px;
+  max-width: 100%;
+  margin: 10px 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-size: 1.35rem;
+  font-weight: 400;
+  padding: 0 1rem;
+  height: 40px;
+  box-sizing: border-box;
+  border: none;
 
   &:focus {
     outline: none;
-    border-color: #0056b3;
   }
 }

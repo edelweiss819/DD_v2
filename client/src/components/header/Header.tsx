@@ -1,9 +1,8 @@
 import React from 'react';
 import ButtonsBlock from '../buttonBlock/ButtonsBlock.tsx';
 import styles from './Header.module.scss';
-import Input from '../input/Input.tsx';
-import SelectContainer from '../selectContainer/SelectContainer.tsx';
 import {useNavigate} from 'react-router-dom';
+import Search from '../../features/search/components/Search.tsx';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
@@ -22,8 +21,7 @@ const Header: React.FC = () => {
                 <ButtonsBlock/>
             </div>
             <div className={styles['header-content']}>
-                <Input/>
-                <SelectContainer/>
+                <Search/>
             </div>
         </header>
     );

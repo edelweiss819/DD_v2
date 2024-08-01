@@ -19,9 +19,14 @@ const SingleArticle: React.FC<IArticle & {
             {title}
         </div>
         <div
-            className={styles['single-article-genres']}
+            className={styles['single-article-genres-container']}
         >
-            {genres ? genres.join(', ') : 'Жанры не указаны'}
+            {genres && genres.map((genre, index) => (
+                <div key={index}
+                     className={styles['single-article-single-genre']}>
+                    {genre}
+                </div>
+            ))}
         </div>
         <div className={styles['single-article-content']}>
             {content}

@@ -1,19 +1,21 @@
-import {QueryFunctionContext, QueryKey} from '@tanstack/react-query';
-import {axiosInstance} from '../../../config/axiosConfig.ts';
+import {axiosInstance} from '../../../config/axiosConfig';
+import {IArticle} from '../../../types';
 
 
-export type ArticlesPageQuery<T> = QueryFunctionContext<QueryKey, T>;
-
-
-export const fetchArticles = async ({pageParam}: ArticlesPageQuery<number>) => {
+export const fetchArticles = async ({pageParam}: {
+    pageParam: number
+}): Promise<IArticle[]> => {
     const pageSize = 10;
+
     const response = await axiosInstance.get('/articles', {
         params: {
             page: pageParam,
             limit: pageSize,
         },
     });
-
-    return response.data;
-
+    if (Array.isArray(response.data)) {
+        return response.data;
+    } else {
+        throw new Error('Invalid response format');
+    }
 };

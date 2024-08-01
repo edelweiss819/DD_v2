@@ -21,7 +21,7 @@ export const getArticleByIndex = async (req: Request, res: Response): Promise<Re
     const {index} = req.params;
 
     try {
-    
+
         const article = await Article.findOne({index});
 
         if (!article) {
@@ -34,3 +34,13 @@ export const getArticleByIndex = async (req: Request, res: Response): Promise<Re
         return res.status(500).json({message: errorMessage});
     }
 };
+
+/*
+export const getFilteredArticlesList = async (req: Request, res: Response): Promise<Response> => {
+    const {searchParams} = req.params;
+    try {
+        const filteredArticles = await Article.find()
+    }
+
+}
+*/
