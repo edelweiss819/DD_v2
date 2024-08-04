@@ -1,18 +1,25 @@
 import React from 'react';
 import styles from './Input.module.scss';
-import Button from '../button/Button.tsx';
 
 
-const Input: React.FC = () => (
-    <div className={styles['search-input-container']}>
+export interface InputProps {
+    placeholder?: string,
+    value?: string | number,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+
+const Input: React.FC<InputProps> = ({placeholder, onChange}) => (
+    <>
         <form>
             <input
                 className={styles['search-input']}
-                placeholder="Поиск.."
+                placeholder={placeholder}
+                onChange={onChange}
             />
-            <Button text={'Поиск'} color={'search'}/>
         </form>
-    </div>
+    </>
+
 );
 
 export default Input;

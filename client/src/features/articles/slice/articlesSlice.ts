@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IArticle} from '../../../types';
 import {fetchArticles} from '../api';
+import {fetchFilteredArticles} from '../../search/api';
 
 export interface IArticlesState {
     articles: IArticle[];
@@ -8,6 +9,11 @@ export interface IArticlesState {
     isError: boolean;
     hasNextPage: boolean;
     nextPage: number;
+    filteredHasNextPage: boolean;
+    filteredNextPage: number;
+    isFirstFilteredRequest: boolean;
+    searchParameters?: string;
+    isSearchParamsChanged: boolean;
 }
 
 const initialState: IArticlesState = {
@@ -16,6 +22,11 @@ const initialState: IArticlesState = {
     isError: false,
     hasNextPage: true,
     nextPage: 1,
+    filteredHasNextPage: true,
+    filteredNextPage: 1,
+    isFirstFilteredRequest: true,
+    searchParameters: undefined,
+    isSearchParamsChanged: false,
 };
 
 export const loadArticles = createAsyncThunk<IArticle[], number>(
@@ -31,6 +42,21 @@ export const loadArticles = createAsyncThunk<IArticle[], number>(
     }
 );
 
+export const loadFilteredArticles = createAsyncThunk<IArticle[], {
+    p: string;
+    page: number
+}>(
+    'articles/loadFilteredArticles',
+    async ({p, page}) => {
+        try {
+            const filteredArticles = await fetchFilteredArticles({p, page});
+            return filteredArticles;
+        } catch (error) {
+            console.error('Error fetching filtered articles:', error);
+            throw error;
+        }
+    }
+);
 
 const articlesSlice = createSlice({
     name: 'articles',
@@ -45,15 +71,17 @@ const articlesSlice = createSlice({
             state.isError = false;
             state.hasNextPage = true;
             state.nextPage = 1;
+            state.filteredHasNextPage = true;
+            state.filteredNextPage = 1;
+            state.isFirstFilteredRequest = true;
+            state.searchParameters = undefined;
         },
-        appendArticles: (state, action: PayloadAction<IArticle[]>) => {
-            state.articles = [...state.articles, ...action.payload];
-        },
-        setNextPage: (state, action: PayloadAction<number>) => {
-            state.nextPage = action.payload;
-        },
-        setHasNextPage: (state, action: PayloadAction<boolean>) => {
-            state.hasNextPage = action.payload;
+        setSearchParameters: (state, action: PayloadAction<string>) => {
+            state.searchParameters = action.payload;
+            state.isSearchParamsChanged = true;
+            state.filteredHasNextPage = true;
+            state.filteredNextPage = 1;
+            state.isFirstFilteredRequest = true;
         }
     },
     extraReducers: (builder) => {
@@ -65,22 +93,46 @@ const articlesSlice = createSlice({
             .addCase(loadArticles.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.articles = [...state.articles, ...action.payload];
-                state.nextPage += 1;
+                state.hasNextPage = action.payload.length >= 10;
+                if (state.hasNextPage) {
+                    state.nextPage += 1;
+                }
             })
             .addCase(loadArticles.rejected, (state) => {
                 state.isLoading = false;
                 state.isError = true;
             })
-        ;
+            .addCase(loadFilteredArticles.pending, (state) => {
+                state.isLoading = true;
+                state.isError = false;
+            })
+            .addCase(loadFilteredArticles.fulfilled, (state, action) => {
+                state.isLoading = false;
+                if (state.isSearchParamsChanged) {
+                    state.articles = action.payload; // Обновляем статьи для новых параметров
+                    state.isSearchParamsChanged = false; // Сбрасываем флаг
+                } else if (state.isFirstFilteredRequest) {
+                    state.articles = action.payload;
+                    state.isFirstFilteredRequest = false;
+                } else {
+                    state.articles = [...state.articles, ...action.payload];
+                }
+                state.filteredHasNextPage = action.payload.length >= 10;
+                if (state.filteredHasNextPage) {
+                    state.filteredNextPage += 1;
+                }
+            })
+            .addCase(loadFilteredArticles.rejected, (state) => {
+                state.isLoading = false;
+                state.isError = true;
+            });
     }
 });
 
 export const {
     setArticles,
     resetArticles,
-    appendArticles,
-    setNextPage,
-    setHasNextPage,
+    setSearchParameters
 } = articlesSlice.actions;
 
 export default articlesSlice.reducer;

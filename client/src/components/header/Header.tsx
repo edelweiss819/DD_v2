@@ -2,7 +2,7 @@ import React from 'react';
 import ButtonsBlock from '../buttonBlock/ButtonsBlock.tsx';
 import styles from './Header.module.scss';
 import {useNavigate} from 'react-router-dom';
-import Search from '../../features/search/components/Search.tsx';
+import Search from '../../features/search/components/searchBar/SearchBar.tsx';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();

@@ -1,10 +1,14 @@
 import {configureStore} from '@reduxjs/toolkit';
-import rootReducer from './rootReducer';
+import rootReducer from './rootReducer'; // Импортируйте корневой редуктор
 
 export const store = configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
 });
 
+// Типы для диспетчера и состояния
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;
+
 export default store;
