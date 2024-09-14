@@ -1,2 +1,2 @@
-export * from './fetchArticles.ts'
-export * from './fetchArticleByIndex.ts'
+export * from './fetchArticlesList.ts'
+export * from './fetchSingleArticleByIndex.ts'

@@ -3,18 +3,14 @@ import {IArticle} from '../../../types';
 
 export interface IArticlesState {
     articlesList: IArticle[];
-    isLoading: boolean;
-    isError: boolean;
     totalPages: number;
     currentPage: number;
 }
 
 const initialState: IArticlesState = {
     articlesList: [],
-    isLoading: false,
-    isError: false,
     totalPages: 0,
-    currentPage: 0,
+    currentPage: 1,
 };
 
 
@@ -22,14 +18,12 @@ const articleListSlice = createSlice({
                                          name: 'articlesList',
                                          initialState,
                                          reducers: {
-                                             setArticles: (state,
-                                                           action: PayloadAction<IArticle[]>) => {
+                                             setArticlesList: (state,
+                                                               action: PayloadAction<IArticle[]>) => {
                                                  state.articlesList = action.payload;
                                              },
-                                             resetArticles: (state) => {
+                                             resetArticlesList: (state) => {
                                                  state.articlesList = [];
-                                                 state.isLoading = false;
-                                                 state.isError = false;
                                              },
                                              setTotalPages: (state,
                                                              action: PayloadAction<number>) => {
@@ -45,8 +39,8 @@ const articleListSlice = createSlice({
                                      });
 
 export const {
-    setArticles,
-    resetArticles,
+    setArticlesList,
+    resetArticlesList,
     setTotalPages,
     setCurrentPage,
 } = articleListSlice.actions;

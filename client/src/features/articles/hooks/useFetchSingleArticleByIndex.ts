@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {fetchSingleArticleByIndex} from '../api';
+import {fetchArticlesList} from '../api';
 import {IArticle} from '../../../types';
 
 export const useFetchSingleArticleByIndex = (index: string | undefined) => {
@@ -12,7 +12,7 @@ export const useFetchSingleArticleByIndex = (index: string | undefined) => {
                                              if (!index) {
                                                  return Promise.reject(new Error('Index is required'));
                                              }
-                                             return fetchSingleArticleByIndex(index);
+                                             return fetchArticlesList(index);
                                          },
                                          retry: 0,
                                          enabled: !!index
