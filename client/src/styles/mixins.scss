@@ -1,3 +1,51 @@
-@mixin networkError {
-  justify-content: center;
+@use "colors" as *;
+
+@mixin content {
+  position: relative;
+  max-width: 1016px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+@mixin grid {
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+}
+
+@mixin align-middle {
+  align-items: center;
+}
+
+@mixin cell {
+  flex: 1;
+  min-width: 0;
+}
+
+@mixin cell-shrink {
+  flex: 0 1 auto;
+}
+
+@mixin cell-third {
+  width: 33.3% !important;
+}
+
+@mixin row-think {
+  
+}
+
+@mixin font-main {
+  font-family: "Rubik", "Helvetica", sans-serif;
+  line-height: 1;
+  font-size: 16px;
+
+}
+
+@mixin font-main-black {
+  font-family: "Rubik", "Helvetica", sans-serif;
+  line-height: 1;
+  font-size: 16px;
+  color: $secondary-text;
+
 }

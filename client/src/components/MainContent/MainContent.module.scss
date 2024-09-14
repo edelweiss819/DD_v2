@@ -1,0 +1,66 @@
+@use '@styles/styles' as *;
+
+.main-section {
+  position: relative;
+  @include row-think;
+  background-color: $main-section-bg;
+  padding-left: 10px !important;
+}
+
+.content {
+  @include content;
+
+  &-pos {
+    @include grid;
+  }
+}
+
+aside {
+  @include cell-third;
+  @include font-main-black;
+}
+
+aside > h3 {
+  @include font-main-black;
+  font-size: 24px;
+  line-height: 32px;
+  margin-bottom: 16px !important;
+}
+
+aside > hr {
+  border: 0;
+  height: 1px;
+  background: $aside-hr;
+  box-sizing: content-box;
+  overflow: visible;
+}
+
+.category {
+  @include font-main-black;
+  margin: 0;
+  margin-bottom: 8px !important;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  position: relative;
+  text-decoration: none;
+  cursor: pointer
+}
+
+main {
+  flex: 1;
+  box-sizing: border-box;
+  padding-bottom: 16px;
+  padding-left: 16px;
+}
+
+main > p {
+  @include font-main-black;
+  font-weight: 400;
+  line-height: 28px;
+  position: relative;
+  margin: 0;
+  margin-top: 20px !important;
+  margin-bottom: 16px !important;
+  font-size: 20px;
+}

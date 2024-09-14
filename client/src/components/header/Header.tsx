@@ -1,28 +1,14 @@
 import React from 'react';
-import ButtonsBlock from '../buttonBlock/ButtonsBlock.tsx';
-import styles from './Header.module.scss';
-import {useNavigate} from 'react-router-dom';
-import Search from '../../features/search/components/searchBar/SearchBar.tsx';
+import styles from "./Header.module.scss"
 
-const Header: React.FC = () => {
-    const navigate = useNavigate();
+interface HeaderProps {
+    children?: React.ReactNode;
+}
 
-    const handleClickTitle = () => {
-        navigate('/');
-    };
-
+const Header: React.FC<HeaderProps> = ({children}) => {
     return (
-        <header className={styles['header-wrapper']}>
-            <div className={styles['header-upper-block-wrapper']}>
-                <div className={styles['header-title']}
-                     onClick={handleClickTitle}>
-                    DesireDiaries
-                </div>
-                <ButtonsBlock/>
-            </div>
-            <div className={styles['header-content']}>
-                <Search/>
-            </div>
+        <header className={styles['main-theme']}>
+            {children}
         </header>
     );
 };

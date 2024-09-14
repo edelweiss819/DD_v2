@@ -1,0 +1,56 @@
+@use '@styles/styles' as *;
+
+.container {
+  @include content;
+  @include grid;
+  @include align-middle;
+}
+
+
+.left-block {
+  width: 62.5% !important; //Сделать медиазпрос 605px
+  flex: none;
+  overflow-x: hidden;
+  padding: 0 0 64px 0;
+  margin-top: 32px !important;
+  z-index: 1;
+}
+
+.description-xl {
+  @include font-main;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 48px;
+  color: $primary-text;
+  margin-top: 0 !important;;
+  margin-bottom: 8px !important;
+}
+
+.description-l {
+  @include font-main;
+  line-height: 28px;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 0 !important;
+}
+
+.btns-container {
+  @include grid;
+  margin: 0 0 -8px -8px !important;
+  margin-top: 16px !important;
+
+}
+
+.right-block {
+  background: url("../../../assets/HeaderBackgrounds/HeaderBackground.svg") no-repeat left bottom;
+  background-size: 100%;
+  position: absolute;
+  width: 620px;
+  height: 600px;
+  margin: 0;
+  left: initial;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  opacity: 1;
+}

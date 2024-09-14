@@ -24,9 +24,15 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    /* Aliases */
+    "baseUrl": "./src",
+    "paths": {
+      "@styles/*": ["styles/*"]
+    }
   },
   "include": [
-    "src"
+    "src",
+    "vite.config.ts"
   ]
 }

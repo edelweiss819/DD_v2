@@ -1,0 +1,30 @@
+@use '@styles/styles' as *;
+
+.nav {
+  &-container {
+    @include grid;
+    @include align-middle;
+    @include content;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    z-index: 100;
+  }
+
+  &-link-container {
+    @include align-middle;
+    display: inline-flex;
+    height: 38px;
+    padding-bottom: 24px;
+    text-align: right;
+    margin: 0 0 -24px -24px !important;
+
+  }
+
+  &-link {
+    @include font-main;
+    color: $primary-text;
+    margin-left: 24px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+}

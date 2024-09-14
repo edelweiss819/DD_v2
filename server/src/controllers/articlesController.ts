@@ -1,7 +1,9 @@
 import {Request, Response} from 'express';
 import Article from '../models/Article';
 
-export const getAllArticles = async (req: Request, res: Response): Promise<Response> => {
+
+export const getAllArticles = async (req: Request,
+                                     res: Response): Promise<Response> => {
     const limit = parseInt(req.query.limit as string) || 10;
     const page = parseInt(req.query.page as string) || 1;
 
@@ -17,7 +19,8 @@ export const getAllArticles = async (req: Request, res: Response): Promise<Respo
     }
 };
 
-export const getArticleByIndex = async (req: Request, res: Response): Promise<Response> => {
+export const getArticleByIndex = async (req: Request,
+                                        res: Response): Promise<Response> => {
     const {index} = req.params;
 
     try {
@@ -35,30 +38,55 @@ export const getArticleByIndex = async (req: Request, res: Response): Promise<Re
     }
 };
 
+export interface Query {
+    index?: { $gt: number };
 
-export const getFilteredArticlesList = async (req: Request, res: Response): Promise<Response> => {
+    [key: string]: any;
+}
+
+export const getFilteredArticlesList = async (req: Request,
+                                              res: Response): Promise<Response> => {
     const searchParams = req.query.p as string;
-    const limit = 10;
-    const page = parseInt(req.query.page as string) || 1;
+    const limit = 3;
+    const lastIndex = parseInt(req.query.lastIndex as string) || undefined;
 
     if (!searchParams) {
         return res.status(400).json({message: 'Search parameter is required'});
     }
 
     try {
-        const cutSearchParams: string[] = searchParams.split('+').map(param => param.trim());
+        //regex для того, чтобы параметры в кавычках передавались как один
+        const regex = /"[^"]*"|\S+/g;
+        const cutSearchParams: string[] = (searchParams.match(regex) || [])
+            .map(param => param.replace(/"/g, '').replace(/\+/g, ' ').trim());
+
+        console.log('Параметры поиска:', cutSearchParams);
         const conditions = cutSearchParams.map(param => ({
             $or: [
-                {title: {$regex: param, $options: 'i'}},
-                {content: {$regex: param, $options: 'i'}}
+                {
+                    title: {
+                        $regex: param,
+                        $options: 'i'
+                    }
+                },
+                {
+                    content: {
+                        $regex: param,
+                        $options: 'i'
+                    }
+                }
             ]
         }));
 
-        const filteredArticles = await Article.find({
-            $and: conditions
-        }).sort({_id: 1})
-            .skip((page - 1) * limit)
-            .limit(limit);
+        const query: Query = {$and: conditions};
+        if (lastIndex !== undefined) {
+            query['index'] = {$gt: lastIndex};
+        }
+
+        const filteredArticles = await Article.find(query)
+            .sort({index: 1})
+            .limit(limit)
+            .lean();
 
         if (filteredArticles.length > 0) {
             return res.status(200).json(filteredArticles);
@@ -72,3 +100,40 @@ export const getFilteredArticlesList = async (req: Request, res: Response): Prom
     }
 };
 
+export const getArticlesByGenre = async (req: Request,
+                                         res: Response): Promise<Response> => {
+    const searchParams = req.query.g as string;
+    const limit = 5;
+    const lastIndex = parseInt(req.query.lastIndex as string) || undefined;
+
+    if (!searchParams) {
+        return res.status(400).json({message: 'Search parameter is required'});
+    }
+
+    console.log('Параметр поиска по жанру:', searchParams);
+
+    try {
+        const query = {
+            $text: {$search: searchParams}
+        };
+
+
+        const articlesQuery = Article.find(query).sort({index: 1}).limit(limit).lean();
+
+        if (lastIndex) {
+            articlesQuery.skip(lastIndex);
+        }
+
+        const filteredArticlesByGenre = await articlesQuery.exec();
+
+        if (filteredArticlesByGenre.length > 0) {
+            return res.status(200).json(filteredArticlesByGenre);
+        } else {
+            return res.status(404).json({message: 'No articles found'});
+        }
+    } catch (error) {
+        console.error('Error fetching filtered articles:', error);
+        const errorMessage = (error as Error).message;
+        return res.status(500).json({message: errorMessage});
+    }
+};

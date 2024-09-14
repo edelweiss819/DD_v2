@@ -1,7 +1,7 @@
 import React from 'react';
 import AppRoutes from './routes/routes.tsx';
 import {BrowserRouter} from 'react-router-dom';
-
+// import 'styles/styles.scss'
 
 const App: React.FC = () => {
     return (

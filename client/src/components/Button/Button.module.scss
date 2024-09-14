@@ -1,0 +1,97 @@
+@use '@styles/styles' as *;
+
+.container {
+  box-sizing: border-box;
+  padding-bottom: 8px;
+  padding-left: 8px;
+}
+
+.btn-m {
+  font-size: 16px !important;
+  padding: 8px 14px !important;
+
+  &:hover {
+    filter: brightness(95%);
+  }
+}
+
+.btn-rs {
+  border-radius: 32px !important;
+  font-size: 12px !important;
+  line-height: 12px !important;
+  padding: 6px !important;
+  text-transform: uppercase;
+}
+
+.btn-nav-login {
+  padding: 8px 14px;
+  margin-top: 8px !important;
+  margin-left: 20px !important;
+}
+
+.btn-blue {
+  @include font-main;
+  @include cell-shrink;
+  background-color: $tertiary-bg;
+  display: inline-block;
+  border: 2px solid $tertiary-bg;
+  text-align: center;
+  border-radius: 6px;
+  line-height: 18px;
+  font-weight: 500;
+  color: $primary-text !important;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.btn-grey {
+  @include font-main-black;
+  @include cell-shrink;
+  background: #eff2f3;
+  display: inline-block;
+  border: 2px solid #eff2f3;
+  border-top-color: rgb(239, 242, 243);
+  border-right-color: rgb(239, 242, 243);
+  border-bottom-color: rgb(239, 242, 243);
+  border-left-color: rgb(239, 242, 243);
+  text-align: center;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 14px 22px;
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #2a2a2a !important;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.btn-dark-blue {
+  @include font-main;
+  @include cell-shrink;
+  background: #3b5998;
+  display: inline-block;
+  border: 2px solid #3b5998;
+  border-top-color: rgb(59, 89, 152);
+  border-right-color: rgb(59, 89, 152);
+  border-bottom-color: rgb(59, 89, 152);
+  border-left-color: rgb(59, 89, 152);
+  text-align: center;
+  border-radius: 6px;
+  padding: 14px 22px;
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #fff !important;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.btn-icon {
+  vertical-align: middle;
+  width: 24px;
+  margin-left: 8px;
+}
