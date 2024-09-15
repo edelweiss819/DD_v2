@@ -83,7 +83,6 @@ const MainContent: React.FC<IArticlesList> = ({articlesList}) => {
                         <div className={styles['articles-list-container']}>
                             <span
                                 className={styles['articles-list-container-title']}>Recently featured</span>
-                            <hr/>
                             <ArticlesList articlesList={articlesList}/>
                         </div>
                         <Pagination/>

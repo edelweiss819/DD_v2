@@ -1,0 +1,28 @@
+@use "@styles/styles" as *;
+
+@mixin symbol {
+
+}
+
+.pagination-container {
+  margin-top: 32px;
+}
+
+.pagination {
+  & > span {
+    @include font-main-black;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: 2px solid #eff2f3;
+    background: #f8f9fa;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 4px;
+  }
+}
+
+.pagination-prev {
+
+}

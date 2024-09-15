@@ -1,1 +1,2 @@
-import * from "./fetchMetadata.ts"
+export * from './fetchMetadata.ts'
+export * from './fetchTotalArticlesCount.ts'

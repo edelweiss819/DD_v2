@@ -10,8 +10,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/store.ts';
 import {useFetchArticlesList} from '../../features/articles/hooks';
 import {
-    setArticlesList
+    setArticlesList, setTotalPages
 } from '../../features/articles/slice/articleListSlice.ts';
+import {articlesCountToPagesCount} from '../../utils';
+import {
+    useFetchTotalArticlesCount
+} from '../../features/pagination/components/hooks';
 
 const MainPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -26,14 +30,21 @@ const MainPage: React.FC = () => {
         isError
     } = useFetchArticlesList(currentPage);
 
+    const {
+        data: fetchedTotalArticlesCount,
+    } = useFetchTotalArticlesCount();
+
     useEffect(() => {
         if (fetchedArticleList) {
             dispatch(setArticlesList(fetchedArticleList));
+            dispatch(setTotalPages(articlesCountToPagesCount(fetchedTotalArticlesCount)));
         }
     }, [
                   dispatch,
-                  fetchedArticleList
+                  fetchedArticleList,
+                  fetchedTotalArticlesCount,
               ]);
+
 
     if (isLoading) {
         return <div>Loading...</div>;

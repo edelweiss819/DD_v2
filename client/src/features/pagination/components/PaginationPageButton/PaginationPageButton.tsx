@@ -1,13 +1,24 @@
 import React from 'react';
-import Button from '../../../../components/Button/Button.tsx';
 
 interface PaginationPageButtonProps {
     page: number
+    onClick?: () => void
 }
 
-const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({page}) => {
+const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({
+                                                                       page,
+                                                                       activePage,
+                                                                       setActivePage
+                                                                   }) => {
+
+    const handleClick = () => {
+        setActivePage(page);
+    }
+
     return (
-        <Button text={`${page}`} type={'small'}/>
+        <span onClick={handleClick}>
+            {page}
+        </span>
     );
 };
 
