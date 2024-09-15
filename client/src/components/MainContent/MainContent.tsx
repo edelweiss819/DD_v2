@@ -80,7 +80,12 @@ const MainContent: React.FC<IArticlesList> = ({articlesList}) => {
                         <p>Submitted by writers on
                             Reedsy Prompts to our weekly
                             writing contest.</p>
-                        <ArticlesList articlesList={articlesList}/>
+                        <div className={styles['articles-list-container']}>
+                            <span
+                                className={styles['articles-list-container-title']}>Recently featured</span>
+                            <hr/>
+                            <ArticlesList articlesList={articlesList}/>
+                        </div>
                         <Pagination/>
                     </main>
                 </div>

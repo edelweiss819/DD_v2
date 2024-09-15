@@ -8,11 +8,8 @@ import {setCurrentPage} from '../../articles/slice/articleListSlice.ts';
 import {arrayRange} from '../../../utils';
 import classNames from 'classnames';
 
-interface PaginationPageProps {
-    onPageChange?: () => void
-}
 
-const Pagination: React.FC<PaginationPageProps> = () => {
+const Pagination: React.FC = () => {
     const {
         totalPages,
         currentPage

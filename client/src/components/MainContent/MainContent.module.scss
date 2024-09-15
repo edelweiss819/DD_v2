@@ -18,12 +18,14 @@
 aside {
   @include cell-third;
   @include font-main-black;
+  padding-left: 2px;
 }
 
 aside > h3 {
   @include font-main-black;
   font-size: 24px;
   line-height: 32px;
+  margin: 0;
   margin-bottom: 16px !important;
 }
 
@@ -60,7 +62,31 @@ main > p {
   line-height: 28px;
   position: relative;
   margin: 0;
-  margin-top: 20px !important;
   margin-bottom: 16px !important;
   font-size: 20px;
 }
+
+.articles-list-container {
+  padding: 16px !important;
+  background: #fff;
+  border: 2px solid #e0e5e7;
+  border-radius: 8px;
+
+  &-title {
+    @include font-main-black;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 16px !important;
+  }
+
+  & > hr {
+    border: 0;
+    height: 1px;
+    background: $aside-hr;
+    box-sizing: content-box;
+    overflow: visible;
+  }
+}
+
