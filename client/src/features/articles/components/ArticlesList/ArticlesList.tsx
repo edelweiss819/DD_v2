@@ -16,9 +16,9 @@ const ArticlesList: React.FC<IArticlesList> = ({
                 key={article.index}
                 title={article.title}
                 genres={article.genres}
-                content={article.content ? truncateText(article.content) : 'Содержимое не найдено.'}
+                content={article.content && truncateText(article.content)}
                 index={article.index}
-                onClick={() => article.index !== undefined && onClick(article.index)}
+                onClick={onClick ? () => onClick(article.index ?? 0) : undefined}
             />
         ))}
     </div>

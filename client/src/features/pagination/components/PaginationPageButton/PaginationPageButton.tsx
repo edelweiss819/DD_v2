@@ -1,22 +1,44 @@
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {setCurrentPage} from '../../../articles/slice/articleListSlice.ts';
+import classNames from 'classnames';
+import styles from './PaginationPageButton.module.scss'
+import {AppDispatch, RootState} from '../../../../store/store.ts';
+import {scrollToElement} from '../../../../utils';
+import {PaginationProps} from '../Pagination.tsx';
 
-interface PaginationPageButtonProps {
-    page: number
+
+interface PaginationPageButtonProps extends PaginationProps {
+    page: number;
+    activePage: number;
+    setActivePage: React.Dispatch<React.SetStateAction<number>>;
     onClick?: () => void
 }
 
 const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({
                                                                        page,
-                                                                       activePage,
-                                                                       setActivePage
+                                                                       setActivePage,
+                                                                       scrollTo
                                                                    }) => {
 
+    const dispatch = useDispatch<AppDispatch>();
+    const {
+        currentPage
+    } = useSelector((state: RootState) => state.articlesList);
+
+
     const handleClick = () => {
+        dispatch(setCurrentPage(page));
         setActivePage(page);
-    }
+        (scrollTo && scrollToElement(scrollTo));
+    };
+
+    const activePageButtonClass = classNames({
+                                                 [styles['active-page-button']]: page === currentPage,
+                                             })
 
     return (
-        <span onClick={handleClick}>
+        <span className={activePageButtonClass} onClick={handleClick}>
             {page}
         </span>
     );

@@ -1,13 +1,12 @@
 import React from 'react';
-import styles from './MainContent.module.scss'
+import styles from './MainContent.module.scss';
 import ArticlesList
     from '../../features/articles/components/ArticlesList/ArticlesList.tsx';
 import {IArticlesList} from '../../types';
 import Pagination from '../../features/pagination/components/Pagination.tsx';
-
+import {Element} from 'react-scroll';
 
 const MainContent: React.FC<IArticlesList> = ({articlesList}) => {
-
 
     const categories: string[] = [
         'Adventure',
@@ -56,43 +55,35 @@ const MainContent: React.FC<IArticlesList> = ({articlesList}) => {
         'Western'
     ];
 
-
     return (
         <section className={styles['main-section']}>
             <div className={styles['content']}>
                 <div className={styles['content-pos']}>
                     <aside>
-                        <h3>
-                            Categories
-                        </h3>
+                        <h3>Categories</h3>
                         <hr/>
-                        {categories.map((category) => {
-                            return (
-                                <p key={category} className={styles.category}>
-                                    {category}
-                                </p>
-                            )
-                        })
-                        }
-
+                        {categories.map((category) => (
+                            <p key={category} className={styles.category}>
+                                {category}
+                            </p>
+                        ))}
                     </aside>
-                    <main>
-                        <p>Submitted by writers on
-                            Reedsy Prompts to our weekly
-                            writing contest.</p>
-                        <div className={styles['articles-list-container']}>
-                            <span
-                                className={styles['articles-list-container-title']}>Recently featured</span>
-                            <ArticlesList articlesList={articlesList}/>
-                        </div>
-                        <Pagination/>
-                    </main>
+                    <Element name="main" className={styles['main']}>
+                        <main>
+                            <p>Submitted by writers on Reedsy Prompts to our
+                                weekly writing contest.</p>
+                            <div className={styles['articles-list-container']}>
+                                <span
+                                    className={styles['articles-list-container-title']}>Recently featured</span>
+                                <ArticlesList articlesList={articlesList}/>
+                            </div>
+                            <Pagination scrollTo={'main'}/>
+                        </main>
+                    </Element>
                 </div>
             </div>
-
-
         </section>
-    )
+    );
 }
 
 export default MainContent;

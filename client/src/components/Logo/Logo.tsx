@@ -16,6 +16,7 @@ const Logo: React.FC<LogoProps> = ({
                                    }) => {
     const logoFirstPartClass = classNames({
                                               [styles['logo-first-part-light']]: firstPartColor === 'light',
+                                              [styles['logo-first-part-dark']]: firstPartColor === 'dark',
                                           });
     const logoSecondPartClass = classNames({
                                                [styles['logo-second-part-blue']]: secondPartColor === 'blue',

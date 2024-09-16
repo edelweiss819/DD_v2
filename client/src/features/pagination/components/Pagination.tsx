@@ -7,9 +7,14 @@ import {AppDispatch, RootState} from '../../../store/store.ts';
 import {setCurrentPage} from '../../articles/slice/articleListSlice.ts';
 import {arrayRange} from '../../../utils';
 import classNames from 'classnames';
+import {scrollToElement} from '../../../utils';
+
+export interface PaginationProps {
+    scrollTo?: 'main'
+}
 
 
-const Pagination: React.FC = () => {
+const Pagination: React.FC<PaginationProps> = ({scrollTo}) => {
     const {
         totalPages,
         currentPage
@@ -34,6 +39,7 @@ const Pagination: React.FC = () => {
             const newActivePage = activePage - 1;
             setActivePage(newActivePage);
             dispatch(setCurrentPage(newActivePage));
+            (scrollTo && scrollToElement(scrollTo));
         }
     }
 
@@ -42,6 +48,7 @@ const Pagination: React.FC = () => {
             const newActivePage = activePage + 1;
             setActivePage(newActivePage);
             dispatch(setCurrentPage(newActivePage));
+            (scrollTo && scrollToElement(scrollTo));
         }
     }
 
@@ -119,6 +126,7 @@ const Pagination: React.FC = () => {
                             page={page}
                             activePage={activePage}
                             setActivePage={setActivePage}
+                            scrollTo={scrollTo}
                             key={`page-${page}-${index}`}
                         />
                     );

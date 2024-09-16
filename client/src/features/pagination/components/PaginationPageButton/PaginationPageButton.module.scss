@@ -1,0 +1,7 @@
+@use "@styles/styles" as *;
+
+
+.active-page-button {
+  background-color: $secondary-bg !important;
+  color: $primary-text !important;
+}

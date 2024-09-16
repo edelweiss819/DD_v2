@@ -46,13 +46,13 @@ const MainPage: React.FC = () => {
               ]);
 
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (isError) {
-        return <div>Error loading articles.</div>;
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>;
+    // }
+    //
+    // if (isError) {
+    //     return <div>Error loading articles.</div>;
+    // }
 
     return (
         <>
