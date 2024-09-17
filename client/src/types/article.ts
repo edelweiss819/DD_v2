@@ -4,5 +4,8 @@ export interface IArticle {
     genres?: Array<string>;
     content?: string;
     index?: number
+    publishedDate?: number,
+    estimatedReadingTime?: number,
+    characterCount?: number,
     onClick?: () => void,
 }

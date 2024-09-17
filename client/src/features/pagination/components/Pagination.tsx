@@ -4,7 +4,7 @@ import PaginationPageButton
     from './PaginationPageButton/PaginationPageButton.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../store/store.ts';
-import {setCurrentPage} from '../../articles/slice/articleListSlice.ts';
+import {setCurrentPage} from '../../articles/slice/articlesListSlice.ts';
 import {arrayRange} from '../../../utils';
 import classNames from 'classnames';
 import {scrollToElement} from '../../../utils';
@@ -27,7 +27,6 @@ const Pagination: React.FC<PaginationProps> = ({scrollTo}) => {
         setActivePage(currentPage);
         const pages = generatePages(currentPage, totalPages);
         setPageNumbers(pages);
-        console.log(pages);
     }, [
                   currentPage,
                   totalPages

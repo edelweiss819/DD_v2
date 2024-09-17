@@ -1,5 +1,5 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import articlesListSlice from '../features/articles/slice/articleListSlice.ts';
+import articlesListSlice from '../features/articles/slice/articlesListSlice.ts';
 import singleArticleSlice
     from '../features/articles/slice/singleArticleSlice';
 

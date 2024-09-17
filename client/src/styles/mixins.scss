@@ -8,6 +8,11 @@
   box-sizing: border-box;
 }
 
+@mixin content-thin {
+  @include content;
+  max-width: 800px;
+}
+
 @mixin grid {
   display: flex;
   flex-flow: row wrap;

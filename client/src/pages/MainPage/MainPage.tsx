@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Header from '../../components/Header/Header.tsx';
 import HeaderNavigation
     from '../../components/Header/HeaderNavigation/HeaderNavigation.tsx';
-import MainContent from '../../components/MainContent/MainContent.tsx';
+import MainPageContent from './MainPageContent/MainPageContent.tsx';
 import Footer from '../../components/Footer/Footer.tsx';
 import HeaderContent
     from '../../components/Header/HeaderContent/HeaderContent.tsx';
@@ -11,14 +11,20 @@ import {AppDispatch, RootState} from '../../store/store.ts';
 import {useFetchArticlesList} from '../../features/articles/hooks';
 import {
     setArticlesList, setTotalPages
-} from '../../features/articles/slice/articleListSlice.ts';
+} from '../../features/articles/slice/articlesListSlice.ts';
 import {articlesCountToPagesCount} from '../../utils';
 import {
     useFetchTotalArticlesCount
-} from '../../features/pagination/components/hooks';
+} from '../../features/pagination/hooks';
+import Content from '../../components/Content/Content.tsx';
 
 const MainPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        document.title = 'Desire Diaries';
+    }, []);
+
     const {
         articlesList,
         currentPage
@@ -37,7 +43,7 @@ const MainPage: React.FC = () => {
     useEffect(() => {
         if (fetchedArticleList) {
             dispatch(setArticlesList(fetchedArticleList));
-            dispatch(setTotalPages(articlesCountToPagesCount(fetchedTotalArticlesCount)));
+            (fetchedTotalArticlesCount && dispatch(setTotalPages(articlesCountToPagesCount(fetchedTotalArticlesCount))));
         }
     }, [
                   dispatch,
@@ -60,7 +66,9 @@ const MainPage: React.FC = () => {
                 <HeaderNavigation/>
                 <HeaderContent/>
             </Header>
-            <MainContent articlesList={articlesList}/>
+            <Content>
+                <MainPageContent articlesList={articlesList}/>
+            </Content>
             <Footer/>
         </>
     );

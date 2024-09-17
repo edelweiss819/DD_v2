@@ -1,9 +1,7 @@
 @use '@styles/styles' as *;
 
 .container {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 8px;
+
 }
 
 .btn-m {
@@ -25,7 +23,6 @@
 
 .btn-nav-login {
   padding: 8px 14px;
-  margin-top: 8px !important;
   margin-left: 20px !important;
 }
 

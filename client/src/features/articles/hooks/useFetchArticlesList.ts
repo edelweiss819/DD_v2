@@ -5,7 +5,7 @@ import {IArticle} from '../../../types';
 export const useFetchArticlesList = (page: number, limit?: number) => {
     return useQuery<IArticle[], Error>({
                                            queryKey: [
-                                               'articlesList',
+                                               'fetchArticlesList',
                                                page,
                                                limit
                                            ],

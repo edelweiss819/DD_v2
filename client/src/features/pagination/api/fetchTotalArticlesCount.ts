@@ -1,5 +1,5 @@
-import {axiosInstance} from '../../../../config/axiosConfig';
-import {API_ROUTES} from '../../../../config/endpoints';
+import {axiosInstance} from '../../../config/axiosConfig.ts';
+import {API_ROUTES} from '../../../config/endpoints.ts';
 
 export const fetchTotalArticlesCount = async () => {
     try {

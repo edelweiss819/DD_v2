@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from './MainContent.module.scss';
+import styles from './MainPageContent.module.scss';
 import ArticlesList
-    from '../../features/articles/components/ArticlesList/ArticlesList.tsx';
-import {IArticlesList} from '../../types';
-import Pagination from '../../features/pagination/components/Pagination.tsx';
+    from '../../../features/articles/components/ArticlesList/ArticlesList.tsx';
+import {IArticlesList} from '../../../types';
+import Pagination from '../../../features/pagination/components/Pagination.tsx';
 import {Element} from 'react-scroll';
 
-const MainContent: React.FC<IArticlesList> = ({articlesList}) => {
+const MainPageContent: React.FC<IArticlesList> = ({articlesList}) => {
 
     const categories: string[] = [
         'Adventure',
@@ -86,4 +86,4 @@ const MainContent: React.FC<IArticlesList> = ({articlesList}) => {
     );
 }
 
-export default MainContent;
+export default MainPageContent;

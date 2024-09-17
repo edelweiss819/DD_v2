@@ -5,6 +5,7 @@ import Logo from '../../Logo/Logo.tsx';
 
 const HeaderNavigation: React.FC = () => {
     const navPages: string[] = [
+        'Главная',
         'Жанры',
         'Любимое',
         'Колесо',

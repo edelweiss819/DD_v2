@@ -3,15 +3,15 @@ import {IArticle} from '../../../types';
 
 
 export interface ISingleArticleState {
-    article: IArticle,
-    isLoading: boolean;
-    isError: boolean;
+    singleArticle: IArticle,
+    currentArticleIndex: number;
+
 }
 
 const initialState: ISingleArticleState = {
-    article: {},
-    isLoading: false,
-    isError: false,
+    singleArticle: {},
+    currentArticleIndex: 0,
+
 }
 
 
@@ -19,13 +19,24 @@ const singleArticleSlice = createSlice({
                                            name: 'singleArticle',
                                            initialState,
                                            reducers: {
-                                               setArticle: (state,
-                                                            action: PayloadAction<IArticle>) => {
-                                                   state.article = action.payload;
+                                               setSingleArticle: (state,
+                                                                  action: PayloadAction<IArticle>) => {
+                                                   state.singleArticle = action.payload;
+                                               },
+                                               resetSingleArticle: (state,) => {
+                                                   state.singleArticle = {};
+                                               },
+                                               setCurrentArticleIndex: (state,
+                                                                        action: PayloadAction<number>) => {
+                                                   state.currentArticleIndex = action.payload;
                                                }
                                            },
 
                                        })
 
-export const {setArticle} = singleArticleSlice.actions;
+export const {
+    setSingleArticle,
+    resetSingleArticle,
+    setCurrentArticleIndex,
+} = singleArticleSlice.actions;
 export default singleArticleSlice.reducer;
