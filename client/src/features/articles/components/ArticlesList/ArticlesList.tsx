@@ -8,7 +8,9 @@ import {truncateText} from '../../../../utils';
 const ArticlesList: React.FC<IArticlesList> = ({
                                                    articlesList,
                                                }) => {
-
+    if (!articlesList || articlesList.length === 0) {
+        return <div>No articles found.</div>;
+    }
 
     return (
         <div className={styles['articles-container']}>
@@ -24,5 +26,4 @@ const ArticlesList: React.FC<IArticlesList> = ({
         </div>
     );
 };
-
 export default ArticlesList;

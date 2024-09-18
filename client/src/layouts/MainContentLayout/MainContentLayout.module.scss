@@ -37,16 +37,21 @@ aside > hr {
   overflow: visible;
 }
 
-.category {
+.genre {
   @include font-main-black;
   margin: 0;
   margin-bottom: 8px !important;
-  font-size: 18px;
-  line-height: 28px;
-  font-weight: 400;
-  position: relative;
-  text-decoration: none;
-  cursor: pointer
+
+
+  &-link {
+    @include font-main-black;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 400;
+    position: relative;
+    cursor: pointer;
+  }
 }
 
 .main {
@@ -54,6 +59,14 @@ aside > hr {
   box-sizing: border-box;
   padding-bottom: 16px;
   padding-left: 16px;
+
+  &-total-articles {
+    @include font-main-black;
+    font-size: 40px;
+    line-height: 48px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
 
   & > main > p {
     @include font-main-black;

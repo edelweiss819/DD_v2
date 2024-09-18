@@ -36,8 +36,10 @@
 
 .btns-container {
   @include grid;
-  margin: 0 0 -8px -8px !important;
+  gap: 8px;
   margin-top: 16px !important;
+  margin-bottom: -8px !important;
+
 
 }
 

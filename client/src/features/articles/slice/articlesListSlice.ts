@@ -9,6 +9,8 @@ export interface IArticlesState {
 
 const initialState: IArticlesState = {
     articlesList: [],
+    totalPages: 1,
+    currentPage: 1,
 };
 
 

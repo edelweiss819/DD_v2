@@ -37,18 +37,16 @@ const Button: React.FC<ButtonProps> = ({
 
 
     return (
-        <div className={styles.container}>
-            <Link
-                className={classNames(buttonClass)}
-                title={text}
-                to={to ? to : '/'}
-                onClick={onClick}
-            >
-                {text}
-                {iconSrc && <img className={styles['btn-icon']} src={iconSrc}
-								 width={iconWidth}/>}
-            </Link>
-        </div>
+        <Link
+            className={classNames(buttonClass)}
+            title={text}
+            to={to ? to : '/'}
+            onClick={onClick}
+        >
+            {text}
+            {iconSrc && <img className={styles['btn-icon']} src={iconSrc}
+							 width={iconWidth}/>}
+        </Link>
     );
 }
 

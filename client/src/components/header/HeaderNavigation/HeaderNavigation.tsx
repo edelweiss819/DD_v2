@@ -2,15 +2,11 @@ import React from 'react';
 import styles from './HeaderNavigation.module.scss';
 import Button from '../../Button/Button.tsx';
 import Logo from '../../Logo/Logo.tsx';
+import {HEADER_NAVIGATION_PAGES} from '../../../constants';
+import {Link} from 'react-router-dom';
 
 const HeaderNavigation: React.FC = () => {
-    const navPages: string[] = [
-        'Главная',
-        'Жанры',
-        'Любимое',
-        'Колесо',
-        'Профиль'
-    ];
+
 
     return (
         <nav className={styles.nav}>
@@ -18,9 +14,11 @@ const HeaderNavigation: React.FC = () => {
                 <Logo firstPartColor={'light'} secondPartColor={'blue'}
                       to={'/'}/>
                 <div className={styles['nav-link-container']}>
-                    {navPages.map((pageName) => (
+                    {Object.entries(HEADER_NAVIGATION_PAGES).map(([pageName, route]) => (
                         <div key={pageName}>
-                            <p className={styles['nav-link']}>{pageName}</p>
+                            <Link to={route}
+                                  className={styles['nav-link']}>{pageName}
+                            </Link>
                         </div>
                     ))}
                     <Button text={'Login'} to={'/login'} color={'blue'}

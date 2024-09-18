@@ -1,11 +1,7 @@
 import React, {useEffect} from 'react';
-import Header from '../../components/Header/Header.tsx';
-import HeaderNavigation
-    from '../../components/Header/HeaderNavigation/HeaderNavigation.tsx';
-import MainPageContent from './MainPageContent/MainPageContent.tsx';
+import MainContentLayout
+    from '../../layouts/MainContentLayout/MainContentLayout.tsx';
 import Footer from '../../components/Footer/Footer.tsx';
-import HeaderContent
-    from '../../components/Header/HeaderContent/HeaderContent.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/store.ts';
 import {useFetchArticlesList} from '../../features/articles/hooks';
@@ -17,6 +13,8 @@ import {
     useFetchTotalArticlesCount
 } from '../../features/pagination/hooks';
 import Content from '../../components/Content/Content.tsx';
+import MainHeaderLayout
+    from '../../layouts/MainHeaderLayout/MainHeaderLayout.tsx';
 
 const MainPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -40,6 +38,7 @@ const MainPage: React.FC = () => {
         data: fetchedTotalArticlesCount,
     } = useFetchTotalArticlesCount();
 
+
     useEffect(() => {
         if (fetchedArticleList) {
             dispatch(setArticlesList(fetchedArticleList));
@@ -62,12 +61,9 @@ const MainPage: React.FC = () => {
 
     return (
         <>
-            <Header>
-                <HeaderNavigation/>
-                <HeaderContent/>
-            </Header>
+            <MainHeaderLayout/>
             <Content>
-                <MainPageContent articlesList={articlesList}/>
+                <MainContentLayout articlesList={articlesList}/>
             </Content>
             <Footer/>
         </>

@@ -38,98 +38,41 @@ export const getArticleByIndex = async (req: Request,
     }
 };
 
-export interface Query {
-    index?: { $gt: number };
 
-    [key: string]: any;
-}
+export const getArticlesListByGenre = async (req: Request,
+                                             res: Response): Promise<Response> => {
+    const genre = decodeURIComponent(req.params.genre as string);
+    const limit = parseInt(req.query.limit as string) || 10;
+    const page = parseInt(req.query.page as string) || 1;
 
-export const getFilteredArticlesList = async (req: Request,
-                                              res: Response): Promise<Response> => {
-    const searchParams = req.query.p as string;
-    const limit = 3;
-    const lastIndex = parseInt(req.query.lastIndex as string) || undefined;
-
-    if (!searchParams) {
-        return res.status(400).json({message: 'Search parameter is required'});
+    if (!genre) {
+        return res.status(400).json({message: 'Genre parameter is required'});
     }
 
-    try {
-        //regex для того, чтобы параметры в кавычках передавались как один
-        const regex = /"[^"]*"|\S+/g;
-        const cutSearchParams: string[] = (searchParams.match(regex) || [])
-            .map(param => param.replace(/"/g, '').replace(/\+/g, ' ').trim());
-
-        console.log('Параметры поиска:', cutSearchParams);
-        const conditions = cutSearchParams.map(param => ({
-            $or: [
-                {
-                    title: {
-                        $regex: param,
-                        $options: 'i'
-                    }
-                },
-                {
-                    content: {
-                        $regex: param,
-                        $options: 'i'
-                    }
-                }
-            ]
-        }));
-
-        const query: Query = {$and: conditions};
-        if (lastIndex !== undefined) {
-            query['index'] = {$gt: lastIndex};
-        }
-
-        const filteredArticles = await Article.find(query)
-            .sort({index: 1})
-            .limit(limit)
-            .lean();
-
-        if (filteredArticles.length > 0) {
-            return res.status(200).json(filteredArticles);
-        } else {
-            return res.status(404).json({message: 'No articles found'});
-        }
-    } catch (error) {
-        console.error('Error fetching filtered articles:', error);
-        const errorMessage = (error as Error).message;
-        return res.status(500).json({message: errorMessage});
-    }
-};
-
-export const getArticlesByGenre = async (req: Request,
-                                         res: Response): Promise<Response> => {
-    const searchParams = req.query.g as string;
-    const limit = 5;
-    const lastIndex = parseInt(req.query.lastIndex as string) || undefined;
-
-    if (!searchParams) {
-        return res.status(400).json({message: 'Search parameter is required'});
-    }
-
-    console.log('Параметр поиска по жанру:', searchParams);
+    console.log('Поиск по жанру:', genre);
 
     try {
         const query = {
-            $text: {$search: searchParams}
+            genres: genre
         };
 
 
-        const articlesQuery = Article.find(query).sort({index: 1}).limit(limit).lean();
+        const skip = (page - 1) * limit;
 
-        if (lastIndex) {
-            articlesQuery.skip(lastIndex);
-        }
 
+        const articlesQuery = Article.find(query)
+            .sort({index: 1})
+            .skip(skip)
+            .limit(limit)
+            .lean();
+
+        // Выполнение запроса
         const filteredArticlesByGenre = await articlesQuery.exec();
 
         if (filteredArticlesByGenre.length > 0) {
             return res.status(200).json(filteredArticlesByGenre);
         } else {
-            return res.status(404).json({message: 'No articles found'});
+            return res.status(404).json({message: 'No articles found for this genre'});
         }
     } catch (error) {
         console.error('Error fetching filtered articles:', error);

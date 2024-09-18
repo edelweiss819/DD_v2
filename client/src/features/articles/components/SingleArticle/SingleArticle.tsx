@@ -35,7 +35,7 @@ const SingleArticle: React.FC<IArticle> = ({
                     text={'ЧИТАТЬ'}
                     type={'rounded-small'}
                     color={'blue'}
-                    to={`articles/${index}`}
+                    to={`/articles/${index}`}
                     onClick={handleButtonClick}
                 />
             </div>
