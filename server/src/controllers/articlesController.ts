@@ -80,3 +80,90 @@ export const getArticlesListByGenre = async (req: Request,
         return res.status(500).json({message: errorMessage});
     }
 };
+
+
+//Поиск по жанру и тексту
+
+export const getArticlesByGenreAndWords = async (req: Request,
+                                                 res: Response): Promise<Response> => {
+    const genres = req.query.genres as string | undefined;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const skip = (page - 1) * limit;
+    const searchWords = (req.query.s as string) || '';
+    const words = searchWords.trim().split(' ').filter(Boolean);
+
+    try {
+        let articles: any[] = [];
+
+        // Если указаны жанры
+        if (genres) {
+            const singleGenres = genres.split(',');
+            console.log('Поиск по массиву жанров:', singleGenres);
+
+            // Поиск по жанрам
+            const genreQuery = {genres: {$all: singleGenres}};
+            articles = await Article.find(genreQuery)
+                .sort({index: 1})
+                .skip(skip)
+                .limit(limit)
+                .lean();
+
+            if (articles.length > 0) {
+                console.log(`Найдено ${articles.length} статей по жанрам.`);
+            } else if (searchWords.length > 0) {
+                console.log(`Слова для полнотекстового поиска не обнаружены. Возвращаю найденные статьи по жанрам : ${singleGenres} `);
+                return res.status(200).json(articles);
+
+            } else {
+                console.log(`Статьи с набором жанров ${singleGenres} не найдены.`);
+                return res.status(404).json({message: 'Статьи по заданным жанрам не найдены.'});
+            }
+        }
+
+        // Если жанры указаны, фильтруем статьи по словам внутри полученных данных
+        if (articles.length > 0 && words.length > 0) {
+            const wordRegex = words.map(word => new RegExp(word, 'i'));
+            articles = articles.filter(article =>
+                                           wordRegex.some(regex => regex.test(article.title) || regex.test(article.content))
+            );
+        } else if (words.length > 0) {
+            // Если жанры не указаны, делаем полнотекстовый поиск по словам
+            const searchQuery = {
+                $or: [
+                    {
+                        title: {
+                            $regex: words.join('|'),
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        content: {
+                            $regex: words.join('|'),
+                            $options: 'i'
+                        }
+                    }
+                ]
+            };
+
+            articles = await Article.find(searchQuery)
+                .sort({index: 1})
+                .skip(skip)
+                .limit(limit)
+                .lean();
+        }
+
+        if (articles.length > 0) {
+            console.log(`Найдено ${articles.length} статей по запросу.`);
+            return res.status(200).json(articles);
+        } else {
+            console.log('Статьи не найдены.');
+            return res.status(404).json({message: 'Статьи по заданным параметрам не найдены.'});
+        }
+    } catch (error) {
+        console.error('Ошибка при получении статей:', error);
+        const errorMessage = (error as Error).message;
+        return res.status(500).json({message: errorMessage});
+    }
+};
+

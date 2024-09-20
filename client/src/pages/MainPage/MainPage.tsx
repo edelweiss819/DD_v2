@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import MainContentLayout
     from '../../layouts/MainContentLayout/MainContentLayout.tsx';
 import Footer from '../../components/Footer/Footer.tsx';
@@ -6,7 +6,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/store.ts';
 import {useFetchArticlesList} from '../../features/articles/hooks';
 import {
-    setArticlesList, setTotalPages
+    resetArticlesList,
+    setArticlesList, setCurrentPage, setTotalPages
 } from '../../features/articles/slice/articlesListSlice.ts';
 import {articlesCountToPagesCount} from '../../utils';
 import {
@@ -20,18 +21,16 @@ const MainPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
-        document.title = 'Desire Diaries';
+        document.title = 'Desire Diaries ';
     }, []);
 
     const {
         articlesList,
-        currentPage
+        currentPage,
     } = useSelector((state: RootState) => state.articlesList);
 
     const {
         data: fetchedArticleList,
-        isLoading,
-        isError
     } = useFetchArticlesList(currentPage);
 
     const {
@@ -40,6 +39,7 @@ const MainPage: React.FC = () => {
 
 
     useEffect(() => {
+        dispatch(setCurrentPage(1));
         if (fetchedArticleList) {
             dispatch(setArticlesList(fetchedArticleList));
             (fetchedTotalArticlesCount && dispatch(setTotalPages(articlesCountToPagesCount(fetchedTotalArticlesCount))));

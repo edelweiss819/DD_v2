@@ -4,7 +4,12 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
 import styles from './SingleArticleContent.module.scss'
 import Button from '../../../components/Button/Button.tsx';
-import {splitContentIntoParagraphs} from '../../../utils';
+import {
+    generateGenreByLink,
+    generateLinkByGenre,
+    splitContentIntoParagraphs
+} from '../../../utils';
+import {GENRES_DIR} from '../../../constants';
 
 export interface ISingleArticleContentProps {
     singleArticle: IArticle;
@@ -12,7 +17,6 @@ export interface ISingleArticleContentProps {
 
 const SingleArticleContent: React.FC<ISingleArticleContentProps> = () => {
     const {singleArticle} = useSelector((state: RootState) => state.singleArticle);
-
     const paragraphs = (singleArticle.content && splitContentIntoParagraphs(singleArticle.content, 10));
 
 //TODO Добавить аватар и автора, когда сделаю
@@ -27,7 +31,8 @@ const SingleArticleContent: React.FC<ISingleArticleContentProps> = () => {
                     className={styles['main-section-content-container-genres-block']}>
                     {singleArticle.genres && singleArticle.genres.map((genre) => (
                         <Button text={genre} type={'rounded-small'}
-                                color={'grey'} key={genre}/>
+                                color={'grey'} key={genre}
+                                to={`${GENRES_DIR}` + generateLinkByGenre(genre)}/>
                     ))}
                 </div>
                 <article

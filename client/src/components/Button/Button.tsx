@@ -10,7 +10,7 @@ interface ButtonProps {
     color?: 'blue' | 'grey' | 'dark-blue'
     icon?: 'SignUpArrow' | 'Google' | 'Facebook';
     iconWidth?: number | string;
-    type: 'small' | 'medium' | 'nav-login' | 'rounded-small';
+    type: 'small' | 'medium' | 'nav-login' | 'rounded-small' | 'search-m';
     onClick?: () => void;
 }
 
@@ -31,6 +31,7 @@ const Button: React.FC<ButtonProps> = ({
                                        [styles['btn-m']]: type === 'medium',
                                        [styles['btn-rs']]: type === 'rounded-small',
                                        [styles['btn-nav-login']]: type === 'nav-login',
+                                       [styles['btn-search']]: type === 'search-m',
                                    })
 
     const iconSrc = icon && `/src/assets/ButtonIcons/${icon}.svg`;

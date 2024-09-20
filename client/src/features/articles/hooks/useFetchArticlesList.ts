@@ -13,6 +13,6 @@ export const useFetchArticlesList = (page: number, limit?: number) => {
                                                                                 page,
                                                                                 limit
                                                                             }),
-                                           retry: 0
+                                           retry: 1
                                        });
 };

@@ -8,6 +8,8 @@ import {Element} from 'react-scroll';
 import {GENRES, GENRES_DIR} from '../../constants';
 import {Link} from 'react-router-dom';
 import {scrollToElement} from '../../utils';
+import SearchForm
+    from '../../features/search/components/SearchForm/SearchForm.tsx';
 
 
 export interface IMainPageContentProps extends IArticlesList {
@@ -18,6 +20,7 @@ const MainContentLayout: React.FC<IMainPageContentProps> = ({
                                                                 articlesList,
                                                                 totalCountArticlesByGenre
                                                             }) => {
+
 
     const handleClickToGenreLink = () => {
         scrollToElement('main')
@@ -42,21 +45,20 @@ const MainContentLayout: React.FC<IMainPageContentProps> = ({
                         ))}
                     </aside>
                     <Element name="main" className={styles['main']}>
-                        <main>
+                        {articlesList && <main>
                             {totalCountArticlesByGenre &&
 								<div className={styles['main-total-articles']}>
 									Всего статей в жанре
 									: {totalCountArticlesByGenre}
 								</div>}
-                            <p>Submitted by writers on Reedsy Prompts to our
-                                weekly writing contest.</p>
-                            <div className={styles['articles-list-container']}>
-                                <span
-                                    className={styles['articles-list-container-title']}>Recently featured</span>
-                                <ArticlesList articlesList={articlesList}/>
-                            </div>
-                            <Pagination scrollTo={'main'}/>
-                        </main>
+							<SearchForm/>
+							<div className={styles['articles-list-container']}>
+								<span
+									className={styles['articles-list-container-title']}>Недавно добавленные</span>
+								<ArticlesList articlesList={articlesList}/>
+							</div>
+							<Pagination scrollTo={'main'}/>
+						</main>}
                     </Element>
                 </div>
             </div>

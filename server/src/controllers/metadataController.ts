@@ -133,7 +133,6 @@ export const getArticlesTotalCountByGenre = async (req: Request,
 
         // Получаем метаданные
         const metadata = await Metadata.findOne();
-        console.log('Fetched metadata:', metadata);
 
         // Извлекаем количество статей
         const totalArticlesCountByGenre = metadata?.metadata.genresCount[`${genre}`] ?? null;

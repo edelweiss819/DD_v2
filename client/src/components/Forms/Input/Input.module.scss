@@ -1,0 +1,14 @@
+@use "@styles/styles" as *;
+
+.input {
+  @include cell-shrink;
+  border: 2px solid #124861;
+  border-radius: 4px;
+
+
+  &-search {
+    font-size: 25px;
+    padding: 8px;
+    flex-grow: 1;
+  }
+}

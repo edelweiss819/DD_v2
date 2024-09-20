@@ -1,1 +1,1 @@
-export * from './updateTotalArticlesFlag'
+export * from './flags'
