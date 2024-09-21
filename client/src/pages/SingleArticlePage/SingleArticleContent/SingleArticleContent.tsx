@@ -5,7 +5,6 @@ import {RootState} from '../../../store/store.ts';
 import styles from './SingleArticleContent.module.scss'
 import Button from '../../../components/Button/Button.tsx';
 import {
-    generateGenreByLink,
     generateLinkByGenre,
     splitContentIntoParagraphs
 } from '../../../utils';

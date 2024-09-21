@@ -3,17 +3,25 @@ import {useForm} from 'react-hook-form';
 import Input from '../../../../components/Forms/Input/Input.tsx';
 import Button from '../../../../components/Button/Button.tsx';
 import styles from './SearchForm.module.scss';
-import {IFetchArticlesListByGenreAndWordsParams} from '../../api';
-import {useFetchArticlesListByGenreAndWords} from '../../hooks';
+import {
+    fetchTotalArticlesCountByGenreAndWords,
+    IFetchArticlesListByGenreAndWordsParams
+} from '../../api';
+import {
+    useFetchArticlesListByGenreAndWords,
+    useFetchTotalArticlesCountByGenreAndWords
+} from '../../hooks';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../../store/store.ts';
 import {
-    setArticlesList
+    setActiveSearch,
+    setArticlesList, setCurrentPage, setSearchParams, setTotalPages
 } from '../../../articles/slice/articlesListSlice.ts';
 import BaseSelect
     from '../../../../components/Selects/BaseSelects/BaseSelect.tsx';
 import {GENRES} from '../../../../constants';
 import {useFetchArticlesList} from '../../../articles/hooks';
+import {articlesCountToPagesCount} from '../../../../utils';
 
 export interface FormValues {
     'search-input': string;
@@ -51,18 +59,10 @@ const SearchForm: React.FC = () => {
         error
     } = useFetchArticlesListByGenreAndWords(params);
 
-    //Переделать
-    const {data: defaultArticles} = useFetchArticlesList(1);
 
-    useEffect(() => {
-        if (params?.genres == '' && params?.s == '' && defaultArticles) {
-            dispatch(setArticlesList(defaultArticles));
-        }
-    }, [
-                  params,
-                  defaultArticles,
-                  dispatch
-              ]);
+    const {data: defaultArticleList} = useFetchArticlesList(1);
+    // const {data: totalArticlesCountByGenreAndWords} = useFetchTotalArticlesCountByGenreAndWords(params);
+    // console.log('Total Articles Count Response:', totalArticlesCountByGenreAndWords);
 
 
     useEffect(() => {
@@ -72,11 +72,14 @@ const SearchForm: React.FC = () => {
         } else if (error) {
             const message = error.response?.data?.message;
             setErrorMessage(message);
+            (defaultArticleList && dispatch(setArticlesList(defaultArticleList)));
         }
     }, [
                   dispatch,
                   foundArticleList,
-                  error
+                  error,
+                  defaultArticleList,
+                  // totalArticlesCountByGenreAndWords,
               ]);
 
     const genreOptions = (currentGenre: string): GenreOption[] => {
@@ -103,8 +106,21 @@ const SearchForm: React.FC = () => {
             genres: selectedGenres.filter(Boolean).join(','),
             s: data['search-input'].toString(),
         };
-        setParams(newParams);
+
+        if (selectedGenres.filter(Boolean).length === 0 && newParams.s === '') {
+            (defaultArticleList && dispatch(setArticlesList(defaultArticleList)));
+        } else {
+            // const totalPages = articlesCountToPagesCount(totalArticlesCountByGenreAndWords);
+            // console.log('Total Articles Count Response:', totalArticlesCountByGenreAndWords);
+            // dispatch(setTotalPages(totalPages));
+            // console.log('Total pages', totalPages);
+            setParams(newParams);
+            dispatch(setActiveSearch(true));
+            dispatch(setCurrentPage(1));
+            dispatch(setSearchParams(newParams));
+        }
     };
+
 
     return (
         <div className={styles['form-container']}>
@@ -139,7 +155,9 @@ const SearchForm: React.FC = () => {
                             onChange={setGenre4}/>
             </div>
             {errorMessage &&
-				<div>{errorMessage}</div>}
+				<div className={styles['error']}>
+					<span className={styles['error-text']}>{errorMessage}</span>
+				</div>}
         </div>
     );
 };

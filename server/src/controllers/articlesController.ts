@@ -167,3 +167,46 @@ export const getArticlesByGenreAndWords = async (req: Request,
     }
 };
 
+//Всего статей в поиске
+export const getTotalArticlesCountByGenresAndWords = async (req: Request,
+                                                            res: Response): Promise<Response> => {
+    const genres = req.query.genres as string | undefined;
+    const searchWords = (req.query.s as string) || '';
+    const words = searchWords.trim().split(' ').filter(Boolean);
+    let query: any = {};
+
+    if (genres) {
+        const singleGenres = genres.split(',');
+        query = {genres: {$all: singleGenres}};
+    }
+
+    if (words.length > 0) {
+        query = {
+            ...query,
+            $or: [
+                {
+                    title: {
+                        $regex: words.join('|'),
+                        $options: 'i'
+                    }
+                },
+                {
+                    content: {
+                        $regex: words.join('|'),
+                        $options: 'i'
+                    }
+                }
+            ]
+        };
+    }
+
+    try {
+        const total = await Article.countDocuments(query).lean();
+        console.log('Всего статей параметрам запроса:', total)
+        return res.status(200).json(total);
+    } catch (error) {
+        console.error('Ошибка при получении общего количества статей:', error);
+        const errorMessage = (error as Error).message;
+        return res.status(500).json({message: errorMessage});
+    }
+};

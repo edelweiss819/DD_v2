@@ -15,6 +15,7 @@ export interface PaginationProps {
 
 
 const Pagination: React.FC<PaginationProps> = ({scrollTo}) => {
+
     const {
         totalPages,
         currentPage

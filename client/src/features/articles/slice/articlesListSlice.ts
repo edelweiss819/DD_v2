@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IArticle} from '../../../types';
+import {IFetchArticlesListByGenreAndWordsParams} from '../../search/api';
 
 export interface IArticlesState {
     articlesList: IArticle[];
@@ -7,6 +8,8 @@ export interface IArticlesState {
     currentPage: number;
     isError: boolean;
     errorMessage: string;
+    isSearchActive: boolean;
+    searchParams: IFetchArticlesListByGenreAndWordsParams | null,
 }
 
 const initialState: IArticlesState = {
@@ -14,7 +17,9 @@ const initialState: IArticlesState = {
     totalPages: 1,
     currentPage: 1,
     isError: false,
-    errorMessage: ''
+    errorMessage: '',
+    isSearchActive: false,
+    searchParams: null,
 };
 
 
@@ -41,7 +46,14 @@ const articlesListSlice = createSlice({
                                                                action: PayloadAction<number>) => {
                                                   state.currentPage = action.payload
                                               },
-
+                                              setActiveSearch(state,
+                                                              action: PayloadAction<boolean>) {
+                                                  state.isSearchActive = action.payload;
+                                              },
+                                              setSearchParams(state,
+                                                              action: PayloadAction<IFetchArticlesListByGenreAndWordsParams>) {
+                                                  state.searchParams = action.payload;
+                                              }
 
                                           },
 
@@ -52,6 +64,8 @@ export const {
     resetArticlesList,
     setTotalPages,
     setCurrentPage,
+    setActiveSearch,
+    setSearchParams
 } = articlesListSlice.actions;
 
 export default articlesListSlice.reducer;

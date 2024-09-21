@@ -1,10 +1,13 @@
 import {useQuery} from '@tanstack/react-query';
 import {IArticle} from '../../../types';
-import {fetchArticlesListByGenreAndWords} from '../api';
-import {IFetchArticlesListParams} from '../../articles/api';
+import {
+    fetchArticlesListByGenreAndWords,
+    IFetchArticlesListByGenreAndWordsParams
+} from '../api';
+
 
 export const useFetchArticlesListByGenreAndWords = (
-    params: IFetchArticlesListParams
+    params: IFetchArticlesListByGenreAndWordsParams | null
 ) => {
     return useQuery<IArticle[], Error>({
                                            queryKey: [
@@ -12,6 +15,6 @@ export const useFetchArticlesListByGenreAndWords = (
                                                params
                                            ],
                                            queryFn: async () => fetchArticlesListByGenreAndWords(params),
-                                           retry: 0,
+                                           retry: 1,
                                        })
 }

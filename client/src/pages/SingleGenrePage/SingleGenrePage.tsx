@@ -44,7 +44,7 @@ export const SingleGenrePage: React.FC = () => {
     useEffect(() => {
         if (prevGenreRef.current !== genre) {
             dispatch(setCurrentPage(1));
-            prevGenreRef.current = genre;
+            (genre && (prevGenreRef.current = genre));
         }
     }, [
                   genre,
@@ -66,7 +66,7 @@ export const SingleGenrePage: React.FC = () => {
 
     useEffect(() => {
         if (fetchedTotalArticlesCountByGenre) {
-            dispatch(setArticlesList(fetchedArticlesListByGenre));
+            (fetchedArticlesListByGenre && dispatch(setArticlesList(fetchedArticlesListByGenre)));
             (fetchedTotalArticlesCountByGenre && dispatch(setTotalPages(articlesCountToPagesCount(fetchedTotalArticlesCountByGenre))));
         }
     }, [
