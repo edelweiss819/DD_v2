@@ -4,7 +4,7 @@ import {setCurrentPage} from '../../../articles/slice/articlesListSlice.ts';
 import classNames from 'classnames';
 import styles from './PaginationPageButton.module.scss'
 import {AppDispatch, RootState} from '../../../../store/store.ts';
-import {scrollToElement} from '../../../../utils';
+import {scrollToElement} from '../../../../shared/utils';
 import {PaginationProps} from '../Pagination.tsx';
 
 
@@ -23,14 +23,19 @@ const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({
 
     const dispatch = useDispatch<AppDispatch>();
     const {
-        currentPage
+        currentPage,
+        lastCursor
     } = useSelector((state: RootState) => state.articlesList);
 
 
     const handleClick = () => {
-        dispatch(setCurrentPage(page));
-        setActivePage(page);
-        (scrollTo && scrollToElement(scrollTo));
+        if (lastCursor) {
+            return;
+        } else {
+            dispatch(setCurrentPage(page));
+            setActivePage(page);
+            (scrollTo && scrollToElement(scrollTo));
+        }
     };
 
     const activePageButtonClass = classNames({

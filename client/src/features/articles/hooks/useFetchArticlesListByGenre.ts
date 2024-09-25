@@ -1,7 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import {fetchArticlesListByGenre} from '../api';
 import {IArticle} from '../../../types';
-import {generateGenreByLink} from '../../../utils';
+import {generateGenreByLink} from '../../../shared/utils';
 
 export const useFetchArticlesListByGenre = (page: number, genreLink: string,
                                             limit?: number) => {

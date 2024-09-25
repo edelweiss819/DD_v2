@@ -5,16 +5,21 @@ import {
     IFetchArticlesListByGenreAndWordsParams
 } from '../api';
 
+export interface IFetchArticlesResponse {
+    articles: IArticle[];
+    cursor: number;
+}
+
 
 export const useFetchArticlesListByGenreAndWords = (
-    params: IFetchArticlesListByGenreAndWordsParams | null
+    params: IFetchArticlesListByGenreAndWordsParams
 ) => {
-    return useQuery<IArticle[], Error>({
-                                           queryKey: [
-                                               fetchArticlesListByGenreAndWords,
-                                               params
-                                           ],
-                                           queryFn: async () => fetchArticlesListByGenreAndWords(params),
-                                           retry: 1,
-                                       })
+    return useQuery<IFetchArticlesResponse, Error>({
+                                                       queryKey: [
+                                                           fetchArticlesListByGenreAndWords,
+                                                           params
+                                                       ],
+                                                       queryFn: async () => fetchArticlesListByGenreAndWords(params),
+                                                       retry: 1,
+                                                   })
 }

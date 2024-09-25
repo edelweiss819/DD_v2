@@ -8,8 +8,10 @@ export interface IArticlesState {
     currentPage: number;
     isError: boolean;
     errorMessage: string;
-    isSearchActive: boolean;
-    searchParams: IFetchArticlesListByGenreAndWordsParams | null,
+    searchParams: IFetchArticlesListByGenreAndWordsParams,
+    lastCursor: number;
+    updatedLastCursor: number,
+    sortOrder: number,
 }
 
 const initialState: IArticlesState = {
@@ -18,8 +20,12 @@ const initialState: IArticlesState = {
     currentPage: 1,
     isError: false,
     errorMessage: '',
-    isSearchActive: false,
-    searchParams: null,
+    searchParams: {
+        page: 1,
+    },
+    lastCursor: 0,
+    updatedLastCursor: 0,
+    sortOrder: 1
 };
 
 
@@ -29,8 +35,8 @@ const articlesListSlice = createSlice({
                                           reducers: {
                                               setArticlesList: (state,
                                                                 action: PayloadAction<IArticle[]>) => {
-                                                  state.errorMessage = ''
-                                                  state.isError = false
+                                                  state.errorMessage = '';
+                                                  state.isError = false;
                                                   state.articlesList = action.payload;
                                               },
                                               resetArticlesList: (state) => {
@@ -44,19 +50,25 @@ const articlesListSlice = createSlice({
                                               },
                                               setCurrentPage: (state,
                                                                action: PayloadAction<number>) => {
-                                                  state.currentPage = action.payload
+                                                  state.currentPage = action.payload;
                                               },
-                                              setActiveSearch(state,
-                                                              action: PayloadAction<boolean>) {
-                                                  state.isSearchActive = action.payload;
-                                              },
-                                              setSearchParams(state,
-                                                              action: PayloadAction<IFetchArticlesListByGenreAndWordsParams>) {
+                                              setSearchParams: (state,
+                                                                action: PayloadAction<IFetchArticlesListByGenreAndWordsParams>) => {
                                                   state.searchParams = action.payload;
-                                              }
-
+                                              },
+                                              setLastCursor: (state,
+                                                              action: PayloadAction<number>) => {
+                                                  state.lastCursor = action.payload;
+                                              },
+                                              updateLastCursor: (state,
+                                                                 action: PayloadAction<number>) => {
+                                                  state.updatedLastCursor = action.payload;
+                                              },
+                                              setSortOrder: (state,
+                                                             action: PayloadAction<number>) => {
+                                                  state.sortOrder = action.payload;
+                                              },
                                           },
-
                                       });
 
 export const {
@@ -64,8 +76,10 @@ export const {
     resetArticlesList,
     setTotalPages,
     setCurrentPage,
-    setActiveSearch,
-    setSearchParams
+    setSearchParams,
+    setLastCursor,
+    updateLastCursor,
+    setSortOrder,
 } = articlesListSlice.actions;
 
 export default articlesListSlice.reducer;

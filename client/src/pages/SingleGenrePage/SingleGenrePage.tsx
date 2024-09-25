@@ -1,8 +1,8 @@
 import React, {useEffect, useRef} from 'react';
-import Content from '../../components/Content/Content.tsx';
+import Content from '../../shared/ui/Content/Content.tsx';
 import MainContentLayout
     from '../../layouts/MainContentLayout/MainContentLayout.tsx';
-import Footer from '../../components/Footer/Footer.tsx';
+import Footer from '../../shared/ui/Footer/Footer.tsx';
 import MainHeaderLayout
     from '../../layouts/MainHeaderLayout/MainHeaderLayout.tsx';
 import {useDispatch, useSelector} from 'react-redux';
@@ -17,7 +17,10 @@ import {
 import {
     useFetchTotalArticlesCountByGenre
 } from '../../features/pagination/hooks';
-import {articlesCountToPagesCount, generateGenreByLink} from '../../utils';
+import {
+    articlesCountToPagesCount,
+    generateGenreByLink
+} from '../../shared/utils';
 
 
 export const SingleGenrePage: React.FC = () => {

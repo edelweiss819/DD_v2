@@ -1,27 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
-import Input from '../../../../components/Forms/Input/Input.tsx';
-import Button from '../../../../components/Button/Button.tsx';
+import Input from '../../../../shared/ui/Forms/Input/Input.tsx';
+import Button from '../../../../shared/ui/Button/Button.tsx';
 import styles from './SearchForm.module.scss';
 import {
-    fetchTotalArticlesCountByGenreAndWords,
     IFetchArticlesListByGenreAndWordsParams
 } from '../../api';
 import {
     useFetchArticlesListByGenreAndWords,
-    useFetchTotalArticlesCountByGenreAndWords
 } from '../../hooks';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../../store/store.ts';
 import {
-    setActiveSearch,
-    setArticlesList, setCurrentPage, setSearchParams, setTotalPages
+    setArticlesList,
+    setCurrentPage, setLastCursor,
+    setSearchParams,
 } from '../../../articles/slice/articlesListSlice.ts';
 import BaseSelect
-    from '../../../../components/Selects/BaseSelects/BaseSelect.tsx';
+    from '../../../../shared/ui/Selects/BaseSelects/BaseSelect.tsx';
 import {GENRES} from '../../../../constants';
 import {useFetchArticlesList} from '../../../articles/hooks';
-import {articlesCountToPagesCount} from '../../../../utils';
+import {useLocation, useNavigate} from 'react-router';
 
 export interface FormValues {
     'search-input': string;
@@ -39,6 +38,9 @@ const SearchForm: React.FC = () => {
         register,
         handleSubmit
     } = useForm<FormValues>();
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const [params, setParams] = useState<IFetchArticlesListByGenreAndWordsParams>();
     const [genre1, setGenre1] = useState<string>('');
@@ -61,8 +63,6 @@ const SearchForm: React.FC = () => {
 
 
     const {data: defaultArticleList} = useFetchArticlesList(1);
-    // const {data: totalArticlesCountByGenreAndWords} = useFetchTotalArticlesCountByGenreAndWords(params);
-    // console.log('Total Articles Count Response:', totalArticlesCountByGenreAndWords);
 
 
     useEffect(() => {
@@ -79,7 +79,6 @@ const SearchForm: React.FC = () => {
                   foundArticleList,
                   error,
                   defaultArticleList,
-                  // totalArticlesCountByGenreAndWords,
               ]);
 
     const genreOptions = (currentGenre: string): GenreOption[] => {
@@ -105,19 +104,23 @@ const SearchForm: React.FC = () => {
             page: 1,
             genres: selectedGenres.filter(Boolean).join(','),
             s: data['search-input'].toString(),
+            limit: 10,
+            lastCursor: 0,
         };
 
         if (selectedGenres.filter(Boolean).length === 0 && newParams.s === '') {
             (defaultArticleList && dispatch(setArticlesList(defaultArticleList)));
+            navigate('/');
         } else {
-            // const totalPages = articlesCountToPagesCount(totalArticlesCountByGenreAndWords);
-            // console.log('Total Articles Count Response:', totalArticlesCountByGenreAndWords);
-            // dispatch(setTotalPages(totalPages));
-            // console.log('Total pages', totalPages);
             setParams(newParams);
-            dispatch(setActiveSearch(true));
             dispatch(setCurrentPage(1));
             dispatch(setSearchParams(newParams));
+            dispatch(setLastCursor(0))
+            console.log(newParams);
+            if (location.pathname !== '/search') {
+                navigate('/search')
+            }
+
         }
     };
 

@@ -3,11 +3,11 @@ import {IArticle} from '../../../types';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
 import styles from './SingleArticleContent.module.scss'
-import Button from '../../../components/Button/Button.tsx';
+import Button from '../../../shared/ui/Button/Button.tsx';
 import {
     generateLinkByGenre,
     splitContentIntoParagraphs
-} from '../../../utils';
+} from '../../../shared/utils';
 import {GENRES_DIR} from '../../../constants';
 
 export interface ISingleArticleContentProps {

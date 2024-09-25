@@ -1,86 +1,46 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect, useEffect} from 'react';
 import MainContentLayout
     from '../../layouts/MainContentLayout/MainContentLayout.tsx';
-import Footer from '../../components/Footer/Footer.tsx';
+import Footer from '../../shared/ui/Footer/Footer.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/store.ts';
 import {useFetchArticlesList} from '../../features/articles/hooks';
 import {
-    setArticlesList, setTotalPages
+    setArticlesList,
+    setTotalPages
 } from '../../features/articles/slice/articlesListSlice.ts';
-import {articlesCountToPagesCount} from '../../utils';
-import {
-    useFetchTotalArticlesCount,
-} from '../../features/pagination/hooks';
-import Content from '../../components/Content/Content.tsx';
+import {articlesCountToPagesCount} from '../../shared/utils';
+import {useFetchTotalArticlesCount} from '../../features/pagination/hooks';
+import Content from '../../shared/ui/Content/Content.tsx';
 import MainHeaderLayout
     from '../../layouts/MainHeaderLayout/MainHeaderLayout.tsx';
-import {
-    useFetchArticlesListByGenreAndWords,
-    useFetchTotalArticlesCountByGenreAndWords
-} from '../../features/search/hooks';
 
 const MainPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {
-        document.title = 'Desire Diaries ';
+    useLayoutEffect(() => {
+        document.title = 'Desire Diaries';
     }, []);
 
     const {
         articlesList,
         currentPage,
-        isSearchActive,
-        searchParams
     } = useSelector((state: RootState) => state.articlesList);
 
-    const {data: fetchedArticleList} = useFetchArticlesList(isSearchActive ? 1 : currentPage);
-    const {
-        data: fetchedTotalArticlesCount,
-    } = useFetchTotalArticlesCount();
-
-
-    const {data: fetchedArticleListByGenreAndWords} = useFetchArticlesListByGenreAndWords(
-        isSearchActive
-            ? {
-                page: currentPage,
-                genres: searchParams?.genres,
-                s: searchParams?.s,
-            }
-            : null
-    );
-
-
-    const {data: foundArticlesCount} = useFetchTotalArticlesCountByGenreAndWords(
-        isSearchActive && currentPage === 1
-            ? {
-                page: currentPage,
-                genres: searchParams?.genres,
-                s: searchParams?.s,
-            }
-            : null
-    );
+    const {data: defaultList} = useFetchArticlesList(currentPage);
+    const {data: defaultTotalCount} = useFetchTotalArticlesCount();
 
 
     useEffect(() => {
-
-        if (fetchedArticleList && !isSearchActive) {
-            dispatch(setArticlesList(fetchedArticleList));
-            (fetchedTotalArticlesCount && dispatch(setTotalPages(articlesCountToPagesCount(fetchedTotalArticlesCount))));
-        } else {
-            (foundArticlesCount && dispatch(setTotalPages(articlesCountToPagesCount(foundArticlesCount))));
-            (fetchedArticleListByGenreAndWords && dispatch(setArticlesList(fetchedArticleListByGenreAndWords)));
+        if (defaultList) {
+            dispatch(setArticlesList(defaultList));
+            defaultTotalCount && dispatch(setTotalPages(articlesCountToPagesCount(defaultTotalCount)));
         }
     }, [
                   dispatch,
-                  fetchedArticleList,
-                  fetchedTotalArticlesCount,
-                  isSearchActive,
-                  fetchedArticleListByGenreAndWords,
-                  foundArticlesCount,
+                  defaultList,
+                  defaultTotalCount,
               ]);
-
-
     return (
         <>
             <MainHeaderLayout/>

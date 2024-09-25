@@ -1,11 +1,13 @@
 import React, {Suspense} from 'react';
-import {Routes, Route} from 'react-router-dom';
-import {GENRES, GENRES_DIR, HEADER_NAVIGATION_PAGES} from '../constants';
+import {Routes, Route, Outlet} from 'react-router-dom';
+import {HEADER_NAVIGATION_PAGES} from '../constants';
+import {searchPageLoader} from '../pages/SearchPage/searchPageLoader.ts';
 
 const MainPage = React.lazy(() => import('../pages/MainPage/MainPage.tsx'));
 const SingleArticlePage = React.lazy(() => import('../pages/SingleArticlePage/SingleArticlePage.tsx'));
 const GenresPage = React.lazy(() => import('../pages/GenresPage/GenresPage.tsx'));
 const SingleGenrePage = React.lazy(() => import('../pages/SingleGenrePage/SingleGenrePage.tsx'));
+const SearchPage = React.lazy(() => import('../pages/SearchPage/SearchPage.tsx'));
 
 const AppRoutes: React.FC = () => {
     return (
@@ -17,13 +19,10 @@ const AppRoutes: React.FC = () => {
                 <Route path={HEADER_NAVIGATION_PAGES['Жанры']}
                        element={<GenresPage/>}/>
                 <Route path="/genres/:genre" element={<SingleGenrePage/>}/>
-                {/*{Object.entries(GENRES).map(([genre, route]) => (*/}
-                {/*    <Route*/}
-                {/*        path={`${GENRES_DIR}${route}`}*/}
-                {/*        key={genre}*/}
-                {/*        element={<SingleGenrePage />}*/}
-                {/*    />*/}
-                {/*))}*/}
+                <Route path="/search" element={<Outlet/>}
+                       loader={searchPageLoader}>
+                    <Route index element={<SearchPage/>}/>
+                </Route>
             </Routes>
         </Suspense>
     );

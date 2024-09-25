@@ -1,9 +1,9 @@
 import React from 'react';
 import HeaderNavigation
-    from '../../components/Header/HeaderNavigation/HeaderNavigation.tsx';
+    from '../../shared/ui/Header/HeaderNavigation/HeaderNavigation.tsx';
 import HeaderContent
-    from '../../components/Header/HeaderContent/HeaderContent.tsx';
-import Header from '../../components/Header/Header.tsx';
+    from '../../shared/ui/Header/HeaderContent/HeaderContent.tsx';
+import Header from '../../shared/ui/Header/Header.tsx';
 
 const MainHeaderLayout: React.FC = () => {
     return (

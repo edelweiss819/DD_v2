@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './HeaderNavigation.module.scss';
 import Button from '../../Button/Button.tsx';
 import Logo from '../../Logo/Logo.tsx';
-import {HEADER_NAVIGATION_PAGES} from '../../../constants';
+import {HEADER_NAVIGATION_PAGES} from '../../../../constants';
 import {Link} from 'react-router-dom';
 
 const HeaderNavigation: React.FC = () => {

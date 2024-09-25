@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import Header from '../../components/Header/Header.tsx';
+import Header from '../../shared/ui/Header/Header.tsx';
 import HeaderNavigation
-    from '../../components/Header/HeaderNavigation/HeaderNavigation.tsx';
+    from '../../shared/ui/Header/HeaderNavigation/HeaderNavigation.tsx';
 import HeaderContent
-    from '../../components/Header/HeaderContent/HeaderContent.tsx';
-import Footer from '../../components/Footer/Footer.tsx';
-import Content from '../../components/Content/Content.tsx';
+    from '../../shared/ui/Header/HeaderContent/HeaderContent.tsx';
+import Footer from '../../shared/ui/Footer/Footer.tsx';
+import Content from '../../shared/ui/Content/Content.tsx';
 import GenresPageContent from './GenresPageContent/GenresPageContent.tsx';
 
 const GenresPage: React.FC = () => {

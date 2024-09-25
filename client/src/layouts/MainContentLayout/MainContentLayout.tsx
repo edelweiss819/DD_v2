@@ -7,7 +7,7 @@ import Pagination from '../../features/pagination/components/Pagination.tsx';
 import {Element} from 'react-scroll';
 import {GENRES, GENRES_DIR} from '../../constants';
 import {Link} from 'react-router-dom';
-import {scrollToElement} from '../../utils';
+import {scrollToElement} from '../../shared/utils';
 import SearchForm
     from '../../features/search/components/SearchForm/SearchForm.tsx';
 
@@ -41,7 +41,8 @@ const MainContentLayout: React.FC<IMainPageContentProps> = ({
                                       key={genre}
                                       className={styles['genre-link']}>
                                     {genre}
-                                </Link></div>
+                                </Link>
+                            </div>
                         ))}
                     </aside>
                     <Element name="main" className={styles['main']}>

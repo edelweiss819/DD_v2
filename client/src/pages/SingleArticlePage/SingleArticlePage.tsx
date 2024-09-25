@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import Header from '../../components/Header/Header.tsx';
+import Header from '../../shared/ui/Header/Header.tsx';
 import HeaderNavigation
-    from '../../components/Header/HeaderNavigation/HeaderNavigation.tsx';
-import Content from '../../components/Content/Content.tsx';
-import Footer from '../../components/Footer/Footer.tsx';
+    from '../../shared/ui/Header/HeaderNavigation/HeaderNavigation.tsx';
+import Content from '../../shared/ui/Content/Content.tsx';
+import Footer from '../../shared/ui/Footer/Footer.tsx';
 import SingleArticleHeader from './SingleArticleHeader/SingleArticleHeader.tsx';
 import SingleArticleContent
     from './SingleArticleContent/SingleArticleContent.tsx';
@@ -15,7 +15,7 @@ import {
 } from '../../features/articles/slice/singleArticleSlice.ts';
 import {useParams} from 'react-router';
 import {Element} from 'react-scroll';
-import {scrollToElement} from '../../utils';
+import {scrollToElement} from '../../shared/utils';
 
 const SingleArticlePage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();

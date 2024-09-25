@@ -4,10 +4,12 @@ import PaginationPageButton
     from './PaginationPageButton/PaginationPageButton.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../store/store.ts';
-import {setCurrentPage} from '../../articles/slice/articlesListSlice.ts';
-import {arrayRange} from '../../../utils';
+import {
+    setCurrentPage, setLastCursor, setSortOrder, updateLastCursor
+} from '../../articles/slice/articlesListSlice.ts';
+import {arrayRange} from '../../../shared/utils';
 import classNames from 'classnames';
-import {scrollToElement} from '../../../utils';
+import {scrollToElement} from '../../../shared/utils';
 
 export interface PaginationProps {
     scrollTo?: 'main'
@@ -18,7 +20,8 @@ const Pagination: React.FC<PaginationProps> = ({scrollTo}) => {
 
     const {
         totalPages,
-        currentPage
+        currentPage,
+        lastCursor
     } = useSelector((state: RootState) => state.articlesList);
     const [activePage, setActivePage] = useState<number>(currentPage);
     const [pageNumbers, setPageNumbers] = useState<number[]>([]);
@@ -35,7 +38,13 @@ const Pagination: React.FC<PaginationProps> = ({scrollTo}) => {
 
 
     const handleClickPrev = () => {
-        if (activePage > 1) {
+        if (lastCursor) {
+            const newActivePage = activePage - 1;
+            dispatch(setSortOrder(-1));
+            setActivePage(newActivePage);
+            dispatch(setCurrentPage(newActivePage));
+            (scrollTo && scrollToElement(scrollTo));
+        } else if (activePage < totalPages) {
             const newActivePage = activePage - 1;
             setActivePage(newActivePage);
             dispatch(setCurrentPage(newActivePage));
@@ -44,7 +53,14 @@ const Pagination: React.FC<PaginationProps> = ({scrollTo}) => {
     }
 
     const handleClickNext = () => {
-        if (activePage < totalPages) {
+        if (lastCursor) {
+            const newActivePage = activePage + 1;
+            dispatch(setSortOrder(1));
+            setActivePage(newActivePage);
+            dispatch(setCurrentPage(newActivePage));
+            (scrollTo && scrollToElement(scrollTo));
+            dispatch(updateLastCursor(lastCursor));
+        } else if (activePage < totalPages) {
             const newActivePage = activePage + 1;
             setActivePage(newActivePage);
             dispatch(setCurrentPage(newActivePage));

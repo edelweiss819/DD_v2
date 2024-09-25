@@ -1,4 +1,4 @@
-import {GENRES} from '../constants';
+import {GENRES} from '../../constants';
 
 export const generateGenreByLink = (genreLink: string) => {
     const genreName = Object.entries(GENRES).find(([_, value]) => value === `/${genreLink}`);

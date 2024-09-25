@@ -5,7 +5,7 @@ import {
 } from '../api';
 
 export const useFetchTotalArticlesCountByGenreAndWords = (
-    params: IFetchTotalArticlesCountByGenreAndWords | null,
+    params: IFetchTotalArticlesCountByGenreAndWords,
 ) => {
     return useQuery<number, Error>({
                                        queryKey: [

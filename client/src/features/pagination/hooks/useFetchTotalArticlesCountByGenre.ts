@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {generateGenreByLink} from '../../../utils';
+import {generateGenreByLink} from '../../../shared/utils';
 import {fetchTotalArticlesCountByGenre} from '../api';
 
 export const useFetchTotalArticlesCountByGenre = (genreLink: string) => {
