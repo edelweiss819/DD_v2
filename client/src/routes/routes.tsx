@@ -1,7 +1,6 @@
 import React, {Suspense} from 'react';
-import {Routes, Route, Outlet} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import {HEADER_NAVIGATION_PAGES} from '../constants';
-import {searchPageLoader} from '../pages/SearchPage/searchPageLoader.ts';
 
 const MainPage = React.lazy(() => import('../pages/MainPage/MainPage.tsx'));
 const SingleArticlePage = React.lazy(() => import('../pages/SingleArticlePage/SingleArticlePage.tsx'));
@@ -19,10 +18,7 @@ const AppRoutes: React.FC = () => {
                 <Route path={HEADER_NAVIGATION_PAGES['Жанры']}
                        element={<GenresPage/>}/>
                 <Route path="/genres/:genre" element={<SingleGenrePage/>}/>
-                <Route path="/search" element={<Outlet/>}
-                       loader={searchPageLoader}>
-                    <Route index element={<SearchPage/>}/>
-                </Route>
+                <Route path="/search" element={<SearchPage/>}/>
             </Routes>
         </Suspense>
     );

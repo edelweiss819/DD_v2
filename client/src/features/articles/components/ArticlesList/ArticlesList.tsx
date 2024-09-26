@@ -18,6 +18,9 @@ const ArticlesList: React.FC<IArticlesList> = ({
                         genres={article.genres}
                         content={article.content ? truncateText(article.content) : ''}
                         index={article.index}
+                        publishedDate={article.publishedDate}
+                        estimatedReadingTime={article.estimatedReadingTime}
+                        characterCount={article.characterCount}
                     />
                 ))
             ) : (

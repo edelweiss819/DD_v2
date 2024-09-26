@@ -33,15 +33,15 @@ export const SingleGenrePage: React.FC = () => {
     const {genre} = useParams<{ genre: string }>();
 
     useEffect(() => {
-        const genreTitle = generateGenreByLink(genre);
+        const genreTitle = generateGenreByLink(genre!);
         document.title = `DD || Жанры - ${genreTitle}`;
     }, [genre]);
 
 
-    const {data: fetchedArticlesListByGenre} = useFetchArticlesListByGenre(currentPage, genre);
+    const {data: fetchedArticlesListByGenre} = useFetchArticlesListByGenre(currentPage, genre!);
 
 
-    const prevGenreRef = useRef<string, undefined>(genre);
+    const prevGenreRef = useRef<string>(genre!);
 
 
     useEffect(() => {
@@ -64,7 +64,7 @@ export const SingleGenrePage: React.FC = () => {
                   fetchedArticlesListByGenre
               ]);
 
-    const {data: fetchedTotalArticlesCountByGenre} = useFetchTotalArticlesCountByGenre(genre);
+    const {data: fetchedTotalArticlesCountByGenre} = useFetchTotalArticlesCountByGenre(genre!);
 
 
     useEffect(() => {

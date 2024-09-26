@@ -6,26 +6,29 @@ export interface IArticlesState {
     articlesList: IArticle[];
     totalPages: number;
     currentPage: number;
-    isError: boolean;
-    errorMessage: string;
     searchParams: IFetchArticlesListByGenreAndWordsParams,
     lastCursor: number;
     updatedLastCursor: number,
     sortOrder: number,
+    globalGenres: string[]
 }
 
 const initialState: IArticlesState = {
     articlesList: [],
     totalPages: 1,
     currentPage: 1,
-    isError: false,
-    errorMessage: '',
     searchParams: {
         page: 1,
     },
     lastCursor: 0,
     updatedLastCursor: 0,
-    sortOrder: 1
+    sortOrder: 1,
+    globalGenres: [
+        '',
+        '',
+        '',
+        ''
+    ],
 };
 
 
@@ -35,14 +38,7 @@ const articlesListSlice = createSlice({
                                           reducers: {
                                               setArticlesList: (state,
                                                                 action: PayloadAction<IArticle[]>) => {
-                                                  state.errorMessage = '';
-                                                  state.isError = false;
                                                   state.articlesList = action.payload;
-                                              },
-                                              resetArticlesList: (state) => {
-                                                  state.articlesList = [];
-                                                  state.isError = true;
-                                                  state.currentPage = 1;
                                               },
                                               setTotalPages: (state,
                                                               action: PayloadAction<number>) => {
@@ -68,18 +64,32 @@ const articlesListSlice = createSlice({
                                                              action: PayloadAction<number>) => {
                                                   state.sortOrder = action.payload;
                                               },
-                                          },
+                                              setGlobalGenres(state,
+                                                              action: PayloadAction<string[]>) {
+                                                  state.globalGenres = action.payload;
+                                                  console.log(state.globalGenres)
+                                              },
+                                              resetGlobalGenres(state) {
+                                                  state.globalGenres = [
+                                                      '',
+                                                      '',
+                                                      '',
+                                                      ''
+                                                  ];
+                                              }
+                                          }
                                       });
 
 export const {
     setArticlesList,
-    resetArticlesList,
     setTotalPages,
     setCurrentPage,
     setSearchParams,
     setLastCursor,
     updateLastCursor,
     setSortOrder,
+    setGlobalGenres,
+    resetGlobalGenres
 } = articlesListSlice.actions;
 
 export default articlesListSlice.reducer;

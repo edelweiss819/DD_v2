@@ -9,18 +9,24 @@ import {
 import {
     useFetchArticlesListByGenreAndWords,
 } from '../../hooks';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from '../../../../store/store.ts';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../../../../store/store.ts';
 import {
     setArticlesList,
-    setCurrentPage, setLastCursor,
-    setSearchParams,
+    setCurrentPage, setGlobalGenres, setLastCursor,
+    setSearchParams, setSortOrder, updateLastCursor,
 } from '../../../articles/slice/articlesListSlice.ts';
 import BaseSelect
     from '../../../../shared/ui/Selects/BaseSelects/BaseSelect.tsx';
 import {GENRES} from '../../../../constants';
 import {useFetchArticlesList} from '../../../articles/hooks';
 import {useLocation, useNavigate} from 'react-router';
+import {AxiosError} from 'axios';
+
+
+interface ErrorResponse {
+    message: string;
+}
 
 export interface FormValues {
     'search-input': string;
@@ -33,7 +39,7 @@ export interface GenreOption {
 
 const SearchForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-
+    const {globalGenres} = useSelector((state: RootState) => state.articlesList);
     const {
         register,
         handleSubmit
@@ -43,23 +49,35 @@ const SearchForm: React.FC = () => {
     const location = useLocation();
 
     const [params, setParams] = useState<IFetchArticlesListByGenreAndWordsParams>();
-    const [genre1, setGenre1] = useState<string>('');
-    const [genre2, setGenre2] = useState<string>('');
-    const [genre3, setGenre3] = useState<string>('');
-    const [genre4, setGenre4] = useState<string>('');
+    const [genre1, setGenre1] = useState<string>(globalGenres[0] || '');
+    const [genre2, setGenre2] = useState<string>(globalGenres[1] || '');
+    const [genre3, setGenre3] = useState<string>(globalGenres[2] || '');
+    const [genre4, setGenre4] = useState<string>(globalGenres[3] || '');
+
+    useEffect(() => {
+
+        setGenre1(globalGenres[0] || '');
+        setGenre2(globalGenres[1] || '');
+        setGenre3(globalGenres[2] || '');
+        setGenre4(globalGenres[3] || '');
+    }, [globalGenres]);
+
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const selectedGenres = [
-        genre1,
-        genre2,
-        genre3,
-        genre4
-    ];
+    // const selectedGenres = [
+    //     genre1,
+    //     genre2,
+    //     genre3,
+    //     genre4
+    // ];
+    const selectedGenres = globalGenres;
+
 
     const {
         data: foundArticleList,
         error
-    } = useFetchArticlesListByGenreAndWords(params);
+    } = useFetchArticlesListByGenreAndWords(params!);
 
 
     const {data: defaultArticleList} = useFetchArticlesList(1);
@@ -67,12 +85,19 @@ const SearchForm: React.FC = () => {
 
     useEffect(() => {
         if (foundArticleList) {
-            dispatch(setArticlesList(foundArticleList));
+            dispatch(setArticlesList(foundArticleList.articles));
             setErrorMessage(null);
         } else if (error) {
-            const message = error.response?.data?.message;
-            setErrorMessage(message);
-            (defaultArticleList && dispatch(setArticlesList(defaultArticleList)));
+            const response = (error as AxiosError).response;
+            if (response && response.data && typeof response.data === 'object' && 'message' in response.data) {
+                const message = (response.data as ErrorResponse).message;
+                setErrorMessage(message);
+            } else {
+                return;
+            }
+            if (defaultArticleList) {
+                dispatch(setArticlesList(defaultArticleList));
+            }
         }
     }, [
                   dispatch,
@@ -80,6 +105,7 @@ const SearchForm: React.FC = () => {
                   error,
                   defaultArticleList,
               ]);
+
 
     const genreOptions = (currentGenre: string): GenreOption[] => {
         const entireGenres: GenreOption[] = [
@@ -115,8 +141,9 @@ const SearchForm: React.FC = () => {
             setParams(newParams);
             dispatch(setCurrentPage(1));
             dispatch(setSearchParams(newParams));
-            dispatch(setLastCursor(0))
-            console.log(newParams);
+            dispatch(setLastCursor(0));
+            dispatch(updateLastCursor(0));
+            dispatch(setSortOrder(1));
             if (location.pathname !== '/search') {
                 navigate('/search')
             }
@@ -140,22 +167,63 @@ const SearchForm: React.FC = () => {
                         onClick={handleSubmit(onSubmit)}/>
             </form>
             <div className={styles['genres-container']}>
-                <BaseSelect options={genreOptions(genre1)}
-                            selectedValue={genre1}
-                            type={'select-search-options'}
-                            onChange={setGenre1}/>
-                <BaseSelect options={genreOptions(genre2)}
-                            selectedValue={genre2}
-                            type={'select-search-options'}
-                            onChange={setGenre2}/>
-                <BaseSelect options={genreOptions(genre3)}
-                            selectedValue={genre3}
-                            type={'select-search-options'}
-                            onChange={setGenre3}/>
-                <BaseSelect options={genreOptions(genre4)}
-                            selectedValue={genre4}
-                            type={'select-search-options'}
-                            onChange={setGenre4}/>
+                <BaseSelect
+                    options={genreOptions(genre1)}
+                    selectedValue={genre1}
+                    type={'select-search-options'}
+                    onChange={(value) =>
+                        dispatch(setGlobalGenres([
+                                                     value,
+                                                     globalGenres[1],
+                                                     globalGenres[2],
+                                                     globalGenres[3]
+                                                 ]))
+                    }
+                />
+
+
+                <BaseSelect
+                    options={genreOptions(genre2)}
+                    selectedValue={genre2}
+                    type={'select-search-options'}
+                    onChange={(value) =>
+                        dispatch(setGlobalGenres([
+                                                     globalGenres[0],
+                                                     value,
+                                                     globalGenres[2],
+                                                     globalGenres[3]
+                                                 ]))
+                    }
+                />
+
+                <BaseSelect
+                    options={genreOptions(genre3)}
+                    selectedValue={genre3}
+                    type={'select-search-options'}
+                    onChange={(value) =>
+                        dispatch(setGlobalGenres([
+                                                     globalGenres[0],
+                                                     globalGenres[1],
+                                                     value,
+                                                     globalGenres[3]
+                                                 ]))
+                    }
+                />
+
+                <BaseSelect
+                    options={genreOptions(genre4)}
+                    selectedValue={genre4}
+                    type={'select-search-options'}
+                    onChange={(value) =>
+                        dispatch(setGlobalGenres([
+                                                     globalGenres[0],
+                                                     globalGenres[1],
+                                                     globalGenres[2],
+                                                     value
+                                                 ]))
+                    }
+                />
+
             </div>
             {errorMessage &&
 				<div className={styles['error']}>

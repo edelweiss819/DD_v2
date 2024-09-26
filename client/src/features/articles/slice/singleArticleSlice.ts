@@ -4,13 +4,6 @@ import {IArticle} from '../../../types';
 
 export interface ISingleArticleState {
     singleArticle: IArticle,
-    title: string,
-    genres: string[],
-    content: string,
-    index: number,
-    publishedDate: number,
-    estimatedReadingTime: number,
-    characterCount: number,
     currentArticleIndex: number;
 
 }
@@ -25,6 +18,7 @@ const initialState: ISingleArticleState = {
         characterCount: 0,
         estimatedReadingTime: 0,
     },
+    currentArticleIndex: 0,
 
 }
 
@@ -37,9 +31,6 @@ const singleArticleSlice = createSlice({
                                                                   action: PayloadAction<IArticle>) => {
                                                    state.singleArticle = action.payload;
                                                },
-                                               resetSingleArticle: (state,) => {
-                                                   state.singleArticle = initialState;
-                                               },
                                                setCurrentArticleIndex: (state,
                                                                         action: PayloadAction<number>) => {
                                                    state.currentArticleIndex = action.payload;
@@ -50,7 +41,6 @@ const singleArticleSlice = createSlice({
 
 export const {
     setSingleArticle,
-    resetSingleArticle,
     setCurrentArticleIndex,
 } = singleArticleSlice.actions;
 export default singleArticleSlice.reducer;

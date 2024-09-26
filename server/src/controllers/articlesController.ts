@@ -93,30 +93,18 @@ export const getArticlesByGenreAndWords = async (req: Request,
     const words = searchWords.trim().split(' ').filter(Boolean);
     const sortOrder = parseInt(req.query.sortOrder as string) || 1;
 
-
-    // const sortOrderQuery = () => {
-    //     if (sortOrder === 1) {
-    //         return '$gt';
-    //     } else if (sortOrder === -1) {
-    //         return '$lt';
-    //     }
-    // }
-
     try {
         let articles: any[] = [];
 
-        // Если указаны жанры
-        if (genres) {
+        // 1. Если указаны только жанры
+        if (genres && words.length === 0) {
             const singleGenres = genres.split(',');
             console.log('Поиск по массиву жанров:', singleGenres);
             const genreQuery: any = {
                 genres: {$all: singleGenres}
             };
-            if (sortOrder === 1) {
-                genreQuery.index = {$gt: cursor};
-            } else if (sortOrder === -1) {
-                genreQuery.index = {$lte: cursor};
-            }
+            genreQuery.index = sortOrder === 1 ? {$gt: cursor} : {$lte: cursor};
+
             articles = await Article.find(genreQuery)
                 .sort({index: 1})
                 .limit(limit)
@@ -124,23 +112,19 @@ export const getArticlesByGenreAndWords = async (req: Request,
 
             if (articles.length > 0) {
                 console.log(`Найдено ${articles.length} статей по жанрам.`);
-            } else if (searchWords.length > 0) {
-                console.log(`Слова для полнотекстового поиска не обнаружены. Возвращаю найденные статьи по жанрам : ${singleGenres}`);
-                return res.status(200).json(articles);
+                return res.status(200).json({
+                                                articles,
+                                                cursor: articles[articles.length - 1].index
+                                            });
             } else {
                 console.log(`Статьи с набором жанров ${singleGenres} не найдены.`);
                 return res.status(404).json({message: 'Статьи по заданным жанрам не найдены.'});
             }
         }
 
-        // Если жанры указаны, фильтруем статьи по словам внутри полученных данных
-        if (articles.length > 0 && words.length > 0) {
+        // 2. Если указаны только слова
+        if (words.length > 0 && !genres) {
             const wordRegex = words.map(word => new RegExp(word, 'i'));
-            articles = articles.filter(article =>
-                                           wordRegex.some(regex => regex.test(article.title) || regex.test(article.content))
-            );
-        } else if (words.length > 0) {
-            // Если жанры не указаны, делаем полнотекстовый поиск по словам
             const searchQuery = {
                 $or: [
                     {
@@ -156,26 +140,78 @@ export const getArticlesByGenreAndWords = async (req: Request,
                         }
                     }
                 ],
-                index: {$gt: cursor}  // Используем курсор для продолжения с последнего индекса
+                index: sortOrder === 1 ? {$gt: cursor} : {$lte: cursor}
             };
 
             articles = await Article.find(searchQuery)
                 .sort({index: 1})
                 .limit(limit)
                 .lean();
+
+            if (articles.length > 0) {
+                console.log(`Найдено ${articles.length} статей по запросу.`);
+                return res.status(200).json({
+                                                articles,
+                                                cursor: articles[articles.length - 1].index
+                                            });
+            } else {
+                console.log('Статьи не найдены по указанным словам.');
+                return res.status(404).json({message: 'Статьи по заданным словам не найдены.'});
+            }
         }
 
-        if (articles.length > 0) {
-            console.log(`Найдено ${articles.length} статей по запросу.`);
-            const newCursor = articles[articles.length - 1].index; // Сохраняем новый курсор
-            return res.status(200).json({
-                                            articles,
-                                            cursor: newCursor // Возвращаем курсор на фронт
-                                        });
-        } else {
-            console.log('Статьи не найдены.');
-            return res.status(404).json({message: 'Статьи по заданным параметрам не найдены.'});
+        // 3. Если указаны как жанры, так и слова
+        if (genres && words.length > 0) {
+            const singleGenres = genres.split(',');
+            console.log('Поиск по массиву жанров и словам:', singleGenres);
+            const genreQuery: any = {
+                genres: {$all: singleGenres}
+            };
+            const wordQuery = {
+                $or: [
+                    {
+                        title: {
+                            $regex: words.join('|'),
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        content: {
+                            $regex: words.join('|'),
+                            $options: 'i'
+                        }
+                    }
+                ]
+            };
+
+            const searchQuery = {
+                $and: [
+                    genreQuery,
+                    wordQuery
+                ],
+                index: sortOrder === 1 ? {$gt: cursor} : {$lte: cursor}
+            };
+
+            articles = await Article.find(searchQuery)
+                .sort({index: 1})
+                .limit(limit)
+                .lean();
+
+            if (articles.length > 0) {
+                console.log(`Найдено ${articles.length} статей по жанрам и словам.`);
+                return res.status(200).json({
+                                                articles,
+                                                cursor: articles[articles.length - 1].index
+                                            });
+            } else {
+                console.log(`Статьи с набором жанров ${singleGenres} и словами ${words.join(', ')} не найдены.`);
+                return res.status(404).json({message: 'Статьи по заданным жанрам и словам не найдены.'});
+            }
         }
+
+        // Если ни жанров, ни слов не указано
+        return res.status(400).json({message: 'Не указаны жанры или слова для поиска.'});
+
     } catch (error) {
         console.error('Ошибка при получении статей:', error);
         const errorMessage = (error as Error).message;
@@ -183,7 +219,8 @@ export const getArticlesByGenreAndWords = async (req: Request,
     }
 };
 
-//Всего статей в поиске
+
+// Всего статей в поиске
 export const getTotalArticlesCountByGenresAndWords = async (req: Request,
                                                             res: Response): Promise<Response> => {
     const genres = req.query.genres as string | undefined;

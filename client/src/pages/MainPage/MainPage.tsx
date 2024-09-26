@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/store.ts';
 import {useFetchArticlesList} from '../../features/articles/hooks';
 import {
+    resetGlobalGenres,
     setArticlesList,
     setTotalPages
 } from '../../features/articles/slice/articlesListSlice.ts';
@@ -17,8 +18,9 @@ import MainHeaderLayout
 
 const MainPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const {globalGenres} = useSelector((state: RootState) => state.articlesList);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         document.title = 'Desire Diaries';
     }, []);
 
@@ -26,6 +28,12 @@ const MainPage: React.FC = () => {
         articlesList,
         currentPage,
     } = useSelector((state: RootState) => state.articlesList);
+
+    useLayoutEffect(() => {
+        console.log('Global genres reset:', globalGenres);
+        dispatch(resetGlobalGenres());
+    }, [dispatch]);
+
 
     const {data: defaultList} = useFetchArticlesList(currentPage);
     const {data: defaultTotalCount} = useFetchTotalArticlesCount();
@@ -41,6 +49,8 @@ const MainPage: React.FC = () => {
                   defaultList,
                   defaultTotalCount,
               ]);
+
+
     return (
         <>
             <MainHeaderLayout/>

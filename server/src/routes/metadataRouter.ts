@@ -4,6 +4,7 @@ import {
     updateTotalArticlesCount, updateGenresCount, getArticlesTotalCountByGenre
 } from '../controllers/metadataController';
 
+
 const router = Router();
 
 router.get('/metadata', getMetadata);

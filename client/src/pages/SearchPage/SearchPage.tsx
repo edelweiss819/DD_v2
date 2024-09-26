@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useDeferredValue, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/store.ts';
 import MainHeaderLayout
@@ -13,7 +13,7 @@ import {
 } from '../../features/search/hooks';
 import {
     setArticlesList, setLastCursor,
-    setTotalPages, updateLastCursor
+    setTotalPages,
 } from '../../features/articles/slice/articlesListSlice.ts';
 import {articlesCountToPagesCount} from '../../shared/utils';
 
@@ -23,7 +23,6 @@ const SearchPage: React.FC = () => {
         articlesList,
         searchParams,
         currentPage,
-        lastCursor,
         sortOrder,
         updatedLastCursor,
     } = useSelector((state: RootState) => state.articlesList);
@@ -43,6 +42,15 @@ const SearchPage: React.FC = () => {
     const list = response?.articles;
     const cursor = response?.cursor;
 
+    const deferredSearchParams = useDeferredValue(searchParams);
+
+
+    useEffect(() => {
+        document.title = deferredSearchParams.s
+            ? `DD || Поиск: ${deferredSearchParams.s}`
+            : `DD || Поиск`;
+    }, [deferredSearchParams]);
+
 
     useEffect(() => {
         if (count) {
@@ -57,7 +65,7 @@ const SearchPage: React.FC = () => {
 
     useEffect(() => {
         if (list) {
-            (dispatch(setArticlesList(list)))
+            dispatch(setArticlesList(list));
         }
 
     }, [

@@ -8,6 +8,8 @@ import {
     updateTotalArticlesCount
 } from './controllers/metadataController';
 import {UPDATE_GENRES_COUNT, UPDATE_TOTAL_ARTICLES} from './constants';
+import usersRouter from './routes/usersRouter';
+import authRouter from './routes/authRouter';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +19,8 @@ app.use(cors());
 
 app.use(articlesRouter);
 app.use(metadataRouter);
+app.use(usersRouter);
+app.use(authRouter);
 
 const startServer = async () => {
     try {

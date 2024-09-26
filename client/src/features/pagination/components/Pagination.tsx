@@ -5,7 +5,7 @@ import PaginationPageButton
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../store/store.ts';
 import {
-    setCurrentPage, setLastCursor, setSortOrder, updateLastCursor
+    setCurrentPage, setSortOrder, updateLastCursor
 } from '../../articles/slice/articlesListSlice.ts';
 import {arrayRange} from '../../../shared/utils';
 import classNames from 'classnames';
