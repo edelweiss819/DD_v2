@@ -7,6 +7,8 @@ const SingleArticlePage = React.lazy(() => import('../pages/SingleArticlePage/Si
 const GenresPage = React.lazy(() => import('../pages/GenresPage/GenresPage.tsx'));
 const SingleGenrePage = React.lazy(() => import('../pages/SingleGenrePage/SingleGenrePage.tsx'));
 const SearchPage = React.lazy(() => import('../pages/SearchPage/SearchPage.tsx'));
+const SignUpPage = React.lazy(() => import('../pages/SignUpPage/SignUpPage.tsx'));
+const SignInPage = React.lazy(() => import('../pages/SignInPage/SignInPage.tsx'));
 
 const AppRoutes: React.FC = () => {
     return (
@@ -19,6 +21,9 @@ const AppRoutes: React.FC = () => {
                        element={<GenresPage/>}/>
                 <Route path="/genres/:genre" element={<SingleGenrePage/>}/>
                 <Route path="/search" element={<SearchPage/>}/>
+                <Route path={'/sign_up'} element={<SignUpPage/>}/>
+                <Route path={'/sign_in'} element={<SignInPage/>}/>
+
             </Routes>
         </Suspense>
     );

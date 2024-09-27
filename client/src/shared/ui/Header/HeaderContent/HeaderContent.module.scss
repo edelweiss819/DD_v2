@@ -36,6 +36,7 @@
 
 .btns-container {
   @include grid;
+  flex-direction: row;
   gap: 8px;
   margin-top: 16px !important;
   margin-bottom: -8px !important;

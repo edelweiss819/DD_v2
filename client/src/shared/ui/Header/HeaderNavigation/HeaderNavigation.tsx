@@ -21,7 +21,7 @@ const HeaderNavigation: React.FC = () => {
                             </Link>
                         </div>
                     ))}
-                    <Button text={'Login'} to={'/login'} color={'blue'}
+                    <Button text={'Войти'} to={'/sign_in'} color={'blue'}
                             type={'nav-login'}/>
                 </div>
             </div>

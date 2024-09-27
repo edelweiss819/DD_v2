@@ -8,7 +8,7 @@ export interface InputProps<T extends FieldValues> {
     name: Path<T>;
     required?: boolean;
     placeholder?: string;
-    type: 'input-search'
+    type: 'input-search' | 'registration-form';
 }
 
 const Input = <T extends FieldValues>({
@@ -20,6 +20,7 @@ const Input = <T extends FieldValues>({
                                       }: InputProps<T>): React.ReactElement => {
     const inputClass = classNames(styles['input'], {
         [styles['input-search']]: type === 'input-search',
+        [styles['input-registration-form']]: type === 'registration-form',
     })
 
     return (

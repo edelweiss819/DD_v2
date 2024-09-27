@@ -13,6 +13,14 @@
   max-width: 800px;
 }
 
+@mixin content-centred {
+  align-items: center;
+  display: flex;
+  min-height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
 @mixin grid {
   display: flex;
   flex-flow: row wrap;

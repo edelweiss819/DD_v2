@@ -163,7 +163,7 @@ const SearchForm: React.FC = () => {
                     required={false}
                     placeholder="Введите запрос.."
                 />
-                <Button text="Поиск" type={'search-m'} color={'dark-blue'}
+                <Button text="Поиск" color={'dark-blue'} type={'search'}
                         onClick={handleSubmit(onSubmit)}/>
             </form>
             <div className={styles['genres-container']}>
