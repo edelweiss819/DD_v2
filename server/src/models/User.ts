@@ -35,10 +35,6 @@ const userSchema: Schema = new Schema({
                                               type: String,
                                               required: true
                                           },
-                                          gender: {
-                                              type: String,
-                                              required: true
-                                          },
                                           favoriteArticles: [
                                               {
                                                   index: {

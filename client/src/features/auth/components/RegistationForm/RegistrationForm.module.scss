@@ -2,7 +2,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   width: 100%;
   gap: 8px;
 
@@ -29,4 +29,10 @@
     text-decoration: none;
     color: $primary-link-color;
   }
+}
+
+.error {
+  margin-top: 4px;
+  margin-left: 6px;
+  color: rgba(255, 0, 0, 0.7);
 }

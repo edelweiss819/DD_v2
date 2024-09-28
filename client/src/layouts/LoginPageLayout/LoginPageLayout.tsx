@@ -11,18 +11,19 @@ const LoginPageLayout: React.FC<LoginPageLayoutProps> = ({children}) => {
 
 
     return (
-        <div className={styles['body']}>
+        <div className={styles['main-wrapper']}>
             <div className={styles['container']}>
                 <div className={styles['container-content-wrapper']}>
-                    <Logo firstPartColor={'dark'} secondPartColor={'blue'}/>
+                    <Logo firstPartColor={'dark'} secondPartColor={'blue'}
+                          to={'/'}/>
                     <div
                         className={styles['container-content-wrapper-h1']}>
                         Добро пожаловать на Desire Diaries 👋
                     </div>
                     <div
                         className={styles['container-content-wrapper-social-block']}>
-                        <p className={styles['container-content-wrapper-social-block-p']}>Continue
-                            with your social account:</p>
+                        <p className={styles['container-content-wrapper-social-block-p']}>Войти
+                            с помощью вашей социальной сети:</p>
                         <div
                             className={styles['container-content-wrapper-social-block-buttons-block']}>
                             <Button text={'Google'}

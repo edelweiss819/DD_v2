@@ -49,7 +49,7 @@ const Button: React.FC<ButtonProps> = ({
         <Link
             className={classNames(buttonClass)}
             title={text}
-            to={to ? to : '/'}
+            to={to ? to : ''}
             onClick={onClick}
         >
             {text}

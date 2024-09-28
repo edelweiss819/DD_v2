@@ -11,7 +11,6 @@ export class UsersController {
                 lastName,
                 email,
                 password,
-                gender,
                 role,
             } = req.body;
 
@@ -22,7 +21,6 @@ export class UsersController {
                                          lastName,
                                          email,
                                          password: hashedPassword,
-                                         gender,
                                          role
                                      });
 
