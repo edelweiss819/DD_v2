@@ -7,7 +7,7 @@ const SignInPage: React.FC = () => {
         document.title = 'DD || Войти';
     }, []);
     return (
-        <LoginPageLayout>
+        <LoginPageLayout formTitle={'Или войдите:'}>
             <LoginForm/>
         </LoginPageLayout>
     );

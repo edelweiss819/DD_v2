@@ -1,13 +1,17 @@
-import axios from 'axios'; // Добавьте этот импорт
-import {axiosInstance} from '../../../config/axiosConfig';
-import {API_ROUTES} from '../../../config/endpoints';
-import {IUser} from '../../../types/users';
+import {
+    IRegistrationForm
+} from '../components/RegistationForm/RegistrationForm.tsx';
+import {axiosInstance} from '../../../config/axiosConfig.ts';
+import {API_ROUTES} from '../../../config/endpoints.ts';
+import axios from 'axios';
 
-export type CreateUserResponse = Omit<IUser, 'favoriteArticles' | 'index' | 'role'>;
+export type AuthResponse = Pick<IRegistrationForm, 'email' | 'password'>
 
-export const createUser = async (userData: CreateUserResponse) => {
+export const auth = async (authData: AuthResponse) => {
     try {
-        await axiosInstance.post(API_ROUTES.USERS, userData);
+        const response = await axiosInstance.post(API_ROUTES.AUTH, authData);
+        console.log('Response от сервера:', response.data);
+        return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response) {
@@ -28,4 +32,4 @@ export const createUser = async (userData: CreateUserResponse) => {
                                   });
         }
     }
-}
+};

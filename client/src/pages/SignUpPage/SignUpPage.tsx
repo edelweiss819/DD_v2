@@ -8,7 +8,7 @@ const SignUpPage: React.FC = () => {
         document.title = 'DD || Зарегистрироваться';
     }, []);
     return (
-        <LoginPageLayout>
+        <LoginPageLayout formTitle={'Или создайте аккаунт:'}>
             {<RegistrationForm/>}
         </LoginPageLayout>
     );

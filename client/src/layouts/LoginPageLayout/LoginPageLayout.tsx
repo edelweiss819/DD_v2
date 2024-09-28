@@ -5,9 +5,13 @@ import Button from '../../shared/ui/Button/Button.tsx';
 
 export interface LoginPageLayoutProps {
     children?: React.ReactNode;
+    formTitle?: string;
 }
 
-const LoginPageLayout: React.FC<LoginPageLayoutProps> = ({children}) => {
+const LoginPageLayout: React.FC<LoginPageLayoutProps> = ({
+                                                             children,
+                                                             formTitle
+                                                         }) => {
 
 
     return (
@@ -37,7 +41,7 @@ const LoginPageLayout: React.FC<LoginPageLayoutProps> = ({children}) => {
                         </div>
                     </div>
                     <p className={styles['container-content-wrapper-form-title']}>
-                        Или создайте аккаунт:
+                        {formTitle}
                     </p>
                     {children}
                 </div>

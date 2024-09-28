@@ -7,5 +7,6 @@ export const API_ROUTES = {
     'ARTICLES_TOTAL_COUNT_BY_GENRE': '/metadata/getArticlesTotalCountByGenre/:genre',
     'SEARCH_ARTICLES_BY_GENRE_AND_WORDS': '/articles/search/getArticlesByGenreAndWords',
     'TOTAL_ARTICLES_COUNT_BY_GENRE_AND_WORDS': '/articles/search/getTotalArticlesCountByGenresAndWords',
-    'USERS': '/users'
+    'USERS': '/users',
+    'AUTH': '/login',
 }

@@ -4,24 +4,22 @@ import bcrypt from 'bcryptjs'
 
 export class UsersController {
     async addUser(req: Request, res: Response) {
-
         try {
             const {
                 firstName,
                 lastName,
                 email,
-                password,
-                role,
+                password
             } = req.body;
 
-            const hashedPassword = await bcrypt.hash(password, 10)
+            const hashedPassword = await bcrypt.hash(password, 10);
 
             const newUser = new User({
                                          firstName,
                                          lastName,
                                          email,
                                          password: hashedPassword,
-                                         role
+                                         role: 'user'
                                      });
 
             const maxIndexUser = await User.findOne().sort('-index').lean().exec();
@@ -44,9 +42,15 @@ export class UsersController {
                                         });
         } catch (error) {
             console.error('Ошибка при добавлении пользователя:', error);
+
+            if ((error as any).code === 11000) {
+                return res.status(409).json({message: 'Пользователь с таким email уже существует.'});
+            }
+
             return res.status(500).json({message: 'Ошибка при добавлении пользователя.'});
         }
     }
+
 
     async deleteUser(index: number, req: Request, res: Response) {
 

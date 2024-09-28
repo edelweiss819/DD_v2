@@ -157,6 +157,7 @@ const SearchForm: React.FC = () => {
             <form onSubmit={handleSubmit(onSubmit)}
                   className={styles['search-form']}>
                 <Input
+                    type={'text'}
                     formType="input-search"
                     register={register}
                     name="search-input"

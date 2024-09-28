@@ -4,16 +4,42 @@ import styles from './LoginForm.module.scss'
 import Input from '../../../../shared/ui/Forms/Input/Input.tsx';
 import Button from '../../../../shared/ui/Button/Button.tsx';
 import {Link} from 'react-router-dom';
+import ErrorMessage from '../ErrorMessage/ErrorMessage.tsx';
+import {IRegistrationForm} from '../RegistationForm/RegistrationForm.tsx';
+import {useAuth} from '../../hooks';
+import {useNavigate} from 'react-router';
 
-const LoginForm: React.FC = ({}) => {
+
+type LoginForm = Pick<IRegistrationForm, 'email' | 'password'>
+
+const LoginForm: React.FC = () => {
 
     const {
         register,
-        handleSubmit
-    } = useForm();
+        handleSubmit,
+        formState: {errors},
+        setError
+    } = useForm<LoginForm>();
 
-    const onSubmit = (data: any) => {
-        console.log(data);
+    const navigate = useNavigate();
+
+    const mutation = useAuth(
+        navigate,
+        (error) => {
+            if (error.status === 400) {
+                setError('email', {message: error.message});
+            } else if (error.status === 401) {
+                setError('password', {message: error.message});
+            } else {
+                console.error('Ошибка при регистрации пользователя:', error);
+            }
+        }
+    );
+
+
+    const onSubmit = (authData: LoginForm) => {
+        console.log('Данные для отправки:', authData);
+        mutation.mutate(authData);
     };
 
     return (
@@ -21,25 +47,44 @@ const LoginForm: React.FC = ({}) => {
             <div className={styles['grid-cell-full']}>
                 <Input
                     register={register}
+                    formType={'registration-form'}
                     name={'email'}
-                    type={'registration-form'}
+                    type={'email'}
                     placeholder={'Введите ваш email...'}
+                    required
+                    validation={{
+                        required: 'Email обязателен',
+                        pattern: {
+                            value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+                            message: 'Введите корректный email',
+                        }
+                    }}
                 />
+                <ErrorMessage field={'email'} errors={errors}/>
             </div>
 
             <div className={styles['grid-cell-full']}>
                 <Input
                     register={register}
                     name={'password'}
-                    type={'registration-form'}
+                    formType={'registration-form'}
+                    type={'password'}
                     placeholder={'Пароль...'}
+                    validation={{
+                        required: 'Пароль обязателен',
+                        pattern: {
+                            value: /^[a-zA-Z0-9_]{10,}$/,
+                            message: 'Введите корректный пароль'
+                        }
+                    }}
                 />
             </div>
+            <ErrorMessage field={'password'} errors={errors}/>
 
             <div
                 className={styles['grid-cell-full']}>
                 <Button text={'Войти'} type={'large-flex'}
-                        color={'blue'}/>
+                        color={'blue'} onClick={handleSubmit(onSubmit)}/>
             </div>
             <div className={styles['grid-cell-full']}>
                 <span

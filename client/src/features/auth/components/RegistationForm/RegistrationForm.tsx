@@ -3,43 +3,41 @@ import styles from './RegistrationForm.module.scss';
 import Input from '../../../../shared/ui/Forms/Input/Input.tsx';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import Button from '../../../../shared/ui/Button/Button.tsx';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {useCreateUser} from '../../hooks';
+import ErrorMessage from '../ErrorMessage/ErrorMessage.tsx';
 
-interface IRegistrationForm {
+export interface IRegistrationForm {
     email: string;
     firstName: string;
     lastName: string;
     password: string;
 }
 
-const ErrorMessage: React.FC<{
-    field: keyof IRegistrationForm;
-    errors: any;
-}> = ({
-          field,
-          errors
-      }) => {
-    return (
-        <>
-            {errors[field] && <div
-				className={styles['error']}>{errors[field].message}</div>}
-        </>
-    );
-};
-
 
 const RegistrationForm: React.FC = () => {
-
     const {
         register,
         handleSubmit,
-        formState: {errors}
+        formState: {errors},
+        setError
     } = useForm<IRegistrationForm>();
 
-    // Убрать после того как переделаю хук
+    const navigate = useNavigate();
+
+    const mutation = useCreateUser(
+        navigate,
+        (error) => {
+            if (error.status === 409) {
+                setError('email', {message: error.message});
+            } else {
+                console.error('Ошибка при регистрации пользователя:', error);
+            }
+        }
+    );
+
     const onSubmit: SubmitHandler<IRegistrationForm> = (userData) => {
-        console.log('onSubmit вызван', userData);
-        alert('Форма отправлена!');
+        mutation.mutate(userData);
     };
 
     return (
@@ -81,6 +79,7 @@ const RegistrationForm: React.FC = () => {
                 />
                 <ErrorMessage field={'firstName'} errors={errors}/>
             </div>
+
             <div className={styles['grid-cell-half']}>
                 <Input
                     register={register}
@@ -95,7 +94,6 @@ const RegistrationForm: React.FC = () => {
                             value: /^[a-zA-Z' -]+$/,
                             message: 'Введите корректную фамилию'
                         }
-
                     }}
                 />
                 <ErrorMessage field={'lastName'} errors={errors}/>
@@ -115,7 +113,6 @@ const RegistrationForm: React.FC = () => {
                             value: /^[a-zA-Z0-9_]{10,}$/,
                             message: 'Введите корректный пароль'
                         }
-
                     }}
                 />
                 <ErrorMessage field={'password'} errors={errors}/>
@@ -135,5 +132,4 @@ const RegistrationForm: React.FC = () => {
         </form>
     );
 };
-
 export default RegistrationForm;
