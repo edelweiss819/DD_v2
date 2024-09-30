@@ -9,4 +9,6 @@ export const API_ROUTES = {
     'TOTAL_ARTICLES_COUNT_BY_GENRE_AND_WORDS': '/articles/search/getTotalArticlesCountByGenresAndWords',
     'USERS': '/users',
     'AUTH': '/login',
+    'AUTH_USER_DATA': '/getUserData',
+    'TOGGLE_ARTICLE_STATUS': '/articles/toggleArticleFavStatus',
 }

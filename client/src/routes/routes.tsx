@@ -1,6 +1,8 @@
 import React, {Suspense} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {HEADER_NAVIGATION_PAGES} from '../constants';
+import PrivateRoute
+    from '../features/privateRoutes/components/PrivateRoutes.tsx';
 
 const MainPage = React.lazy(() => import('../pages/MainPage/MainPage.tsx'));
 const SingleArticlePage = React.lazy(() => import('../pages/SingleArticlePage/SingleArticlePage.tsx'));
@@ -9,8 +11,11 @@ const SingleGenrePage = React.lazy(() => import('../pages/SingleGenrePage/Single
 const SearchPage = React.lazy(() => import('../pages/SearchPage/SearchPage.tsx'));
 const SignUpPage = React.lazy(() => import('../pages/SignUpPage/SignUpPage.tsx'));
 const SignInPage = React.lazy(() => import('../pages/SignInPage/SignInPage.tsx'));
+const ProfilePage = React.lazy(() => import('../pages/ProfilePage/ProfilePage.tsx'));
 
 const AppRoutes: React.FC = () => {
+
+
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <Routes>
@@ -23,7 +28,14 @@ const AppRoutes: React.FC = () => {
                 <Route path="/search" element={<SearchPage/>}/>
                 <Route path={'/sign_up'} element={<SignUpPage/>}/>
                 <Route path={'/sign_in'} element={<SignInPage/>}/>
-
+                <Route
+                    path={'/profile'}
+                    element={
+                        <PrivateRoute>
+                            <ProfilePage/>
+                        </PrivateRoute>
+                    }
+                />
             </Routes>
         </Suspense>
     );

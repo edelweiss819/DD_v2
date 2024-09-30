@@ -4,7 +4,7 @@ import {
     getArticleByIndex,
     getArticlesByGenreAndWords,
     getArticlesListByGenre,
-    getTotalArticlesCountByGenresAndWords
+    getTotalArticlesCountByGenresAndWords, toggleArticleFavStatus
 } from '../controllers/articlesController';
 
 const router = Router();
@@ -14,5 +14,6 @@ router.get('/articles/:index', getArticleByIndex)
 router.get('/articles/search/getArticlesListByGenre/:genre', getArticlesListByGenre)
 router.get('/articles/search/getArticlesByGenreAndWords', getArticlesByGenreAndWords)
 router.get('/articles/search/getTotalArticlesCountByGenresAndWords', getTotalArticlesCountByGenresAndWords)
+router.post('/articles/toggleArticleFavStatus', toggleArticleFavStatus)
 
 export default router;

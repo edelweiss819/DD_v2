@@ -38,7 +38,26 @@
 
   &-button-container {
     @include grid;
-    justify-content: end;
-    margin-top: 8px;
+    justify-content: space-between;
+    margin-top: 10px;
+
+    &-fav-block {
+      @include grid;
+      align-items: center;
+
+      &-fav-icon {
+        margin-top: 2px;
+      }
+
+      &-text {
+        @include font-main-black;
+        font-size: 16px;
+        margin-left: 2px;
+        text-align: center;
+      }
+    }
+
   }
+
 }
+

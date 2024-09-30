@@ -1,5 +1,10 @@
 import {Request, Response} from 'express';
 import Article from '../models/Article';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import User from '../models/User';
+
+dotenv.config();
 
 
 export const getAllArticles = async (req: Request,
@@ -261,5 +266,61 @@ export const getTotalArticlesCountByGenresAndWords = async (req: Request,
         console.error('Ошибка при получении общего количества статей:', error);
         const errorMessage = (error as Error).message;
         return res.status(500).json({message: errorMessage});
+    }
+};
+
+
+export const toggleArticleFavStatus = async (req: Request, res: Response) => {
+    const {
+        index,
+        token
+    } = req.body;
+
+    if (!token) {
+        return res.status(401).json({message: 'Токен обязателен.'});
+    }
+
+    try {
+        const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
+        const userIndex = decoded.index;
+
+        const user = await User.findOne({index: userIndex});
+        if (!user) {
+            return res.status(404).json({message: 'Пользователь не найден.'});
+        }
+
+        const article = await Article.findOne({index});
+        if (!article) {
+            return res.status(404).json({message: 'Статья не найдена.'});
+        }
+
+        const {title} = article;
+        const favoriteArticle = user.favoriteArticles.find(fav => Number(fav.index) === index);
+
+        if (favoriteArticle) {
+
+            user.favoriteArticles = user.favoriteArticles.filter(fav => Number(fav.index) !== index);
+            await user.save();
+
+            return res.status(200).json({
+                                            message: 'Статья удалена из избранного.',
+                                            favoriteArticles: user.favoriteArticles,
+                                        });
+        } else {
+
+            user.favoriteArticles.push({
+                                           index,
+                                           title
+                                       });
+            await user.save();
+
+            return res.status(200).json({
+                                            message: 'Статья добавлена в избранное.',
+                                            favoriteArticles: user.favoriteArticles,
+                                        });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({message: 'Ошибка сервера.'});
     }
 };

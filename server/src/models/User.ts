@@ -1,4 +1,4 @@
-import mongoose, {Model, Document, Schema, CallbackError} from 'mongoose';
+import mongoose, {Model, Document, Schema} from 'mongoose';
 
 export interface IFavoriteArticle {
     index: string;
@@ -14,6 +14,7 @@ export interface IUser extends Document {
     favoriteArticles: IFavoriteArticle[];
     index: number;
     role: string;
+    registrationDate: number;
 }
 
 const userSchema: Schema = new Schema({
@@ -58,7 +59,12 @@ const userSchema: Schema = new Schema({
                                                   'admin'
                                               ],
                                               default: 'user'
-                                          }
+                                          },
+
+                                          registrationDate: {
+                                              type: Number,
+                                              required: true
+                                          },
                                       });
 
 

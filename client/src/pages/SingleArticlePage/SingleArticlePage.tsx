@@ -4,7 +4,8 @@ import HeaderNavigation
     from '../../shared/ui/Header/HeaderNavigation/HeaderNavigation.tsx';
 import Content from '../../shared/ui/Content/Content.tsx';
 import Footer from '../../shared/ui/Footer/Footer.tsx';
-import SingleArticleHeader from './SingleArticleHeader/SingleArticleHeader.tsx';
+import SimpleHeaderContentTemplate
+    from '../../templates/SimpleHeaderContentTemplate/SimpleHeaderContentTemplate.tsx';
 import SingleArticleContent
     from './SingleArticleContent/SingleArticleContent.tsx';
 import {useDispatch, useSelector} from 'react-redux';
@@ -59,8 +60,8 @@ const SingleArticlePage: React.FC = () => {
             <Element name="single-article-top">
                 <Header>
                     <HeaderNavigation/>
-                    {singleArticle.title && <SingleArticleHeader
-						singleArticleTitle={singleArticle.title}/>}
+                    {singleArticle.title && <SimpleHeaderContentTemplate
+						pageName={singleArticle.title}/>}
                 </Header>
             </Element>
             <Content>

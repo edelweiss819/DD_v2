@@ -10,7 +10,7 @@
 .title-block {
   @include content-thin;
   @include font-main;
-  padding: 64px 0;
+  padding: 48px 0;
 
 
   &-title {
@@ -19,6 +19,12 @@
     font-size: 40px;
     line-height: 48px;
     font-weight: 700;
+
+    &-reg-date {
+      padding-top: 8px;
+      font-size: 18px;
+      line-height: 28px;
+    }
   }
 
 }

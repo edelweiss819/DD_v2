@@ -1,0 +1,40 @@
+@use "@styles/styles" as *;
+
+
+.main-section {
+  padding: 32px 0;
+  background: #fff;
+
+  &-tabs {
+    background: #fff;
+    border-bottom: 2px solid #e0e5e7;
+    margin-left: 12px;
+    padding-bottom: 12px;
+
+    &-container {
+      @include grid;
+      @include content-thin;
+
+    }
+  }
+
+  &-content-container {
+    @include content-thin;
+    padding: 0 24px;
+
+    &-title {
+      @include font-main-black;
+      font-size: 26px;
+      line-height: 28px;
+      font-weight: 500;
+    }
+
+    &-email {
+      @include font-main-black;
+      margin-top: 8px;
+      font-size: 22px;
+      line-height: 28px;
+      font-weight: 450;
+    }
+  }
+}

@@ -1,3 +1,5 @@
 export * from './fetchArticlesList.ts'
 export * from './fetchSingleArticleByIndex.ts'
 export * from './fetchArticlesListByGenre.ts'
+export * from './fetchFavArticles.ts'
+export * from './toggleFavArticleStatus.ts'

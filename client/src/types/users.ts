@@ -1,18 +1,18 @@
+export interface IFavoriteArticle {
+    index: number,
+    title: string,
+}
+
+export type FavoriteArticlesList = IFavoriteArticle[]
+
+
 export interface IUser {
     firstName: string,
     lastName: string,
     email: string,
     password: string,
-    role: string,
-    favoriteArticles: [
-        {
-            index: {
-                type: string,
-            },
-            title: {
-                type: string,
-            }
-        }
-    ],
-    index: string
+    role: string | undefined,
+    favoriteArticles: FavoriteArticlesList
+    index: number
+    registrationDate: number,
 }

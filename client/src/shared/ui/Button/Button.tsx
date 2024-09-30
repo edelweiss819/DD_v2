@@ -7,7 +7,7 @@ interface ButtonProps {
 
     text: string;
     to?: string;
-    color?: 'blue' | 'grey' | 'dark-blue' | 'white'
+    color?: 'blue' | 'grey' | 'dark-blue' | 'white' | 'red'
     icon?: 'SignUpArrow' | 'Google' | 'Facebook';
     iconWidth?: number | string;
     type: 'small' | 'medium' | 'medium-flex' | 'large' | 'large-flex' | 'nav-login' | 'rounded-small' | 'search';
@@ -27,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
 
     const colorClass = classNames({
                                       [styles['btn-blue']]: color === 'blue',
+                                      [styles['btn-red']]: color === 'red',
                                       [styles['btn-grey']]: color === 'grey',
                                       [styles['btn-white']]: color === 'white',
                                       [styles['btn-dark-blue']]: color === 'dark-blue',

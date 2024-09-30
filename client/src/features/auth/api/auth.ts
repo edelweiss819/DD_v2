@@ -4,14 +4,34 @@ import {
 import {axiosInstance} from '../../../config/axiosConfig.ts';
 import {API_ROUTES} from '../../../config/endpoints.ts';
 import axios from 'axios';
+import {FavoriteArticlesList} from '../../../types/users.ts';
 
-export type AuthResponse = Pick<IRegistrationForm, 'email' | 'password'>
+export type AuthResponse = Pick<IRegistrationForm, 'email' | 'password'>;
 
-export const auth = async (authData: AuthResponse) => {
+export interface AuthResult {
+    token: string;
+    user: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        registrationDate: number;
+        favoriteArticles: FavoriteArticlesList
+    };
+}
+
+export const auth = async (authData: AuthResponse): Promise<AuthResult> => {
     try {
         const response = await axiosInstance.post(API_ROUTES.AUTH, authData);
-        console.log('Response от сервера:', response.data);
-        return response.data;
+
+        const {
+            token,
+            user
+        } = response.data;
+        return {
+            token,
+            user
+        };
+
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response) {

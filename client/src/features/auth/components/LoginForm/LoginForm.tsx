@@ -25,6 +25,7 @@ const LoginForm: React.FC = () => {
 
     const mutation = useAuth(
         navigate,
+        undefined,
         (error) => {
             if (error.status === 400) {
                 setError('email', {message: error.message});
@@ -38,7 +39,7 @@ const LoginForm: React.FC = () => {
 
 
     const onSubmit = (authData: LoginForm) => {
-        console.log('Данные для отправки:', authData);
+        // console.log('Данные для отправки:', authData);
         mutation.mutate(authData);
     };
 

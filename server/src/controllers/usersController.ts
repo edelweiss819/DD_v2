@@ -19,7 +19,8 @@ export class UsersController {
                                          lastName,
                                          email,
                                          password: hashedPassword,
-                                         role: 'user'
+                                         role: 'user',
+                                         registrationDate: Math.floor(Date.now() / 1000),
                                      });
 
             const maxIndexUser = await User.findOne().sort('-index').lean().exec();

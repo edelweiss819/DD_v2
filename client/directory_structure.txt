@@ -105,9 +105,9 @@ client/
                 SingleArticleContent/
                     SingleArticleContent.module.scss
                     SingleArticleContent.tsx
-                SingleArticleHeader/
-                    SingleArticleHeader.module.scss
-                    SingleArticleHeader.tsx
+                SimpleHeaderContentTemplate/
+                    SimpleHeaderContentTemplate.module.scss
+                    SimpleHeaderContentTemplate.tsx
             SingleGenrePage/
                 SingleGenrePage.tsx
         routes/
