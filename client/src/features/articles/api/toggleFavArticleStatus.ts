@@ -13,11 +13,11 @@ export const toggleFavArticleStatus = async (
     token: string
 ): Promise<IToggleArticleFavStatusResponse> => {
     try {
-        const response = await axiosInstance.post(API_ROUTES.TOGGLE_ARTICLE_STATUS, {
+        const response = await axiosInstance.post(API_ROUTES.POST_TOGGLE_ARTICLE_STATUS, {
             index,
             token
         });
-        
+
         return response.data;
     } catch (error) {
         console.error('Error toggling favorite article status:', error);

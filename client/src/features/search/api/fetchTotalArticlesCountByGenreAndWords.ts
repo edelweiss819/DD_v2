@@ -13,7 +13,7 @@ export const fetchTotalArticlesCountByGenreAndWords = async ({
                                                                  genres,
                                                                  s
                                                              }: IFetchTotalArticlesCountByGenreAndWords): Promise<number> => {
-    const res = await axiosInstance.get(API_ROUTES.TOTAL_ARTICLES_COUNT_BY_GENRE_AND_WORDS, {
+    const res = await axiosInstance.get(API_ROUTES.GET_TOTAL_ARTICLES_COUNT_BY_GENRE_AND_WORDS, {
         params: {
             genres,
             s,

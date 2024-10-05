@@ -20,7 +20,7 @@ export const fetchArticlesListByGenreAndWords = async ({
                                                            s,
                                                            sortOrder
                                                        }: IFetchArticlesListByGenreAndWordsParams): Promise<IFetchArticlesResponse> => {
-    const res = await axiosInstance.get(API_ROUTES.SEARCH_ARTICLES_BY_GENRE_AND_WORDS, {
+    const res = await axiosInstance.get(API_ROUTES.GET_SEARCH_ARTICLES_BY_GENRE_AND_WORDS, {
         params: {
             page,
             limit: limit ?? 10,

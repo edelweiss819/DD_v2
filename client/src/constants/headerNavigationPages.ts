@@ -5,3 +5,5 @@ export const HEADER_NAVIGATION_PAGES: Record<string, string> = {
     'Колесо': '/wheel',
     'Профиль': '/profile',
 };
+
+export const HEADER_NAVIGATION_AUTORIZED_PAGES = ['Профиль']

@@ -11,7 +11,7 @@ export const fetchArticlesList = async ({
                                             page,
                                             limit
                                         }: IFetchArticlesListParams): Promise<IArticle[]> => {
-    const response = await axiosInstance.get(API_ROUTES.ARTICLES_LIST, {
+    const response = await axiosInstance.get(API_ROUTES.GET_ARTICLES_LIST, {
         params: {
             page,
             limit: limit ?? 10,

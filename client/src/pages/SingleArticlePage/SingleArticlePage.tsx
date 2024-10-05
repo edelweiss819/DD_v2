@@ -10,7 +10,10 @@ import SingleArticleContent
     from './SingleArticleContent/SingleArticleContent.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/store.ts';
-import {useFetchSingleArticleByIndex} from '../../features/articles/hooks';
+import {
+    useAddArticleToUserLastArticlesList,
+    useFetchSingleArticleByIndex
+} from '../../features/articles/hooks';
 import {
     setSingleArticle
 } from '../../features/articles/slice/singleArticleSlice.ts';
@@ -21,6 +24,7 @@ import {scrollToElement} from '../../shared/utils';
 const SingleArticlePage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const {index: indexFromParams} = useParams<{ index: string }>();
+
 
     const generateFinalIndex = (): number => {
         if (currentArticleIndex === undefined || currentArticleIndex === 0) {
@@ -33,6 +37,8 @@ const SingleArticlePage: React.FC = () => {
         singleArticle,
         currentArticleIndex
     } = useSelector((state: RootState) => state.singleArticle);
+
+    const {token} = useSelector((state: RootState) => state.user);
     const {
         data: fetchedSingleArticle,
     } = useFetchSingleArticleByIndex(generateFinalIndex());
@@ -54,6 +60,9 @@ const SingleArticlePage: React.FC = () => {
     useEffect(() => {
         scrollToElement('single-article-top', 0, 0);
     }, [scrollToElement]);
+
+
+    useAddArticleToUserLastArticlesList(token!, Number(indexFromParams))
 
     return (
         <div>

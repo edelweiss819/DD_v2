@@ -1,0 +1,20 @@
+@use "@styles/styles" as *;
+
+.link-container {
+  background-color: #f5f5f5;
+  text-decoration: none;
+  margin: 16px 0;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(95%);
+  }
+
+  &-text {
+    @include font-main-black;
+    line-height: 1.5;
+    text-decoration: none;
+  }
+}

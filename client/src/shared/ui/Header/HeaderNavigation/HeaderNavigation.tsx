@@ -2,7 +2,10 @@ import React from 'react';
 import styles from './HeaderNavigation.module.scss';
 import Button from '../../Button/Button.tsx';
 import Logo from '../../Logo/Logo.tsx';
-import {HEADER_NAVIGATION_PAGES} from '../../../../constants';
+import {
+    HEADER_NAVIGATION_AUTORIZED_PAGES,
+    HEADER_NAVIGATION_PAGES
+} from '../../../../constants';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../../store/store.ts';
@@ -26,13 +29,18 @@ const HeaderNavigation: React.FC = () => {
                 <Logo firstPartColor={'light'} secondPartColor={'blue'}
                       to={'/'}/>
                 <div className={styles['nav-link-container']}>
-                    {Object.entries(HEADER_NAVIGATION_PAGES).map(([pageName, route]) => (
-                        <div key={pageName}>
-                            <Link to={route}
-                                  className={styles['nav-link']}>{pageName}
-                            </Link>
-                        </div>
-                    ))}
+                    {Object.entries(HEADER_NAVIGATION_PAGES).map(([pageName, route]) => {
+                        if (HEADER_NAVIGATION_AUTORIZED_PAGES.includes(pageName) && !isAuthorized) {
+                            return null;
+                        }
+                        return (
+                            <div key={pageName}>
+                                <Link to={route}
+                                      className={styles['nav-link']}>{pageName}
+                                </Link>
+                            </div>
+                        )
+                    })}
                     {isAuthorized ?
                         <Button text={'Выйти'} color={'red'}
                                 type={'nav-login'}

@@ -15,8 +15,6 @@ const SimpleHeaderContentTemplate: React.FC<ISimpleHeaderLayoutProps> = ({
                                                                              userLastName,
                                                                              registrationDate
                                                                          }) => {
-
-    console.log(registrationDate);
     return (
         <section className={styles.container}>
             <div className={styles['title-block']}>

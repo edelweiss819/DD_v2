@@ -1,13 +1,11 @@
 import {useMutation, UseMutationResult} from '@tanstack/react-query';
 import {auth, AuthResponse, AuthResult} from '../api';
-import {IUser} from '../../../types/users';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../store/store';
-import {setAuthorized, setToken, setUser} from '../slice/userSlice';
+import {setAuthorized, setToken} from '../slice/userSlice';
 
 interface AuthSuccessResponse {
     token: string;
-    user: Partial<IUser>;
 }
 
 interface Error {
@@ -30,11 +28,9 @@ export const useAuth = (
                                                                 if (data) {
                                                                     const {
                                                                         token,
-                                                                        user
                                                                     } = data;
                                                                     if (token) {
                                                                         dispatch(setToken(token));
-                                                                        dispatch(setUser(user));
                                                                     }
 
                                                                     onSuccess && onSuccess(data);

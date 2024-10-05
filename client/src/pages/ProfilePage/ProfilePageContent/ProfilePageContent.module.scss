@@ -8,33 +8,31 @@
   &-tabs {
     background: #fff;
     border-bottom: 2px solid #e0e5e7;
-    margin-left: 12px;
+    margin-left: 16px;
     padding-bottom: 12px;
+
 
     &-container {
       @include grid;
       @include content-thin;
-
+      gap: 8px;
     }
   }
 
   &-content-container {
     @include content-thin;
     padding: 0 24px;
+    min-height: 600px;
 
-    &-title {
+    &-date {
       @include font-main-black;
-      font-size: 26px;
-      line-height: 28px;
+      background-color: #d3d3d3;
+      text-decoration: none;
+      font-size: 20px;
       font-weight: 500;
-    }
-
-    &-email {
-      @include font-main-black;
-      margin-top: 8px;
-      font-size: 22px;
-      line-height: 28px;
-      font-weight: 450;
+      margin: 16px 0;
+      padding: 12px;
+      border-radius: 5px;
     }
   }
 }

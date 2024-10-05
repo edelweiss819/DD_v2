@@ -1,13 +1,13 @@
-import axios from 'axios'; // Добавьте этот импорт
+import axios from 'axios';
 import {axiosInstance} from '../../../config/axiosConfig';
 import {API_ROUTES} from '../../../config/endpoints';
 import {IUser} from '../../../types/users';
 
-export type CreateUserResponse = Omit<IUser, 'favoriteArticles' | 'index' | 'role'>;
+export type CreateUserResponse = Pick<IUser, 'email' | 'password'>;
 
 export const createUser = async (userData: CreateUserResponse) => {
     try {
-        await axiosInstance.post(API_ROUTES.USERS, userData);
+        await axiosInstance.post(API_ROUTES.POST_USER, userData);
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response) {

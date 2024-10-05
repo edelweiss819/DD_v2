@@ -1,5 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IUser} from '../../../types/users';
+import {
+    IUser,
+    LastArticlesList
+} from '../../../types/users';
 import Cookies from 'js-cookie';
 
 export interface UserState extends IUser {
@@ -7,28 +10,27 @@ export interface UserState extends IUser {
     token?: string;
 }
 
-const loadUserFromLocalStorage = () => {
-    const user = localStorage.getItem('favoriteArticles');
-    return user ? JSON.parse(user) : {
-        favoriteArticles: [],
-    };
-};
 
 const loadUserFromCookies = () => {
     return {
-        firstName: Cookies.get('firstName'),
-        lastName: Cookies.get('lastName'),
-        email: Cookies.get('email'),
         token: Cookies.get('token'),
-        role: undefined,
     };
 };
 
 
 const initialState: UserState = {
-    ...loadUserFromLocalStorage(),
     ...loadUserFromCookies(),
     isAuthorized: JSON.parse(localStorage.getItem('isAuthorized') || 'false'),
+    firstName: undefined,
+    lastName: undefined,
+    email: undefined,
+    password: undefined,
+    role: undefined,
+    registrationDate: undefined,
+    index: undefined,
+    favoriteArticles: [],
+    lastArticles: [],
+
 };
 
 const userSlice = createSlice({
@@ -44,30 +46,10 @@ const userSlice = createSlice({
                                           state.email = user.email ?? state.email;
                                           state.role = user.role ?? state.role;
                                           state.registrationDate = user.registrationDate ?? state.registrationDate;
-                                          state.favoriteArticles = user.favoriteArticles ?? [];
+                                          state.favoriteArticles = user.favoriteArticles ?? state.favoriteArticles;
+                                          state.lastArticles = user.lastArticles ?? state.lastArticles;
 
-                                          localStorage.setItem('favoriteArticles', JSON.stringify(state.favoriteArticles));
 
-                                          Cookies.set('firstName', state.firstName || '', {
-                                              expires: 7,
-                                              secure: true
-                                          });
-                                          Cookies.set('lastName', state.lastName || '', {
-                                              expires: 7,
-                                              secure: true
-                                          });
-                                          Cookies.set('email', state.email || '', {
-                                              expires: 7,
-                                              secure: true
-                                          });
-                                          Cookies.set('role', state.role || '', {
-                                              expires: 7,
-                                              secure: true
-                                          });
-                                          Cookies.set('registrationDate', String(state.registrationDate) || '', {
-                                              expires: 7,
-                                              secure: true
-                                          });
                                       },
                                       setAuthorized: (state,
                                                       action: PayloadAction<boolean>) => {
@@ -94,21 +76,18 @@ const userSlice = createSlice({
                                           state.registrationDate = 0
                                           state.favoriteArticles = []
 
-                                          Cookies.remove('firstName');
-                                          Cookies.remove('lastName');
-                                          Cookies.remove('email');
                                           Cookies.remove('token');
-                                          Cookies.remove('role');
-                                          Cookies.remove('registrationDate');
 
                                           state.isAuthorized = false;
                                           localStorage.removeItem('isAuthorized');
-                                          localStorage.removeItem('favoriteArticles');
                                       },
                                       setFavoriteArticles: (state,
                                                             action: PayloadAction<IUser['favoriteArticles']>) => {
                                           state.favoriteArticles = action.payload;
-                                          localStorage.setItem('favoriteArticles', JSON.stringify(state.favoriteArticles));
+                                      },
+                                      setUserLastArticlesList: (state,
+                                                                action: PayloadAction<LastArticlesList>) => {
+                                          state.lastArticles = action.payload;
                                       }
 
                                   },
@@ -121,6 +100,7 @@ export const {
     removeToken,
     removeUser,
     setFavoriteArticles,
+    setUserLastArticlesList,
 } = userSlice.actions;
 
 export default userSlice.reducer;

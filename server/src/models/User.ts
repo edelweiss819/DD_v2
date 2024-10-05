@@ -1,8 +1,12 @@
 import mongoose, {Model, Document, Schema} from 'mongoose';
 
 export interface IFavoriteArticle {
-    index: string;
+    index: number;
     title: string;
+}
+
+export interface ILastArticles extends IFavoriteArticle {
+    timestamp: number;
 }
 
 export interface IUser extends Document {
@@ -12,6 +16,7 @@ export interface IUser extends Document {
     password: string;
     gender: string;
     favoriteArticles: IFavoriteArticle[];
+    lastArticles: ILastArticles[];
     index: number;
     role: string;
     registrationDate: number;
@@ -38,11 +43,27 @@ const userSchema: Schema = new Schema({
                                           favoriteArticles: [
                                               {
                                                   index: {
-                                                      type: String,
+                                                      type: Number,
                                                       required: true
                                                   },
                                                   title: {
                                                       type: String,
+                                                      required: true
+                                                  }
+                                              }
+                                          ],
+                                          lastArticles: [
+                                              {
+                                                  index: {
+                                                      type: Number,
+                                                      required: true
+                                                  },
+                                                  title: {
+                                                      type: String,
+                                                      required: true
+                                                  },
+                                                  timestamp: {
+                                                      type: Number,
                                                       required: true
                                                   }
                                               }

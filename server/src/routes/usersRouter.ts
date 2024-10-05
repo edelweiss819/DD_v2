@@ -22,12 +22,11 @@ router.put('/users/:index', authenticateToken([
     usersController.updateUser(index, req.body, res);
 });
 
-router.get('/users/:index', authenticateToken([
-                                                  'user',
-                                                  'admin'
-                                              ]), (req, res) => {
-    const index = parseInt(req.params.index);
-    usersController.getUser(index, res);
+router.get('/users', authenticateToken([
+                                           'user',
+                                           'admin'
+                                       ]), (req, res) => {
+    usersController.getUser(req, res);
 });
 
 router.get('/users', authenticateToken([
@@ -36,6 +35,34 @@ router.get('/users', authenticateToken([
                                        ]), (req, res) => {
     usersController.getAllUsers(res);
 });
+router.get('/users/favorites/getUserFavoriteArticlesList', authenticateToken([
+                                                                                 'user',
+                                                                                 'admin'
+                                                                             ]), (req,
+                                                                                  res) => {
+    usersController.getUserFavoriteArticlesList(req, res);
+});
+router.post('/users/favorites/toggle', authenticateToken([
+                                                             'user',
+                                                             'admin'
+                                                         ]), (req, res) => {
+    usersController.toggleArticleFavStatus(req, res);
+});
 
+router.post('/users/lastsArticles/postLastArticle', authenticateToken([
+                                                                          'user',
+                                                                          'admin'
+                                                                      ]), (req,
+                                                                           res) => {
+    usersController.addArticleToLastArticlesList(req, res);
+});
+
+router.get('/users/lastArticles/getLastArticlesList',
+           authenticateToken([
+                                 'user',
+                                 'admin'
+                             ]),
+           (req, res) => usersController.getUserLastArticlesList(req, res)
+);
 
 export default router;

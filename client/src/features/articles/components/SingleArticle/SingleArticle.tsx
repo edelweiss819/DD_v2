@@ -25,7 +25,6 @@ const SingleArticle: React.FC<IArticle> = ({
     const isFavorite = () => {
         return favoriteArticles.some(article => Number(article.index) === index);
     };
-
     const handleButtonClick = () => {
         if (index) {
             dispatch(setCurrentArticleIndex(index));
@@ -36,11 +35,11 @@ const SingleArticle: React.FC<IArticle> = ({
 
     const handleFavIconClick = async () => {
         try {
-            const response = await mutation.mutateAsync({
-                                                            index,
-                                                            token: userToken!
-                                                        });
-            
+            await mutation.mutateAsync({
+                                           index,
+                                           token: userToken!
+                                       });
+
         } catch (error) {
             console.error('Ошибка при изменении статуса избранного:', error);
         }

@@ -32,20 +32,13 @@ export class AuthController {
                     role: user.role
                 },
                 process.env.JWT_SECRET!,
-                {expiresIn: '5h'}
+                {expiresIn: '24h'}
             );
 
             return res.status(200).json({
-                                            token,
-                                            user: {
-                                                firstName: user.firstName,
-                                                lastName: user.lastName,
-                                                email: user.email,
-                                                role: user.role,
-                                                registrationDate: user.registrationDate,
-                                                favoriteArticles: user.favoriteArticles
-                                            }
-                                        });
+                                            token
+                                        }
+            );
 
         } catch (error) {
             console.error('Ошибка при входе пользователя:', error);

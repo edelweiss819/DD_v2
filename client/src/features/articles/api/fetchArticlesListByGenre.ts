@@ -12,7 +12,7 @@ export const fetchArticlesListByGenre = async ({
                                                    limit,
                                                    genre
                                                }: IFetchArticlesListByGenreParams): Promise<IArticle[]> => {
-    const res = await axiosInstance.get(API_ROUTES.ARTICLES_LIST_BY_GENRE.replace(':genre', genre), {
+    const res = await axiosInstance.get(API_ROUTES.GET_ARTICLES_LIST_BY_GENRE.replace(':genre', genre), {
         params: {
             page,
             limit: limit ?? 10
