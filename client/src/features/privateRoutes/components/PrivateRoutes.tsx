@@ -25,9 +25,9 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
         return <Navigate to="/"/>;
     }
 
-    return <>
+    return (<>
         {children}
-    </>;
+    </>);
 };
 
 export default PrivateRoute;

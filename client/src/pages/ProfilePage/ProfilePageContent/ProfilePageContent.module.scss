@@ -3,11 +3,10 @@
 
 .main-section {
   padding: 32px 0;
-  background: #fff;
+  background: $white-bg-color;
 
   &-tabs {
-    background: #fff;
-    border-bottom: 2px solid #e0e5e7;
+    border-bottom: 2px solid $profile-tabs-line-color;
     margin-left: 16px;
     padding-bottom: 12px;
 
@@ -24,15 +23,5 @@
     padding: 0 24px;
     min-height: 600px;
 
-    &-date {
-      @include font-main-black;
-      background-color: #d3d3d3;
-      text-decoration: none;
-      font-size: 20px;
-      font-weight: 500;
-      margin: 16px 0;
-      padding: 12px;
-      border-radius: 5px;
-    }
   }
 }

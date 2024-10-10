@@ -21,15 +21,12 @@ export const getArticlesTotalCount = async (req: Request,
     try {
         console.log('Fetching metadata for total articles count...');
 
-        // Получаем метаданные
         const metadata = await Metadata.findOne();
-        console.log('Fetched metadata:', metadata);
+        // console.log('Fetched metadata:', metadata);
 
-        // Извлекаем количество статей
         const totalArticlesCount = metadata?.metadata['totalArticlesCount'] ?? null;
-        console.log('Total articles count:', totalArticlesCount);
+        // console.log('Total articles count:', totalArticlesCount);
 
-        // Возвращаем результат в формате JSON, только значение
         if (totalArticlesCount !== null) {
             res.status(200).json(totalArticlesCount);
         } else {
@@ -78,18 +75,12 @@ export const updateTotalArticlesCount = async (shouldUpdate: boolean): Promise<I
 export const updateGenresCount = async (shouldUpdate: boolean): Promise<IMetadata | null> => {
     if (shouldUpdate) {
         try {
-            // Получаем все статьи
             const articles = await Article.find();
-
-            // Объект для хранения количества статей по жанрам
             const genreCounts: Record<string, number> = {};
-
-            // Обход всех статей
             articles.forEach(article => {
-                // Получаем жанры статьи
-                const genres = article.genres; // Предполагаем, что `genres` - это массив строк
 
-                // Обход всех жанров и обновление счетчика
+                const genres = article.genres;
+
                 genres.forEach(genre => {
                     if (genreCounts[genre]) {
                         genreCounts[genre] += 1;
@@ -99,7 +90,6 @@ export const updateGenresCount = async (shouldUpdate: boolean): Promise<IMetadat
                 });
             });
 
-            // Обновляем метаданные с количеством статей по жанрам
             const metadata = await Metadata.findOneAndUpdate(
                 {},
                 {$set: {'metadata.genresCount': genreCounts}},
@@ -131,14 +121,14 @@ export const getArticlesTotalCountByGenre = async (req: Request,
 
         console.log('Fetching metadata for total articles count by genre...');
 
-        // Получаем метаданные
+
         const metadata = await Metadata.findOne();
 
         // Извлекаем количество статей
         const totalArticlesCountByGenre = metadata?.metadata.genresCount[`${genre}`] ?? null;
         console.log(`Total articles count by "${genre}":`, totalArticlesCountByGenre);
 
-        // Возвращаем результат в формате JSON, только значение
+
         if (totalArticlesCountByGenre !== null) {
             res.status(200).json(totalArticlesCountByGenre);
         } else {

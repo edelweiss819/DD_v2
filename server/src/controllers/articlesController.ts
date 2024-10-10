@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
-import Article from '../models/Article';
+import Article, {IArticle} from '../models/Article';
 import dotenv from 'dotenv';
+import Metadata from '../models/Metadata';
 
 dotenv.config();
 
@@ -267,5 +268,53 @@ export const getTotalArticlesCountByGenresAndWords = async (req: Request,
     }
 };
 
+export const getRandomArticlesList = async (req: Request, res: Response) => {
+    try {
+        const metadata = await Metadata.findOne();
+        const totalArticlesInDb = metadata?.metadata?.totalArticlesCount;
 
 
+        const maxArticles = Math.min(10, totalArticlesInDb || 0);
+        const articlesIndexesSet = new Set<number>();
+
+        while (articlesIndexesSet.size < maxArticles) {
+            const randomIndex = Math.floor(Math.random() * totalArticlesInDb);
+            articlesIndexesSet.add(randomIndex);
+
+            if (articlesIndexesSet.size >= totalArticlesInDb) {
+                break;
+            }
+        }
+
+        const articlesIndexesArray = Array.from(articlesIndexesSet);
+        console.log('Массив индексов случайных статей: ', articlesIndexesArray);
+
+        const randomArticlesList: Array<{ index: number; title: string }> = [];
+
+
+        for (const articleIndex of articlesIndexesArray) {
+            const article = await Article.findOne({index: articleIndex});
+
+            if (article) {
+                randomArticlesList.push({
+                                            index: article.index,
+                                            title: article.title,
+                                        });
+            }
+
+            if (randomArticlesList.length >= maxArticles) {
+                break;
+            }
+        }
+
+        return res.status(200).json({
+                                        message: 'Список случайных статей',
+                                        count: randomArticlesList.length,
+                                        randomArticlesList
+                                    });
+    } catch (error) {
+        console.error('Ошибка при получении общего количества статей:', error);
+        const errorMessage = (error as Error).message;
+        return res.status(500).json({message: errorMessage});
+    }
+};

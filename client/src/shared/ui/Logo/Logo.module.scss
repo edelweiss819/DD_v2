@@ -10,17 +10,17 @@
 
   &-first-part {
     &-light {
-      color: $primary-text;
+      color: $primary-text-color;
     }
 
     &-dark {
-      color: $secondary-text;
+      color: $secondary-text-color;
     }
   }
 
   &-second-part {
     &-blue {
-      color: $tertiary-text;
+      color: $tertiary-text-color;
     }
   }
 }

@@ -12,6 +12,7 @@ import {
     useFetchTotalArticlesCountByGenreAndWords
 } from '../../features/search/hooks';
 import {
+    resetArticlesList,
     setArticlesList, setLastCursor,
     setTotalPages,
 } from '../../features/articles/slice/articlesListSlice.ts';
@@ -34,15 +35,21 @@ const SearchPage: React.FC = () => {
                                                                      lastCursor: updatedLastCursor,
                                                                      sortOrder: sortOrder,
                                                                  });
-    const {data: count} = useFetchTotalArticlesCountByGenreAndWords({
-                                                                        genres: searchParams?.genres,
-                                                                        s: searchParams?.s,
-                                                                    });
+    const {
+        data: count,
+    } = useFetchTotalArticlesCountByGenreAndWords({
+                                                      genres: searchParams?.genres,
+                                                      s: searchParams?.s,
+                                                  });
 
     const list = response?.articles;
     const cursor = response?.cursor;
 
     const deferredSearchParams = useDeferredValue(searchParams);
+
+    useEffect(() => {
+        dispatch(resetArticlesList())
+    }, [dispatch]);
 
 
     useEffect(() => {

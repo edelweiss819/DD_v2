@@ -17,19 +17,16 @@ export const useFetchArticlesListByGenre = (page: number, genreLink: string,
                                                const genre = generateGenreByLink(genreLink);
 
                                                if (!genre) {
-                                                   throw new Error('Genre not found');
+                                                   throw new Error('Жанр не найден!');
                                                }
 
+                                               return await fetchArticlesListByGenre({
+                                                                                         genre,
+                                                                                         page,
+                                                                                         limit,
+                                                                                     });
 
-                                               const encodedGenre = encodeURIComponent(genre);
 
-
-                                               const res = await fetchArticlesListByGenre({
-                                                                                              genre: encodedGenre,
-                                                                                              page,
-                                                                                              limit
-                                                                                          });
-                                               return res;
                                            },
                                            retry: 0,
                                        });

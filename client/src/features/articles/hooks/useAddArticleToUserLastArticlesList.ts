@@ -18,7 +18,7 @@ export const useAddArticleToUserLastArticlesList = (token: string,
                                                                ],
                                                                queryFn: async () => {
                                                                    if (!token) {
-                                                                       throw new Error('Token is required');
+                                                                       throw new Error('Токен обязателен.');
                                                                    }
                                                                    return await addArticleToUserLastArticlesList(token, articleIndex);
 

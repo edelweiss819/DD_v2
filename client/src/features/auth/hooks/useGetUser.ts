@@ -37,7 +37,7 @@ export const useGetUser = (
                                          ],
                                          queryFn: async () => {
                                              if (!token) {
-                                                 throw new Error('Token is required');
+                                                 throw new Error('Токен обязателен');
                                              }
 
                                              return await getUser({
@@ -50,7 +50,7 @@ export const useGetUser = (
 
     useEffect(() => {
         if (data) {
-            console.log(data.message);
+            // console.log(data.message);
             dispatch(setUser(data.user));
         }
     }, [

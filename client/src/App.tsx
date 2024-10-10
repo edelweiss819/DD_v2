@@ -5,9 +5,12 @@ import './App.module.scss';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from './store/store.ts';
 import {setAuthorized} from './features/auth/slice/userSlice.ts';
+import TokenManager from './features/tokenManager/TokenManager.ts';
+
 
 const App: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
+
 
     useEffect(() => {
         const isAuthorized = JSON.parse(localStorage.getItem('isAuthorized') || 'false');
@@ -15,8 +18,10 @@ const App: React.FC = () => {
 
     }, [dispatch]);
 
+
     return (
         <BrowserRouter>
+            <TokenManager/>
             <AppRoutes/>
         </BrowserRouter>
     );

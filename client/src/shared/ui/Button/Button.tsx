@@ -3,14 +3,38 @@ import {Link} from 'react-router-dom';
 import styles from './Button.module.scss';
 import classNames from 'classnames';
 
-interface ButtonProps {
+export enum ButtonColor {
+    BLUE = 'blue',
+    GREY = 'grey',
+    DARK_BLUE = 'dark-blue',
+    WHITE = 'white',
+    RED = 'red'
+}
 
+export enum ButtonIcon {
+    SIGN_UP_ARROW = 'SignUpArrow',
+    GOOGLE = 'Google',
+    FACEBOOK = 'Facebook'
+}
+
+export enum ButtonType {
+    SMALL = 'small',
+    MEDIUM = 'medium',
+    MEDIUM_FLEX = 'medium-flex',
+    LARGE = 'large',
+    LARGE_FLEX = 'large-flex',
+    NAV_LOGIN = 'nav-login',
+    ROUNDED_SMALL = 'rounded-small',
+    SEARCH = 'search'
+}
+
+interface ButtonProps {
     text: string;
     to?: string;
-    color?: 'blue' | 'grey' | 'dark-blue' | 'white' | 'red'
-    icon?: 'SignUpArrow' | 'Google' | 'Facebook';
+    color?: ButtonColor;
+    icon?: ButtonIcon;
     iconWidth?: number | string;
-    type: 'small' | 'medium' | 'medium-flex' | 'large' | 'large-flex' | 'nav-login' | 'rounded-small' | 'search';
+    type: ButtonType;
     onClick?: () => void;
 }
 
@@ -21,43 +45,42 @@ const Button: React.FC<ButtonProps> = ({
                                            icon,
                                            iconWidth,
                                            type,
-                                           onClick
+                                           onClick,
                                        }) => {
-
-
     const colorClass = classNames({
-                                      [styles['btn-blue']]: color === 'blue',
-                                      [styles['btn-red']]: color === 'red',
-                                      [styles['btn-grey']]: color === 'grey',
-                                      [styles['btn-white']]: color === 'white',
-                                      [styles['btn-dark-blue']]: color === 'dark-blue',
+                                      [styles['btn-blue']]: color === ButtonColor.BLUE,
+                                      [styles['btn-red']]: color === ButtonColor.RED,
+                                      [styles['btn-grey']]: color === ButtonColor.GREY,
+                                      [styles['btn-white']]: color === ButtonColor.WHITE,
+                                      [styles['btn-dark-blue']]: color === ButtonColor.DARK_BLUE,
                                   });
 
     const buttonClass = classNames(styles['btn'], colorClass, {
-        [styles['btn-m']]: type === 'medium',
-        [styles['btn-m-flex']]: type === 'medium-flex',
-        [styles['btn-l']]: type === 'large',
-        [styles['btn-l-flex']]: type === 'large-flex',
-        [styles['btn-rs']]: type === 'rounded-small',
-        [styles['btn-nav-login']]: type === 'nav-login',
-        [styles['btn-search']]: type === 'search',
-    })
+        [styles['btn-m']]: type === ButtonType.MEDIUM,
+        [styles['btn-m-flex']]: type === ButtonType.MEDIUM_FLEX,
+        [styles['btn-l']]: type === ButtonType.LARGE,
+        [styles['btn-l-flex']]: type === ButtonType.LARGE_FLEX,
+        [styles['btn-rs']]: type === ButtonType.ROUNDED_SMALL,
+        [styles['btn-nav-login']]: type === ButtonType.NAV_LOGIN,
+        [styles['btn-search']]: type === ButtonType.SEARCH,
+    });
 
     const iconSrc = icon && `/src/assets/ButtonIcons/${icon}.svg`;
 
-
     return (
         <Link
-            className={classNames(buttonClass)}
+            className={buttonClass}
             title={text}
             to={to ? to : ''}
             onClick={onClick}
         >
             {text}
-            {iconSrc && <img className={styles['btn-icon']} src={iconSrc}
-							 width={iconWidth}/>}
+            {iconSrc && (
+                <img className={styles['btn-icon']} src={iconSrc}
+                     width={iconWidth}/>
+            )}
         </Link>
     );
-}
+};
 
 export default Button;

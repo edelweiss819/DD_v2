@@ -1,9 +1,9 @@
-@use "@styles/styles" as *;
+@use '@styles/styles' as *;
 
 .link-container {
-  background-color: #f5f5f5;
+  background-color: $article-link-block-color;
   text-decoration: none;
-  margin: 16px 0;
+  margin-top: 16px;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -17,4 +17,5 @@
     line-height: 1.5;
     text-decoration: none;
   }
+
 }

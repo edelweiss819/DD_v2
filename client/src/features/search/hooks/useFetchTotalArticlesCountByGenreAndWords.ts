@@ -13,6 +13,6 @@ export const useFetchTotalArticlesCountByGenreAndWords = (
                                            params
                                        ],
                                        queryFn: async () => await fetchTotalArticlesCountByGenreAndWords(params),
-                                       retry: 1
+                                       refetchOnWindowFocus: false
                                    })
 }

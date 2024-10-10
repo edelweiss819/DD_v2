@@ -6,4 +6,4 @@ export const HEADER_NAVIGATION_PAGES: Record<string, string> = {
     'Профиль': '/profile',
 };
 
-export const HEADER_NAVIGATION_AUTORIZED_PAGES = ['Профиль']
+export const HEADER_NAVIGATION_AUTHORIZED_PAGES = ['Профиль']

@@ -6,7 +6,7 @@ export const fetchTotalArticlesCount = async () => {
         const response = await axiosInstance.get(API_ROUTES.GET_ARTICLES_TOTAL_COUNT);
         return response.data;
     } catch (error) {
-        console.error('Error fetching metadata:', error);
+        console.error('Ошибка получения метаданных:', error);
         throw error;
     }
 };

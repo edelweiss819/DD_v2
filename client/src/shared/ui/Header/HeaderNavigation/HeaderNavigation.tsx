@@ -1,17 +1,15 @@
 import React from 'react';
 import styles from './HeaderNavigation.module.scss';
-import Button from '../../Button/Button.tsx';
+import Button, {ButtonColor, ButtonType} from '../../Button/Button.tsx';
 import Logo from '../../Logo/Logo.tsx';
 import {
-    HEADER_NAVIGATION_AUTORIZED_PAGES,
+    HEADER_NAVIGATION_AUTHORIZED_PAGES,
     HEADER_NAVIGATION_PAGES
 } from '../../../../constants';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../../store/store.ts';
-import {
-    removeUser
-} from '../../../../features/auth/slice/userSlice.ts';
+import {removeUser} from '../../../../features/auth/slice/userSlice.ts';
 
 const HeaderNavigation: React.FC = () => {
 
@@ -30,7 +28,7 @@ const HeaderNavigation: React.FC = () => {
                       to={'/'}/>
                 <div className={styles['nav-link-container']}>
                     {Object.entries(HEADER_NAVIGATION_PAGES).map(([pageName, route]) => {
-                        if (HEADER_NAVIGATION_AUTORIZED_PAGES.includes(pageName) && !isAuthorized) {
+                        if (HEADER_NAVIGATION_AUTHORIZED_PAGES.includes(pageName) && !isAuthorized) {
                             return null;
                         }
                         return (
@@ -42,11 +40,12 @@ const HeaderNavigation: React.FC = () => {
                         )
                     })}
                     {isAuthorized ?
-                        <Button text={'Выйти'} color={'red'}
-                                type={'nav-login'}
+                        <Button text={'Выйти'} color={ButtonColor.RED}
+                                type={ButtonType.NAV_LOGIN}
                                 onClick={handleExitButton}/> :
-                        <Button text={'Войти'} to={'/sign_in'} color={'blue'}
-                                type={'nav-login'}/>}
+                        <Button text={'Войти'} to={'/sign_in'}
+                                color={ButtonColor.BLUE}
+                                type={ButtonType.NAV_LOGIN}/>}
                 </div>
             </div>
         </nav>

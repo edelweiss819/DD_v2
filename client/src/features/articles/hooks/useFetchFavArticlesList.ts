@@ -19,7 +19,7 @@ export const useFetchFavArticlesList = (token: string | undefined) => {
                                                            ],
                                                            queryFn: async () => {
                                                                if (!token) {
-                                                                   throw new Error('Token is required');
+                                                                   throw new Error('Токен обязателен.');
                                                                }
                                                                return await fetchFavArticlesList(token);
                                                            },

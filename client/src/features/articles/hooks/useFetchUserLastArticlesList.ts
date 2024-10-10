@@ -23,7 +23,7 @@ export const useFetchUserLastArticlesList = (token: string | undefined) => {
             ],
             queryFn: async () => {
                 if (!token) {
-                    throw new Error('Token is required');
+                    throw new Error('Токен обязателен.');
                 }
                 return await fetchUserLastArticlesList(token);
             },

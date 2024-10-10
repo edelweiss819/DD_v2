@@ -11,12 +11,12 @@ export const useFetchTotalArticlesCountByGenre = (genreLink: string) => {
                                        queryFn: async () => {
                                            const genre = generateGenreByLink(genreLink);
                                            if (!genre) {
-                                               throw new Error('Genre not found');
+                                               throw new Error('Жанр не найден!');
                                            }
-                                           const encodedGenre = encodeURIComponent(genre);
-                                           const res = await fetchTotalArticlesCountByGenre(encodedGenre);
-                                           return res;
+
+                                           return await fetchTotalArticlesCountByGenre(genre);
+
                                        },
-                                       retry: 0,
+                                       refetchOnWindowFocus: false
                                    });
 };

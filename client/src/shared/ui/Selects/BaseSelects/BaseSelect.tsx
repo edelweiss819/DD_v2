@@ -1,11 +1,11 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import styles from './BaseSelect.module.scss';
 import classNames from 'classnames';
 
 export interface IBaseSelectProps {
     options: Array<{ value: string, label: string }>;
     selectedValue: string;
-    type: 'select-search-options'
+    type: 'select-search-options';
     onChange?: (value: string) => void;
 }
 
@@ -15,7 +15,12 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
                                                     onChange,
                                                     type,
                                                 }) => {
+    
     const [selectedOption, setSelectedOption] = useState<string>(selectedValue);
+
+    useEffect(() => {
+        setSelectedOption(selectedValue);
+    }, [selectedValue]);
 
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const newValue = event.target.value;
@@ -28,9 +33,8 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
     };
 
     const selectClass = classNames({
-                                       [styles['select-search-options']]: type === 'select-search-options'
-                                   })
-
+                                       [styles['select-search-options']]: type === 'select-search-options',
+                                   });
 
     return (
         <select value={selectedOption} onChange={handleChange}

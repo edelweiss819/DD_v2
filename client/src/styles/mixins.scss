@@ -1,4 +1,5 @@
 @use "colors" as *;
+@use "fonts" as *;
 
 @mixin content {
   position: relative;
@@ -48,30 +49,13 @@
   padding: 32px 0;
 }
 
-@mixin font-main {
-  font-family: "Rubik", "Helvetica", sans-serif;
-  line-height: 1;
-  font-size: 16px;
-
-}
-
-@mixin font-main-black {
-  font-family: "Rubik", "Helvetica", sans-serif;
-  line-height: 1;
-  font-size: 16px;
-  color: $secondary-text;
-
-}
-
-@mixin font-alt {
-  font-family: "Lora", "Helvetica", sans-serif;
-  line-height: 1;
-  font-size: 16px;
-}
-
-@mixin font-alt-black {
-  font-family: "Lora", "Helvetica", sans-serif;
-  line-height: 1;
-  font-size: 16px;
-  color: $secondary-text;
+@mixin articles-lists-title-block {
+  @include font-main-black;
+  background-color: $date-block-bg-color;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 16px 0;
+  padding: 12px;
+  border-radius: 5px;
 }

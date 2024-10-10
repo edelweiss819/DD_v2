@@ -3,7 +3,7 @@ import {
     getAllArticles,
     getArticleByIndex,
     getArticlesByGenreAndWords,
-    getArticlesListByGenre,
+    getArticlesListByGenre, getRandomArticlesList,
     getTotalArticlesCountByGenresAndWords,
 } from '../controllers/articlesController';
 
@@ -15,6 +15,7 @@ router.get('/articles/:index', getArticleByIndex);
 router.get('/articles/search/getArticlesListByGenre/:genre', getArticlesListByGenre);
 router.get('/articles/search/getArticlesByGenreAndWords', getArticlesByGenreAndWords);
 router.get('/articles/search/getTotalArticlesCountByGenresAndWords', getTotalArticlesCountByGenresAndWords);
+router.get('/articles/randomArticles/getRandomArticlesList', getRandomArticlesList);
 
 
 export default router;

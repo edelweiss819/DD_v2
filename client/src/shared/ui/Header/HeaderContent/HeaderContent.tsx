@@ -1,6 +1,10 @@
 import React from 'react';
 import styles from './HeaderContent.module.scss'
-import Button from '../../Button/Button.tsx';
+import Button, {
+    ButtonColor,
+    ButtonIcon,
+    ButtonType
+} from '../../Button/Button.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../../store/store.ts';
 
@@ -17,12 +21,16 @@ const HeaderContent: React.FC = () => {
                     новые истории от талантливых авторов!
                 </p>
                 {!isAuthorized && <div className={styles['btns-container']}>
-					<Button type={'medium'} text={'Sign Up'} color={'blue'}
-							icon={'SignUpArrow'} iconWidth={'24'}/>
-					<Button type={'medium'} text={'Sign In With Google'}
-							color={'grey'} icon={'Google'} iconWidth={'24'}/>
-					<Button type={'medium'} text={'Facebook'}
-							color={'dark-blue'} icon={'Facebook'}
+					<Button type={ButtonType.MEDIUM} text={'Sign Up'}
+							color={ButtonColor.BLUE}
+							icon={ButtonIcon.SIGN_UP_ARROW} iconWidth={'24'}/>
+					<Button type={ButtonType.MEDIUM}
+							text={'Sign In With Google'}
+							color={ButtonColor.GREY} icon={ButtonIcon.GOOGLE}
+							iconWidth={'24'}/>
+					<Button type={ButtonType.MEDIUM} text={'Facebook'}
+							color={ButtonColor.DARK_BLUE}
+							icon={ButtonIcon.FACEBOOK}
 							iconWidth={'24'}/>
 				</div>}
             </div>

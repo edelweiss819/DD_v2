@@ -35,7 +35,7 @@ const MainContentLayout: React.FC<IMainPageContentProps> = ({
                         <h3>Жанры</h3>
                         <hr/>
                         {Object.entries(GENRES).map(([genre, route]) => (
-                            <div key={genre} className={styles.genre}>
+                            <div key={genre} className={styles['genre']}>
                                 <Link onClick={handleClickToGenreLink}
                                       to={`${GENRES_DIR}${route}`}
                                       key={genre}
@@ -53,12 +53,17 @@ const MainContentLayout: React.FC<IMainPageContentProps> = ({
 									: {totalCountArticlesByGenre}
 								</div>}
 							<SearchForm/>
-							<div className={styles['articles-list-container']}>
-								<span
-									className={styles['articles-list-container-title']}>Недавно добавленные</span>
-								<ArticlesList articlesList={articlesList}/>
-							</div>
-							<Pagination scrollTo={'main'}/>
+                            {articlesList && articlesList.length > 0 ? (
+                                <div
+                                    className={styles['articles-list-container']}>
+                                    <span
+                                        className={styles['articles-list-container-title']}>Недавно добавленные</span>
+                                    <ArticlesList articlesList={articlesList}/>
+                                </div>
+                            ) : null}
+                            {articlesList && articlesList.length > 0 ? (
+                                    <Pagination scrollTo={'main'}/>) :
+                                <span className={styles['help-info']}>Выберите параметры поиска</span>}
 						</main>}
                     </Element>
                 </div>

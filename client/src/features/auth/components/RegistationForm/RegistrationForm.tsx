@@ -2,7 +2,10 @@ import React from 'react';
 import styles from './RegistrationForm.module.scss';
 import Input from '../../../../shared/ui/Forms/Input/Input.tsx';
 import {SubmitHandler, useForm} from 'react-hook-form';
-import Button from '../../../../shared/ui/Button/Button.tsx';
+import Button, {
+    ButtonColor,
+    ButtonType
+} from '../../../../shared/ui/Button/Button.tsx';
 import {Link, useNavigate} from 'react-router-dom';
 import {useCreateUser} from '../../hooks';
 import ErrorMessage from '../ErrorMessage/ErrorMessage.tsx';
@@ -120,8 +123,9 @@ const RegistrationForm: React.FC = () => {
             </div>
 
             <div className={styles['grid-cell-full']}>
-                <Button text={'Зарегистрироваться'} type={'large-flex'}
-                        color={'blue'} onClick={handleSubmit(onSubmit)}/>
+                <Button text={'Зарегистрироваться'} type={ButtonType.LARGE_FLEX}
+                        color={ButtonColor.BLUE}
+                        onClick={handleSubmit(onSubmit)}/>
             </div>
             <div className={styles['grid-cell-full']}>
                 <span

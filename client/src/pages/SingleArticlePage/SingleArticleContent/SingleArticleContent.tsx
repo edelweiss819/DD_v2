@@ -3,7 +3,10 @@ import {IArticle} from '../../../types';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
 import styles from './SingleArticleContent.module.scss'
-import Button from '../../../shared/ui/Button/Button.tsx';
+import Button, {
+    ButtonColor,
+    ButtonType
+} from '../../../shared/ui/Button/Button.tsx';
 import {
     generateLinkByGenre,
     splitContentIntoParagraphs
@@ -29,8 +32,8 @@ const SingleArticleContent: React.FC<ISingleArticleContentProps> = () => {
                 <div
                     className={styles['main-section-content-container-genres-block']}>
                     {singleArticle.genres && singleArticle.genres.map((genre) => (
-                        <Button text={genre} type={'rounded-small'}
-                                color={'grey'} key={genre}
+                        <Button text={genre} type={ButtonType.ROUNDED_SMALL}
+                                color={ButtonColor.GREY} key={genre}
                                 to={`${GENRES_DIR}` + generateLinkByGenre(genre)}/>
                     ))}
                 </div>

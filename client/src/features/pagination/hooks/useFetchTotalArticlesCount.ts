@@ -6,6 +6,6 @@ export const useFetchTotalArticlesCount = () => {
     return useQuery<number, Error>({
                                        queryKey: ['fetchTotalArticlesCount'],
                                        queryFn: fetchTotalArticlesCount,
-                                       retry: 1,
+                                       refetchOnWindowFocus: false
                                    });
 };

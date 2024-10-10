@@ -12,6 +12,7 @@ const SearchPage = React.lazy(() => import('../pages/SearchPage/SearchPage.tsx')
 const SignUpPage = React.lazy(() => import('../pages/SignUpPage/SignUpPage.tsx'));
 const SignInPage = React.lazy(() => import('../pages/SignInPage/SignInPage.tsx'));
 const ProfilePage = React.lazy(() => import('../pages/ProfilePage/ProfilePage.tsx'));
+const WheelPage = React.lazy(() => import('../pages/WheelPage/WheelPage.tsx'));
 
 const AppRoutes: React.FC = () => {
 
@@ -28,6 +29,7 @@ const AppRoutes: React.FC = () => {
                 <Route path="/search" element={<SearchPage/>}/>
                 <Route path={'/sign_up'} element={<SignUpPage/>}/>
                 <Route path={'/sign_in'} element={<SignInPage/>}/>
+                <Route path={'/wheel'} element={<WheelPage/>}/>
                 <Route
                     path={'/profile'}
                     element={

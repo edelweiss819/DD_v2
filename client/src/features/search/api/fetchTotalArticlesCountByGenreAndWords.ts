@@ -19,6 +19,6 @@ export const fetchTotalArticlesCountByGenreAndWords = async ({
             s,
         }
     })
-    console.log('Response from API:', res.data);
+    // console.log('Response from API:', res.data);
     return res.data
 }

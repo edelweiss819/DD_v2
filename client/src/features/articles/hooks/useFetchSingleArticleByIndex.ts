@@ -10,7 +10,7 @@ export const useFetchSingleArticleByIndex = (index: string | number | undefined)
                                          ],
                                          queryFn: () => {
                                              if (index === undefined) {
-                                                 return Promise.reject(new Error('Index is required'));
+                                                 throw new Error('Индекс обязателен!');
                                              }
                                              const indexAsString = String(index);
                                              return fetchSingleArticleByIndex(indexAsString);

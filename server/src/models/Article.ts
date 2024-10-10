@@ -1,6 +1,7 @@
 import mongoose, {Model, Document, Schema} from 'mongoose';
 
 export interface IArticle extends Document {
+    _id: mongoose.Types.ObjectId
     title: string;
     genres: Array<string>;
     content: string;

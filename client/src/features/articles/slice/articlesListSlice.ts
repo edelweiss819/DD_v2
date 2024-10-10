@@ -40,6 +40,9 @@ const articlesListSlice = createSlice({
                                                                 action: PayloadAction<IArticle[]>) => {
                                                   state.articlesList = action.payload;
                                               },
+                                              resetArticlesList: (state) => {
+                                                  state.articlesList = [];
+                                              },
                                               setTotalPages: (state,
                                                               action: PayloadAction<number>) => {
                                                   state.totalPages = action.payload;
@@ -51,6 +54,15 @@ const articlesListSlice = createSlice({
                                               setSearchParams: (state,
                                                                 action: PayloadAction<IFetchArticlesListByGenreAndWordsParams>) => {
                                                   state.searchParams = action.payload;
+                                              },
+                                              resetSearchParams: (state) => {
+                                                  state.searchParams = {
+                                                      page: 1,
+                                                      genres: state.globalGenres.filter(Boolean).join(','),
+                                                      s: undefined,
+                                                      limit: 10,
+                                                      lastCursor: 0,
+                                                  }
                                               },
                                               setLastCursor: (state,
                                                               action: PayloadAction<number>) => {
@@ -82,9 +94,11 @@ const articlesListSlice = createSlice({
 
 export const {
     setArticlesList,
+    resetArticlesList,
     setTotalPages,
     setCurrentPage,
     setSearchParams,
+    resetSearchParams,
     setLastCursor,
     updateLastCursor,
     setSortOrder,

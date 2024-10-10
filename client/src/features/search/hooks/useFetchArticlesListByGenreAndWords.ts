@@ -20,6 +20,7 @@ export const useFetchArticlesListByGenreAndWords = (
                                                            params
                                                        ],
                                                        queryFn: async () => fetchArticlesListByGenreAndWords(params),
-                                                       retry: 1,
+                                                       refetchOnWindowFocus: false,
+                                                       retry: 0,
                                                    })
 }

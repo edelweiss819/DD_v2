@@ -2,7 +2,10 @@ import React from 'react';
 import {IArticle} from '../../../../types';
 import {truncateText} from '../../../../shared/utils';
 import styles from './SingleArticle.module.scss';
-import Button from '../../../../shared/ui/Button/Button';
+import Button, {
+    ButtonColor,
+    ButtonType
+} from '../../../../shared/ui/Button/Button';
 import {setCurrentArticleIndex} from '../../slice/singleArticleSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../../store/store';
@@ -85,8 +88,8 @@ const SingleArticle: React.FC<IArticle> = ({
 
                 <Button
                     text={'ЧИТАТЬ'}
-                    type={'rounded-small'}
-                    color={'blue'}
+                    type={ButtonType.ROUNDED_SMALL}
+                    color={ButtonColor.BLUE}
                     to={`/articles/${index}`}
                     onClick={handleButtonClick}
                 />

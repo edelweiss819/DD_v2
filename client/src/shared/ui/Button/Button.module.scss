@@ -71,63 +71,34 @@
 }
 
 
-.btn-blue {
-  @include font-main;
+@mixin button-style($bg-color, $border-color, $text-color, $font-mixin) {
+  @include select-font($font-mixin);
   @include cell-shrink;
-  background-color: $tertiary-bg;
+  background-color: $bg-color;
+  border-color: $border-color;
   display: inline-block;
-  border-color: $tertiary-bg;
   text-align: center;
-  color: $primary-text !important;
+  color: $text-color !important;
+}
+
+.btn-blue {
+  @include button-style($button-blue-color, $button-blue-color, $primary-text-color, 'main');
 }
 
 .btn-grey {
-  @include font-main-black;
-  @include cell-shrink;
-  background: #eff2f3;
-  display: inline-block;
-  border-color: #eff2f3;
-  border-top-color: rgb(239, 242, 243);
-  border-right-color: rgb(239, 242, 243);
-  border-bottom-color: rgb(239, 242, 243);
-  border-left-color: rgb(239, 242, 243);
-  text-align: center;
-  color: #2a2a2a !important;
+  @include button-style($button-grey-color, $button-grey-color, $secondary-text-color, 'main-black');
 }
 
 .btn-white {
-  @include font-main-black;
-  @include cell-shrink;
-  background: #fff;
-  display: inline-block;
-  border-color: #fff;
-  text-align: center;
-  color: #2a2a2a !important;
+  @include button-style($button-white-color, $button-white-color, $secondary-text-color, 'main-black');
 }
 
 .btn-dark-blue {
-  @include font-main;
-  @include cell-shrink;
-  background: #3b5998;
-  display: inline-block;
-  border-color: #3b5998;
-  border-top-color: rgb(59, 89, 152);
-  border-right-color: rgb(59, 89, 152);
-  border-bottom-color: rgb(59, 89, 152);
-  border-left-color: rgb(59, 89, 152);
-  text-align: center;
-  color: #fff !important;
-
+  @include button-style($button-dark-blue-color, $button-dark-blue-color, $primary-text-color, 'main');
 }
 
 .btn-red {
-  @include font-main;
-  @include cell-shrink;
-  background-color: #F08080;
-  display: inline-block;
-  border-color: #F08080;
-  text-align: center;
-  color: $primary-text !important;
+  @include button-style($button-red-color, $button-red-color, $primary-text-color, 'main');
 }
 
 

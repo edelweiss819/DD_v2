@@ -2,7 +2,10 @@ import React from 'react';
 import {useForm} from 'react-hook-form';
 import styles from './LoginForm.module.scss'
 import Input from '../../../../shared/ui/Forms/Input/Input.tsx';
-import Button from '../../../../shared/ui/Button/Button.tsx';
+import Button, {
+    ButtonColor,
+    ButtonType
+} from '../../../../shared/ui/Button/Button.tsx';
 import {Link} from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage.tsx';
 import {IRegistrationForm} from '../RegistationForm/RegistrationForm.tsx';
@@ -84,8 +87,9 @@ const LoginForm: React.FC = () => {
 
             <div
                 className={styles['grid-cell-full']}>
-                <Button text={'Войти'} type={'large-flex'}
-                        color={'blue'} onClick={handleSubmit(onSubmit)}/>
+                <Button text={'Войти'} type={ButtonType.LARGE_FLEX}
+                        color={ButtonColor.BLUE}
+                        onClick={handleSubmit(onSubmit)}/>
             </div>
             <div className={styles['grid-cell-full']}>
                 <span

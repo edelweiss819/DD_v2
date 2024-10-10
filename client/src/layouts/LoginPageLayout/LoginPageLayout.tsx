@@ -1,7 +1,11 @@
 import React from 'react';
 import styles from './LoginPageLayout.module.scss'
 import Logo from '../../shared/ui/Logo/Logo.tsx';
-import Button from '../../shared/ui/Button/Button.tsx';
+import Button, {
+    ButtonColor,
+    ButtonIcon,
+    ButtonType
+} from '../../shared/ui/Button/Button.tsx';
 
 export interface LoginPageLayoutProps {
     children?: React.ReactNode;
@@ -31,12 +35,14 @@ const LoginPageLayout: React.FC<LoginPageLayoutProps> = ({
                         <div
                             className={styles['container-content-wrapper-social-block-buttons-block']}>
                             <Button text={'Google'}
-                                    color={'white'} type={'medium-flex'}
-                                    icon={'Google'}
+                                    color={ButtonColor.WHITE}
+                                    type={ButtonType.MEDIUM_FLEX}
+                                    icon={ButtonIcon.GOOGLE}
                                     iconWidth={'24'}/>
                             <Button text={'Facebook'}
-                                    color={'dark-blue'} type={'medium-flex'}
-                                    icon={'Facebook'}
+                                    color={ButtonColor.DARK_BLUE}
+                                    type={ButtonType.MEDIUM_FLEX}
+                                    icon={ButtonIcon.FACEBOOK}
                                     iconWidth={'24'}/>
                         </div>
                     </div>
