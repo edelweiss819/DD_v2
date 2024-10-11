@@ -1,61 +1,58 @@
 import React, {useEffect} from 'react';
-import Header from '../../components/header/Header.tsx';
-import Footer from '../../components/footer/Footer.tsx';
-import MainContent from '../../components/mainContent/MainContent.tsx';
-import ArticlesList
-    from '../../features/articles/components/articlesList/ArticlesList.tsx';
-import useFetchArticles
-    from '../../features/articles/hooks/useFetchArticles.ts';
-import {useNavigate} from 'react-router-dom'; // 'react-router-dom', not 'react-router'
+import MainContentLayout
+    from '../../layouts/MainContentLayout/MainContentLayout.tsx';
+import Footer from '../../shared/ui/Footer/Footer.tsx';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../../store/store.ts';
+import {useFetchArticlesList} from '../../features/articles/hooks';
+import {
+    resetSearchParams,
+    setArticlesList,
+    setTotalPages
+} from '../../features/articles/slice/articlesListSlice.ts';
+import {articlesCountToPagesCount} from '../../shared/utils';
+import {useFetchTotalArticlesCount} from '../../features/pagination/hooks';
+import Content from '../../shared/ui/Content/Content.tsx';
+import MainHeaderLayout
+    from '../../layouts/MainHeaderLayout/MainHeaderLayout.tsx';
 
 const MainPage: React.FC = () => {
-    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    useEffect(() => {
+        document.title = 'Desire Diaries';
+    }, []);
+
     const {
-        articles,
-        isLoading,
-        isError,
-        fetchNextPage,
-        hasNextPage
-    } = useFetchArticles();
+        articlesList,
+        currentPage,
+    } = useSelector((state: RootState) => state.articlesList);
+
+
+    const {data: defaultList} = useFetchArticlesList(currentPage);
+    const {data: defaultTotalCount} = useFetchTotalArticlesCount();
+
 
     useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-            if (scrollTop + windowHeight >= documentHeight - 400) {
-                if (hasNextPage && !isLoading) {
-                    fetchNextPage();
-                }
-            }
-        };
+        dispatch(resetSearchParams());
+        if (defaultList) {
+            dispatch(setArticlesList(defaultList));
+            defaultTotalCount && dispatch(setTotalPages(articlesCountToPagesCount(defaultTotalCount)));
+        }
+    }, [
+                  dispatch,
+                  defaultList,
+                  defaultTotalCount,
+              ]);
 
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [fetchNextPage, hasNextPage, isLoading]);
-
-    const handleClickOnArticle = (index: number) => {
-        navigate(`/articles/${index}`);
-    }
 
     return (
-        <div>
-            <Header/>
-            <MainContent>
-                {isLoading && <div>Загрузка...</div>}
-                {isError &&
-					<div>Ошибка загрузки статей. Попробуйте позже.</div>}
-                {!isLoading && !isError &&
-					<ArticlesList
-						articlesList={articles}
-						onClick={handleClickOnArticle}
-					/>}
-            </MainContent>
+        <>
+            <MainHeaderLayout/>
+            <Content>
+                <MainContentLayout articlesList={articlesList}/>
+            </Content>
             <Footer/>
-        </div>
+        </>
     );
 };
 
