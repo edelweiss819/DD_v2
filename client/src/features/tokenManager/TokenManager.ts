@@ -5,17 +5,18 @@ import {useRefreshToken} from '../auth/hooks/useRefreshToken.ts';
 
 const TokenManager: React.FC = () => {
     const {token} = useSelector((state: RootState) => state.user);
-    const {refetch: refreshToken} = useRefreshToken(token!);
+    const {refetch: refreshToken} = useRefreshToken(token);
 
     useEffect(() => {
+        if (token) {
+            const intervalId = setInterval(() => {
+                if (token) {
+                    refreshToken();
+                }
+            }, 600000 / 2); // 600000  = 10 min
 
-        const intervalId = setInterval(() => {
-            if (token) {
-                refreshToken();
-            }
-        }, 600000 / 2); // 600000  = 10 min
-
-        return () => clearInterval(intervalId);
+            return () => clearInterval(intervalId);
+        }
     }, [
                   token,
                   refreshToken

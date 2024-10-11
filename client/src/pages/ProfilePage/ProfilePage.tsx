@@ -9,7 +9,7 @@ import SimpleHeaderContentTemplate
 import ProfilePageContent from './ProfilePageContent/ProfilePageContent.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/store.ts';
-import {useGetUser} from '../../features/auth/hooks/useGetUser.ts';
+import {useGetUser} from '../../features/auth/hooks';
 
 const ProfilePage: React.FC = () => {
     const {token} = useSelector((state: RootState) => state.user);

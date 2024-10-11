@@ -7,7 +7,7 @@ import Button, {
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
 import {timestampToLocalDate} from '../../../shared/utils';
-import {useGetUser} from '../../../features/auth/hooks/useGetUser.ts';
+import {useGetUser} from '../../../features/auth/hooks';
 import FavoriteArticlesList
     from './FavoriteArticlesList/FavoriteArticlesList.tsx';
 import LastArticlesList from './LastArticlesList/LastArticlesList.tsx';

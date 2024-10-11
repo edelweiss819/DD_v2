@@ -2,8 +2,10 @@
 
 .content-container {
   background: $grey-bg-color;
-  padding: 32px 0;
-  margin-left: 8px;
+  padding: 32px 0 32px 8px;
+  @include respond(tablet) {
+    padding-left: 0;
+  }
 
 }
 
@@ -11,6 +13,12 @@
   @include content;
   @include grid;
   gap: 16px;
+  @include respond(tablet) {
+    flex-direction: column;
+    margin-left: 16px;
+    margin-right: 16px;
+
+  }
 }
 
 .title {
@@ -25,4 +33,11 @@
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 2px solid $aside-hr-color;
+  @include respond(tablet) {
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 32px;
+    padding-right: 32px;
+
+  }
 }

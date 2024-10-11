@@ -26,9 +26,12 @@ const HeaderContent: React.FC = () => {
 							icon={ButtonIcon.SIGN_UP_ARROW} iconWidth={'24'}/>
 					<Button type={ButtonType.MEDIUM}
 							text={'Sign In With Google'}
+							textRespond={true}
 							color={ButtonColor.GREY} icon={ButtonIcon.GOOGLE}
 							iconWidth={'24'}/>
-					<Button type={ButtonType.MEDIUM} text={'Facebook'}
+					<Button type={ButtonType.MEDIUM}
+							text={'Facebook'}
+							textRespond={true}
 							color={ButtonColor.DARK_BLUE}
 							icon={ButtonIcon.FACEBOOK}
 							iconWidth={'24'}/>

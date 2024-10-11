@@ -68,6 +68,12 @@
     margin-left: 8px;
 
   }
+
+  &-text-respond {
+    @include respond(tablet) {
+      display: none;
+    }
+  }
 }
 
 

@@ -10,7 +10,7 @@ import {AppDispatch, RootState} from '../../store/store.ts';
 import {useParams} from 'react-router';
 import {
     useFetchArticlesListByGenre
-} from '../../features/articles/hooks/useFetchArticlesListByGenre.ts';
+} from '../../features/articles/hooks';
 import {
     setArticlesList, setCurrentPage, setTotalPages
 } from '../../features/articles/slice/articlesListSlice.ts';

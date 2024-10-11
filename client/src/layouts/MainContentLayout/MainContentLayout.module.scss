@@ -5,6 +5,14 @@
   @include row-think;
   background-color: $main-section-bg-color;
   padding-left: 10px !important;
+  @include respond(tablet) {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    @include respond(mobile) {
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+    }
+  }
 }
 
 .content {
@@ -19,6 +27,9 @@ aside {
   @include cell-third;
   @include font-main-black;
   padding-left: 2px;
+  @include respond(tablet) {
+    display: none;
+  }
 }
 
 aside > h3 {
@@ -59,6 +70,12 @@ aside > hr {
   box-sizing: border-box;
   padding-bottom: 16px;
   padding-left: 16px;
+  @include respond(tablet) {
+    padding-left: 0;
+    @include respond(extra-small) {
+      max-width: 350px;
+    }
+  }
 
   &-total-articles {
     @include font-main-black;

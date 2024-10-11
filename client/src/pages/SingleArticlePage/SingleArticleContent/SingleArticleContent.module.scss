@@ -7,6 +7,9 @@
   &-content-container {
     @include content-thin;
     padding: 0 24px;
+    @include respond(mobile) {
+      padding-left: 22px;
+    }
 
     &-author-block {
       @include grid;

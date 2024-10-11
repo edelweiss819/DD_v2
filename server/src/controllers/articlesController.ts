@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import Article, {IArticle} from '../models/Article';
+import Article from '../models/Article';
 import dotenv from 'dotenv';
 import Metadata from '../models/Metadata';
 
@@ -128,7 +128,6 @@ export const getArticlesByGenreAndWords = async (req: Request,
 
         // 2. Если указаны только слова
         if (words.length > 0 && !genres) {
-            const wordRegex = words.map(word => new RegExp(word, 'i'));
             const searchQuery = {
                 $or: [
                     {

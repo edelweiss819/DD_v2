@@ -5,7 +5,7 @@ import {setToken} from '../slice/userSlice.ts';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../store/store.ts';
 
-export const useRefreshToken = (token: string) => {
+export const useRefreshToken = (token?: string) => {
     const dispatch = useDispatch<AppDispatch>();
 
     const {

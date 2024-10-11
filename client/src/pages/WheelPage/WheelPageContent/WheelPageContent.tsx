@@ -49,7 +49,7 @@ const WheelPageContent: React.FC = () => {
             }
         }
     }, [
-                  winningArticleIndex,
+        
                   article
               ]);
 

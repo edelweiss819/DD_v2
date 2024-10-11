@@ -28,8 +28,11 @@ export enum ButtonType {
     SEARCH = 'search'
 }
 
+export type ButtonTextRespond = boolean;
+
 interface ButtonProps {
     text: string;
+    textRespond?: ButtonTextRespond;
     to?: string;
     color?: ButtonColor;
     icon?: ButtonIcon;
@@ -40,6 +43,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
                                            text,
+                                           textRespond,
                                            to,
                                            color,
                                            icon,
@@ -55,6 +59,8 @@ const Button: React.FC<ButtonProps> = ({
                                       [styles['btn-dark-blue']]: color === ButtonColor.DARK_BLUE,
                                   });
 
+    const textClass = textRespond ? styles['btn-text-respond'] : '';
+
     const buttonClass = classNames(styles['btn'], colorClass, {
         [styles['btn-m']]: type === ButtonType.MEDIUM,
         [styles['btn-m-flex']]: type === ButtonType.MEDIUM_FLEX,
@@ -65,7 +71,7 @@ const Button: React.FC<ButtonProps> = ({
         [styles['btn-search']]: type === ButtonType.SEARCH,
     });
 
-    const iconSrc = icon && `/src/assets/ButtonIcons/${icon}.svg`;
+    const iconSrc = icon ? `/src/assets/ButtonIcons/${icon}.svg` : undefined;
 
     return (
         <Link
@@ -74,13 +80,14 @@ const Button: React.FC<ButtonProps> = ({
             to={to ? to : ''}
             onClick={onClick}
         >
-            {text}
+            <span className={textClass}>{text}</span>
             {iconSrc && (
                 <img className={styles['btn-icon']} src={iconSrc}
-                     width={iconWidth}/>
+                     width={iconWidth} alt={icon}/>
             )}
         </Link>
     );
 };
 
 export default Button;
+

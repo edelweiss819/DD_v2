@@ -59,7 +59,7 @@ const SingleArticlePage: React.FC = () => {
 
     useEffect(() => {
         scrollToElement('single-article-top', 0, 0);
-    }, [scrollToElement]);
+    }, []);
 
 
     useAddArticleToUserLastArticlesList(token!, Number(indexFromParams))

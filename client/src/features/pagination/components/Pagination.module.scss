@@ -1,8 +1,13 @@
 @use "@styles/styles" as *;
 
-
 .pagination-container {
   margin-top: 32px;
+
+  @include respond(tablet) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 .pagination {
@@ -17,5 +22,11 @@
     display: inline-block;
     cursor: pointer;
     margin: 0 4px;
+  }
+
+  @include respond(tablet) {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }

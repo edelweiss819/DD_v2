@@ -33,7 +33,7 @@ export const authenticateToken = (allowedRoles: string[]) => {
             }
 
             if (user && typeof user !== 'string' && allowedRoles.includes(user.role)) {
-                req.user = user;
+                req.user = user as JwtPayload;
                 return next();
             } else {
                 return res.status(403).json({message: 'Недостаточно прав.'}); // Forbidden

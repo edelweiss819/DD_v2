@@ -11,10 +11,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  @include respond(tablet) {
+    background: #EFF2F3;
+  }
 }
 
 .container {
   @include content-centred;
+  @include respond(tablet) {
+    max-width: 400px;
+    @include respond(mobile) {
+      max-width: 300px;
+    }
+  }
 
   &-content-wrapper {
     max-width: 500px;
