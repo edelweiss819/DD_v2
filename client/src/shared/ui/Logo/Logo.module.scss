@@ -1,6 +1,6 @@
 @use "@styles/styles" as *;
 
-.logo {
+.logo-base {
   @include grid;
   @include cell;
   @include font-main;
