@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Stage, Layer, Arc, Text, Circle, Line} from 'react-konva';
 import {truncateText} from '../../../shared/utils';
 import {useNavigate} from 'react-router';
+import Konva from 'konva';
+import KonvaEventObject = Konva.KonvaEventObject;
 
 export interface WheelProps {
     setWinningArticleIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
@@ -55,14 +57,14 @@ const Wheel: React.FC<WheelProps> = ({
                         angle={segmentAngle * (180 / Math.PI)}
                         rotation={startAngle * (180 / Math.PI) + rotation}
                         fill={color}
-                        onMouseEnter={(e) => {
+                        onMouseEnter={(e: KonvaEventObject<MouseEvent>) => {
                             e.target.to({
                                             fill: '#00cc00',
                                             duration: 0.2
                                         });
                             document.body.style.cursor = 'pointer';
                         }}
-                        onMouseLeave={(e) => {
+                        onMouseLeave={(e: KonvaEventObject<MouseEvent>) => {
                             e.target.to({
                                             fill: color,
                                             duration: 0.2
