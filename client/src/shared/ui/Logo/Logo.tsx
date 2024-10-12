@@ -23,7 +23,7 @@ const Logo: React.FC<LogoProps> = ({
                                            });
 
     return (
-        <Link to={`${to}`} className={styles['logo-base']}>
+        <Link to={`${to}`} className={styles['logo']}>
             <span className={logoFirstPartClass}>Desire</span>
             <span className={logoSecondPartClass}>Diaries</span>
         </Link>

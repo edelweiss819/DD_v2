@@ -22,7 +22,7 @@ const Input = <T extends FieldValues>({
                                           type,
                                           validation,
                                       }: InputProps<T>): React.ReactElement => {
-    const inputClass = classNames(styles['input-base'], {
+    const inputClass = classNames(styles['input'], {
         [styles['input-search']]: formType === 'input-search',
         [styles['input-registration-form']]: formType === 'registration-form',
     });
