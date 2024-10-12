@@ -22,12 +22,14 @@ const SingleArticle: React.FC<IArticle> = ({
     const dispatch = useDispatch<AppDispatch>();
     const {
         favoriteArticles,
-        token: userToken
+        token: userToken,
+        isAuthorized
     } = useSelector((state: RootState) => state.user);
 
     const isFavorite = () => {
         return favoriteArticles.some(article => Number(article.index) === index);
     };
+
     const handleButtonClick = () => {
         if (index) {
             dispatch(setCurrentArticleIndex(index));
@@ -37,12 +39,16 @@ const SingleArticle: React.FC<IArticle> = ({
     const mutation = useToggleFavArticleStatus();
 
     const handleFavIconClick = async () => {
+        if (!userToken) {
+            console.error('User token is not available');
+            return;
+        }
+
         try {
             await mutation.mutateAsync({
                                            index,
-                                           token: userToken!
+                                           token: userToken,
                                        });
-
         } catch (error) {
             console.error('Ошибка при изменении статуса избранного:', error);
         }
@@ -59,8 +65,8 @@ const SingleArticle: React.FC<IArticle> = ({
                 {content && truncateText(content)}
             </div>
             <div className={styles['single-article-button-container']}>
-                {isFavorite() ? (
-                    <div>
+                {isAuthorized && (
+                    isFavorite() ? (
                         <div
                             className={styles['single-article-button-container-fav-block']}>
                             <div
@@ -71,19 +77,18 @@ const SingleArticle: React.FC<IArticle> = ({
                             <span
                                 className={styles['single-article-button-container-fav-block-text']}>Уже в избранном</span>
                         </div>
-                    </div>
-                ) : (
-                    <div>
+                    ) : (
                         <div
                             className={styles['single-article-button-container-fav-block']}>
                             <div
                                 className={styles['single-article-button-container-fav-block-fav-icon']}>
                                 <StarFavArticleIcon
-                                    onClick={handleFavIconClick}/></div>
+                                    onClick={handleFavIconClick}/>
+                            </div>
                             <span
                                 className={styles['single-article-button-container-fav-block-text']}>Добавить в избранное</span>
                         </div>
-                    </div>
+                    )
                 )}
 
                 <Button
