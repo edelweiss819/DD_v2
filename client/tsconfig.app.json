@@ -28,11 +28,16 @@
     /* Aliases */
     "baseUrl": "./src",
     "paths": {
-      "@styles/*": ["styles/*"]
+      "@styles/*": [
+        "styles/*"
+      ]
     }
+    //    "types": [
+    //      "vite-plugin-svgr/client"
+    //    ]
   },
   "include": [
-    "src",
-    "vite.config.ts"
+    "./src",
+    "./vite.config.ts"
   ]
 }
