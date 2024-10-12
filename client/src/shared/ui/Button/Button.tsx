@@ -3,6 +3,14 @@ import {Link} from 'react-router-dom';
 import styles from './Button.module.scss';
 import classNames from 'classnames';
 
+// @ts-ignore
+import SignUpArrow from '../../../assets/ButtonIcons/SignUpArrow.svg?react';
+// @ts-ignore
+import Google from '../../../assets/ButtonIcons/Google.svg?react';
+// @ts-ignore
+import Facebook from '../../../assets/ButtonIcons/Facebook.svg?react';
+
+
 export enum ButtonColor {
     BLUE = 'blue',
     GREY = 'grey',
@@ -71,7 +79,11 @@ const Button: React.FC<ButtonProps> = ({
         [styles['btn-search']]: type === ButtonType.SEARCH,
     });
 
-    const iconSrc = icon ? `../../../assets/ButtonIcons/${icon}.svg` : undefined;
+    const iconSrc = icon === ButtonIcon.SIGN_UP_ARROW ? SignUpArrow
+        : icon === ButtonIcon.GOOGLE ? Google
+            : icon === ButtonIcon.FACEBOOK ? Facebook
+                : undefined;
+
 
     return (
         <Link
