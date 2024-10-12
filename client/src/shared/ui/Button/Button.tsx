@@ -71,7 +71,7 @@ const Button: React.FC<ButtonProps> = ({
         [styles['btn-search']]: type === ButtonType.SEARCH,
     });
 
-    const iconSrc = icon ? `/src/assets/ButtonIcons/${icon}.svg` : undefined;
+    const iconSrc = icon ? `../../../assets/ButtonIcons/"${icon}.svg` : undefined;
 
     return (
         <Link
