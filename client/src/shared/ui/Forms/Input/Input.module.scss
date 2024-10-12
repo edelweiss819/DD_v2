@@ -1,6 +1,6 @@
 @use "@styles/styles" as *;
 
-.input {
+.input-base {
   &-search {
     @include cell;
     @include font-main-black;
