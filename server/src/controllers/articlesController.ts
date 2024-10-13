@@ -35,7 +35,8 @@ export const getArticleByIndex = async (req: Request,
             return res.status(404).json({message: 'Article not found'});
         }
 
-        const author = await User.findOne({author: article.author});
+
+        const author = await User.findOne({index: article.author});
 
         if (!author) {
             return res.status(404).json({message: 'Author not found'});
