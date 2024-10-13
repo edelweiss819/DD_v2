@@ -9,7 +9,7 @@ export interface IArticle {
     characterCount: number,
     onClick?: () => void,
     author: {
-        name: string;
+        authorName: string;
         index: number
     }
 }

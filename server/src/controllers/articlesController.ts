@@ -45,7 +45,7 @@ export const getArticleByIndex = async (req: Request,
         const fullAuthorName = `${author.firstName} ${author.lastName}`;
         const authorInfo = {
             index: author.index,
-            name: fullAuthorName
+            authorName: fullAuthorName
         };
 
         return res.status(200).json({
