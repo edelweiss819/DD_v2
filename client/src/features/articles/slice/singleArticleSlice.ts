@@ -17,7 +17,7 @@ const initialState: ISingleArticleState = {
         estimatedReadingTime: 0,
         author: {
             index: 0,
-            authorName: '',
+            name: '',
         },
     },
     currentArticleIndex: 0,
@@ -29,35 +29,11 @@ const singleArticleSlice = createSlice({
                                            reducers: {
                                                setSingleArticle: (
                                                    state,
-                                                   action: PayloadAction<Omit<IArticle, 'author'>>
+                                                   action: PayloadAction<IArticle>
                                                ) => {
-                                                   const {
-                                                       title,
-                                                       genres,
-                                                       content,
-                                                       index,
-                                                       publishedDate,
-                                                       characterCount,
-                                                       estimatedReadingTime
-                                                   } = action.payload;
-
-                                                   if (title !== undefined) state.singleArticle.title = title;
-                                                   if (genres !== undefined) state.singleArticle.genres = genres;
-                                                   if (content !== undefined) state.singleArticle.content = content;
-                                                   if (index !== undefined) state.singleArticle.index = index;
-                                                   if (publishedDate !== undefined) state.singleArticle.publishedDate = publishedDate;
-                                                   if (characterCount !== undefined) state.singleArticle.characterCount = characterCount;
-                                                   if (estimatedReadingTime !== undefined) state.singleArticle.estimatedReadingTime = estimatedReadingTime;
+                                                   state.singleArticle = action.payload;
                                                },
-                                               setArticleAuthor: (state,
-                                                                  action: PayloadAction<Pick<IArticle, 'author'>>) => {
-                                                   const {author} = action.payload;
-                                                   if (author && state.singleArticle.author) {
-                                                       state.singleArticle.author.authorName = author.authorName;
-                                                       state.singleArticle.author.index = author.index;
-                                                   }
 
-                                               },
                                                setCurrentArticleIndex: (state,
                                                                         action: PayloadAction<number>) => {
                                                    state.currentArticleIndex = action.payload;
@@ -68,6 +44,5 @@ const singleArticleSlice = createSlice({
 export const {
     setSingleArticle,
     setCurrentArticleIndex,
-    setArticleAuthor
 } = singleArticleSlice.actions;
 export default singleArticleSlice.reducer;

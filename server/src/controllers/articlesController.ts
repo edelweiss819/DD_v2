@@ -2,7 +2,6 @@ import {Request, Response} from 'express';
 import Article from '../models/Article';
 import dotenv from 'dotenv';
 import Metadata from '../models/Metadata';
-import User from '../models/User';
 
 dotenv.config();
 
@@ -36,21 +35,8 @@ export const getArticleByIndex = async (req: Request,
         }
 
 
-        const author = await User.findOne({index: article.author});
-
-        if (!author) {
-            return res.status(404).json({message: 'Author not found'});
-        }
-
-        const fullAuthorName = `${author.firstName} ${author.lastName}`;
-        const authorInfo = {
-            index: author.index,
-            authorName: fullAuthorName
-        };
-
         return res.status(200).json({
                                         article,
-                                        author: authorInfo
                                     });
     } catch (error) {
         const errorMessage = (error as Error).message;

@@ -15,7 +15,6 @@ import {
     useFetchSingleArticleByIndex
 } from '../../features/articles/hooks';
 import {
-    setArticleAuthor,
     setSingleArticle
 } from '../../features/articles/slice/singleArticleSlice.ts';
 import {useParams} from 'react-router';
@@ -47,7 +46,6 @@ const SingleArticlePage: React.FC = () => {
     useEffect(() => {
         if (fetchedSingleArticle) {
             dispatch(setSingleArticle(fetchedSingleArticle.article));
-            dispatch(setArticleAuthor({author: fetchedSingleArticle.author}));
         }
 
     }, [
