@@ -57,12 +57,13 @@ const SingleArticle: React.FC<IArticle> = ({
 
     return (
         <div className={styles['single-article-container']}>
-            <div className={styles['single-article-title']}>Avatar "{title}" by
-                &nbsp;
-                {author.authorName}
+            <div className={styles['single-article-title']}>
+                Avatar "{title}" by&nbsp;
+                {author?.authorName || 'Неизвестный автор'}
             </div>
-            <div
-                className={styles['single-article-genres']}>{genres?.join(', ').toUpperCase()}</div>
+            <div className={styles['single-article-genres']}>
+                {genres?.join(', ').toUpperCase()}
+            </div>
             <div className={styles['single-article-content']}>
                 {content && truncateText(content)}
             </div>
@@ -92,7 +93,6 @@ const SingleArticle: React.FC<IArticle> = ({
                         </div>
                     )
                 )}
-
                 <Button
                     text={'ЧИТАТЬ'}
                     type={ButtonType.ROUNDED_SMALL}
@@ -103,6 +103,7 @@ const SingleArticle: React.FC<IArticle> = ({
             </div>
         </div>
     );
+
 };
 
 export default SingleArticle;
