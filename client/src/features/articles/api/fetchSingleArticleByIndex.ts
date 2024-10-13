@@ -6,7 +6,7 @@ export interface IFetchSingleArticleByIndexResponse {
     article: IArticle;
     author: {
         index: number;
-        name: string;
+        authorName: string;
     }
 }
 

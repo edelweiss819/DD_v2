@@ -17,7 +17,7 @@ const initialState: ISingleArticleState = {
         estimatedReadingTime: 0,
         author: {
             index: 0,
-            name: '',
+            authorName: '',
         },
     },
     currentArticleIndex: 0,
@@ -53,7 +53,7 @@ const singleArticleSlice = createSlice({
                                                                   action: PayloadAction<Pick<IArticle, 'author'>>) => {
                                                    const {author} = action.payload;
                                                    if (author && state.singleArticle.author) {
-                                                       state.singleArticle.author.name = author.name;
+                                                       state.singleArticle.author.authorName = author.authorName;
                                                        state.singleArticle.author.index = author.index;
                                                    }
 
