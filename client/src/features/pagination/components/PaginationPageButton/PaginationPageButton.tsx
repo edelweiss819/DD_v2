@@ -38,9 +38,17 @@ const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({
         }
     };
 
+
+    const removePointer = classNames({
+                                         [styles['remove-pointer']]: true
+                                     })
+
     const activePageButtonClass = classNames({
                                                  [styles['active-page-button']]: page === currentPage,
+
                                              })
+
+    const pageButtonClass = =classNames({activePageButtonClass, removePointer})
 
     return (
         <span className={activePageButtonClass} onClick={handleClick}>
