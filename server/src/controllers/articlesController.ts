@@ -45,12 +45,12 @@ export const getArticleByIndex = async (req: Request,
         const fullAuthorName = `${author.firstName} ${author.lastName}`;
         const authorInfo = {
             index: author.index,
-            fullAuthorName
+            name: fullAuthorName
         };
 
         return res.status(200).json({
                                         article,
-                                        authorInfo
+                                        author: authorInfo
                                     });
     } catch (error) {
         const errorMessage = (error as Error).message;

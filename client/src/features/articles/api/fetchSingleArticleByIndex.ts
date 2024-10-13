@@ -4,9 +4,9 @@ import {API_ROUTES} from '../../../config/endpoints.ts';
 
 export interface IFetchSingleArticleByIndexResponse {
     article: IArticle;
-    authorInfo: {
+    author: {
         index: number;
-        fullAuthorName: string;
+        name: string;
     }
 }
 

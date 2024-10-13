@@ -18,6 +18,7 @@ const SingleArticle: React.FC<IArticle> = ({
                                                title,
                                                genres,
                                                index,
+                                               author
                                            }) => {
     const dispatch = useDispatch<AppDispatch>();
     const {
@@ -57,7 +58,8 @@ const SingleArticle: React.FC<IArticle> = ({
     return (
         <div className={styles['single-article-container']}>
             <div className={styles['single-article-title']}>Avatar "{title}" by
-                Author
+                &nbsp;
+                {author.name}
             </div>
             <div
                 className={styles['single-article-genres']}>{genres?.join(', ').toUpperCase()}</div>
