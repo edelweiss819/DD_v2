@@ -48,10 +48,10 @@ const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({
 
                                              })
 
-    const pageButtonClass = classNames({
-                                           activePageButtonClass,
-                                           removePointer
-                                       })
+    const pageButtonClass = classNames(
+        activePageButtonClass,
+        removePointer
+    )
 
     return (
         <span className={pageButtonClass} onClick={handleClick}>
