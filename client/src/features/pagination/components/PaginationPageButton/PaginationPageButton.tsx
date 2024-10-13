@@ -40,7 +40,7 @@ const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({
 
 
     const removePointer = classNames({
-                                         [styles['remove-pointer']]: true
+                                         [styles['remove-pointer']]: location.pathname === '/search'
                                      })
 
     const activePageButtonClass = classNames({
@@ -48,10 +48,13 @@ const PaginationPageButton: React.FC<PaginationPageButtonProps> = ({
 
                                              })
 
-    const pageButtonClass = =classNames({activePageButtonClass, removePointer})
+    const pageButtonClass = classNames({
+                                           activePageButtonClass,
+                                           removePointer
+                                       })
 
     return (
-        <span className={activePageButtonClass} onClick={handleClick}>
+        <span className={pageButtonClass} onClick={handleClick}>
             {page}
         </span>
     );
