@@ -42,8 +42,14 @@ const articleSchema: Schema = new Schema({
                                                  required: true
                                              },
                                              author: {
-                                                 type: Number,
-                                                 required: true,
+                                                 index: {
+                                                     type: Number,
+                                                     required: true
+                                                 },
+                                                 authorName: {
+                                                     type: String,
+                                                     required: true
+                                                 },
                                              }
                                          })
 
