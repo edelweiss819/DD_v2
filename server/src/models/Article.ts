@@ -9,6 +9,7 @@ export interface IArticle extends Document {
     publishedDate: number;
     estimatedReadingTime: number;
     characterCount: number;
+    author: number;
 }
 
 const articleSchema: Schema = new Schema({
@@ -40,6 +41,10 @@ const articleSchema: Schema = new Schema({
                                                  type: Number,
                                                  required: true
                                              },
+                                             author: {
+                                                 type: Number,
+                                                 required: true,
+                                             }
                                          })
 
 //Индексация частоиспользуеммых сценариев получения данных.

@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import Article from '../models/Article';
 import dotenv from 'dotenv';
 import Metadata from '../models/Metadata';
+import User from '../models/User';
 
 dotenv.config();
 
@@ -30,12 +31,26 @@ export const getArticleByIndex = async (req: Request,
     try {
 
         const article = await Article.findOne({index});
-
         if (!article) {
             return res.status(404).json({message: 'Article not found'});
         }
 
-        return res.status(200).json(article);
+        const author = await User.findOne({author: article.author});
+
+        if (!author) {
+            return res.status(404).json({message: 'Author not found'});
+        }
+
+        const fullAuthorName = `${author.firstName} ${author.lastName}`;
+        const authorInfo = {
+            index: author.index,
+            fullAuthorName
+        };
+
+        return res.status(200).json({
+                                        article,
+                                        authorInfo
+                                    });
     } catch (error) {
         const errorMessage = (error as Error).message;
         return res.status(500).json({message: errorMessage});

@@ -15,6 +15,7 @@ import {
     useFetchSingleArticleByIndex
 } from '../../features/articles/hooks';
 import {
+    setAuthorName,
     setSingleArticle
 } from '../../features/articles/slice/singleArticleSlice.ts';
 import {useParams} from 'react-router';
@@ -35,7 +36,7 @@ const SingleArticlePage: React.FC = () => {
 
     const {
         singleArticle,
-        currentArticleIndex
+        currentArticleIndex,
     } = useSelector((state: RootState) => state.singleArticle);
 
     const {token} = useSelector((state: RootState) => state.user);
@@ -45,7 +46,8 @@ const SingleArticlePage: React.FC = () => {
 
     useEffect(() => {
         if (fetchedSingleArticle) {
-            dispatch(setSingleArticle(fetchedSingleArticle));
+            dispatch(setSingleArticle(fetchedSingleArticle.article));
+            dispatch(setAuthorName(fetchedSingleArticle.authorInfo.fullAuthorName))
         }
 
     }, [
@@ -74,7 +76,7 @@ const SingleArticlePage: React.FC = () => {
                 </Header>
             </Element>
             <Content>
-                <SingleArticleContent singleArticle={singleArticle}/>
+                <SingleArticleContent/>
             </Content>
             <Footer/>
         </div>

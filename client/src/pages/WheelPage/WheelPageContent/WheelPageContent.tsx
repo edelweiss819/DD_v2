@@ -43,13 +43,13 @@ const WheelPageContent: React.FC = () => {
                     ...prevList,
                     {
                         index: winningArticleIndex,
-                        title: article.title
+                        title: article.article.title
                     }
                 ]);
             }
         }
     }, [
-        
+
                   article
               ]);
 

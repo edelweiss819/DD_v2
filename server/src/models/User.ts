@@ -20,6 +20,7 @@ export interface IUser extends Document {
     index: number;
     role: string;
     registrationDate: number;
+    avatar: string;
 }
 
 const userSchema: Schema = new Schema({
@@ -86,6 +87,11 @@ const userSchema: Schema = new Schema({
                                               type: Number,
                                               required: true
                                           },
+                                          avatar: {
+                                              type: String,
+                                              required: true
+
+                                          }
                                       });
 
 
