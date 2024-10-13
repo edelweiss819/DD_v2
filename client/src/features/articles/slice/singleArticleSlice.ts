@@ -5,6 +5,7 @@ import {IArticle} from '../../../types';
 export interface ISingleArticleState {
     singleArticle: IArticle,
     currentArticleIndex: number;
+    authorName: string;
 
 }
 
@@ -18,6 +19,7 @@ const initialState: ISingleArticleState = {
         characterCount: 0,
         estimatedReadingTime: 0,
     },
+    authorName: '',
     currentArticleIndex: 0,
 
 }
@@ -31,6 +33,10 @@ const singleArticleSlice = createSlice({
                                                                   action: PayloadAction<IArticle>) => {
                                                    state.singleArticle = action.payload;
                                                },
+                                               setAuthorName: (state,
+                                                               action: PayloadAction<string>) => {
+                                                   state.authorName = action.payload;
+                                               },
                                                setCurrentArticleIndex: (state,
                                                                         action: PayloadAction<number>) => {
                                                    state.currentArticleIndex = action.payload;
@@ -42,5 +48,6 @@ const singleArticleSlice = createSlice({
 export const {
     setSingleArticle,
     setCurrentArticleIndex,
+    setAuthorName
 } = singleArticleSlice.actions;
 export default singleArticleSlice.reducer;

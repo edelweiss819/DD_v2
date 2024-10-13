@@ -1,5 +1,4 @@
 import React from 'react';
-import {IArticle} from '../../../types';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
 import styles from './SingleArticleContent.module.scss'
@@ -13,12 +12,12 @@ import {
 } from '../../../shared/utils';
 import {GENRES_DIR} from '../../../constants';
 
-export interface ISingleArticleContentProps {
-    singleArticle: IArticle;
-}
 
-const SingleArticleContent: React.FC<ISingleArticleContentProps> = () => {
-    const {singleArticle} = useSelector((state: RootState) => state.singleArticle);
+const SingleArticleContent: React.FC = () => {
+    const {
+        singleArticle,
+        authorName
+    } = useSelector((state: RootState) => state.singleArticle);
     const paragraphs = (singleArticle.content && splitContentIntoParagraphs(singleArticle.content, 10));
 
 //TODO Добавить аватар и автора, когда сделаю
@@ -27,7 +26,7 @@ const SingleArticleContent: React.FC<ISingleArticleContentProps> = () => {
             <div className={styles['main-section-content-container']}>
                 <div
                     className={styles['main-section-content-container-author-block']}>
-                    Avatar Author
+                    Avatar {authorName}
                 </div>
                 <div
                     className={styles['main-section-content-container-genres-block']}>

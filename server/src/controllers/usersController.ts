@@ -30,6 +30,7 @@ export class UsersController {
                                          password: hashedPassword,
                                          role: 'user',
                                          registrationDate: Math.floor(Date.now() / 1000),
+                                         avatar: ''
                                      });
 
             const maxIndexUser = await User.findOne().sort('-index').lean().exec();
@@ -152,7 +153,7 @@ export class UsersController {
                     }
                     return result;
                 }, {});
-                
+
                 return res.status(200).json({
                                                 message: 'Данные пользователя:',
                                                 user: resFields
