@@ -120,13 +120,14 @@ const Pagination: React.FC<PaginationProps> = ({scrollTo}) => {
     return (
         <div className={styles['pagination-container']}>
             <nav className={styles['pagination']}>
-                <span
-                    onClick={handleClickPrev}
-                    className={prevCursorClass}
-                >
+                {(totalPages > 1) && <span
+					onClick={handleClickPrev}
+					className={prevCursorClass}
+				>
                     <span
-                        className={styles['pagination-prev-symbol']}>&#60;</span> Prev
+						className={styles['pagination-prev-symbol']}>&#60;</span> Prev
                 </span>
+                }
 
                 {pageNumbers.map((page, index) => {
 
@@ -148,13 +149,13 @@ const Pagination: React.FC<PaginationProps> = ({scrollTo}) => {
                     );
                 })}
 
-                <span
-                    onClick={handleClickNext}
-                    className={nextCursorClass}
-                >
+                {(totalPages > 1) && <span
+					onClick={handleClickNext}
+					className={nextCursorClass}
+				>
                     Next <span
-                    className={styles['pagination-next-symbol']}>&#62;</span>
-                </span>
+					className={styles['pagination-next-symbol']}>&#62;</span>
+                </span>}
             </nav>
         </div>
     );
