@@ -4,10 +4,6 @@ import {API_ROUTES} from '../../../config/endpoints.ts';
 
 export interface IFetchSingleArticleByIndexResponse {
     article: IArticle;
-    author: {
-        index: number;
-        authorName: string;
-    }
 }
 
 export const fetchSingleArticleByIndex = async (index: string): Promise<IFetchSingleArticleByIndexResponse> => {

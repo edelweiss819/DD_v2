@@ -1,3 +1,8 @@
+export interface IAuthor {
+    name: string;
+    index: number;
+}
+
 export interface IArticle {
     _id?: string;
     title: string;
@@ -8,8 +13,5 @@ export interface IArticle {
     estimatedReadingTime: number,
     characterCount: number,
     onClick?: () => void,
-    author: {
-        authorName: string;
-        index: number
-    }
+    author: IAuthor
 }

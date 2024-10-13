@@ -23,7 +23,7 @@ const SingleArticleContent: React.FC = () => {
                     className={styles['main-section-content-container-author-block']}>
                     {singleArticle.author ? (
                         <>
-                            Avatar {singleArticle.author.authorName}
+                            Avatar {singleArticle.author.name}
                         </>
                     ) : (
                         <span>Author not found</span>

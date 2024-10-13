@@ -46,19 +46,12 @@ const articleSchema: Schema = new Schema({
                                                      type: Number,
                                                      required: true
                                                  },
-                                                 authorName: {
+                                                 name: {
                                                      type: String,
                                                      required: true
                                                  },
                                              }
                                          })
-
-//Индексация частоиспользуеммых сценариев получения данных.
-articleSchema.index({title: 1});
-articleSchema.index({
-                        title: 'text',
-                        content: 'text'
-                    });
 
 
 const Article: Model<IArticle> = mongoose.model<IArticle>('Article', articleSchema, 'stulchik');
