@@ -59,7 +59,7 @@ const SingleArticle: React.FC<IArticle> = ({
         <div className={styles['single-article-container']}>
             <div className={styles['single-article-title']}>Avatar "{title}" by
                 &nbsp;
-                {author.name}
+                {author.authorName}
             </div>
             <div
                 className={styles['single-article-genres']}>{genres?.join(', ').toUpperCase()}</div>
