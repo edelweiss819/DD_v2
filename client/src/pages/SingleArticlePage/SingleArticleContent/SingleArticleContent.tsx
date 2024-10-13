@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
-import styles from './SingleArticleContent.module.scss'
+import styles from './SingleArticleContent.module.scss';
 import Button, {
     ButtonColor,
     ButtonType
@@ -12,28 +12,33 @@ import {
 } from '../../../shared/utils';
 import {GENRES_DIR} from '../../../constants';
 
-
 const SingleArticleContent: React.FC = () => {
-    const {
-        singleArticle,
-        authorName
-    } = useSelector((state: RootState) => state.singleArticle);
+    const {singleArticle} = useSelector((state: RootState) => state.singleArticle);
     const paragraphs = (singleArticle.content && splitContentIntoParagraphs(singleArticle.content, 10));
 
-//TODO Добавить аватар и автора, когда сделаю
     return (
         <main className={styles['main-section']}>
             <div className={styles['main-section-content-container']}>
                 <div
                     className={styles['main-section-content-container-author-block']}>
-                    Avatar {authorName}
+                    {singleArticle.author ? (
+                        <>
+                            Avatar {singleArticle.author.name}
+                        </>
+                    ) : (
+                        <span>Author not found</span>
+                    )}
                 </div>
                 <div
                     className={styles['main-section-content-container-genres-block']}>
                     {singleArticle.genres && singleArticle.genres.map((genre) => (
-                        <Button text={genre} type={ButtonType.ROUNDED_SMALL}
-                                color={ButtonColor.GREY} key={genre}
-                                to={`${GENRES_DIR}` + generateLinkByGenre(genre)}/>
+                        <Button
+                            text={genre}
+                            type={ButtonType.ROUNDED_SMALL}
+                            color={ButtonColor.GREY}
+                            key={genre}
+                            to={`${GENRES_DIR}${generateLinkByGenre(genre)}`}
+                        />
                     ))}
                 </div>
                 <article

@@ -21,6 +21,7 @@ const ArticlesList: React.FC<IArticlesList> = ({
                         publishedDate={article.publishedDate}
                         estimatedReadingTime={article.estimatedReadingTime}
                         characterCount={article.characterCount}
+                        author={article.author}
                     />
                 ))
             ) : (

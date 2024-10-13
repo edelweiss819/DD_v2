@@ -8,4 +8,8 @@ export interface IArticle {
     estimatedReadingTime: number,
     characterCount: number,
     onClick?: () => void,
+    author: {
+        name: string;
+        index: number
+    }
 }
