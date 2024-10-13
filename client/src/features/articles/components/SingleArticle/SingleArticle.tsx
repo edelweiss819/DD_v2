@@ -55,7 +55,6 @@ const SingleArticle: React.FC<IArticle> = ({
         }
     };
 
-    console.log(author);
     return (
         <div className={styles['single-article-container']}>
             <div className={styles['single-article-title']}>

@@ -8,7 +8,6 @@ import {truncateText} from '../../../../shared/utils';
 const ArticlesList: React.FC<IArticlesList> = ({
                                                    articlesList,
                                                }) => {
-    console.log(articlesList);
     return (
         <div className={styles['articles-container']}>
             {Array.isArray(articlesList) ? (

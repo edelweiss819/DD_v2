@@ -89,7 +89,8 @@ const userSchema: Schema = new Schema({
                                           },
                                           avatar: {
                                               type: String,
-                                              required: true
+                                              //TODO ИЗМЕНИТЬ КАК РЕАЛИЗУЮ АВАТАР
+                                              required: false
 
                                           }
                                       });
