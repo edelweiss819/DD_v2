@@ -12,13 +12,13 @@ export default defineConfig({
                                                  exportType: 'default',
                                                  ref: true,
                                                  svgo: false,
-                                                 titleProp: true
+                                                 titleProp: true,
+                                                 typescript: true,
                                              },
                                              include: '**/*.svg',
                                          }),
 
                                 ],
-                                assetsInclude: ['**/*.svg'],
                                 server: {
                                     watch: {usePolling: true}
                                 },

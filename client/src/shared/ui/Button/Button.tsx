@@ -3,11 +3,9 @@ import {Link} from 'react-router-dom';
 import styles from './Button.module.scss';
 import classNames from 'classnames';
 
-// @ts-ignore
+
 import SignUpArrow from '../../../assets/ButtonIcons/SignUpArrow.svg?react';
-// @ts-ignore
 import Google from '../../../assets/ButtonIcons/Google.svg?react';
-// @ts-ignore
 import Facebook from '../../../assets/ButtonIcons/Facebook.svg?react';
 
 
@@ -94,8 +92,18 @@ const Button: React.FC<ButtonProps> = ({
         >
             <span className={textClass}>{text}</span>
             {iconSrc && (
-                <img className={styles['btn-icon']} src={iconSrc}
-                     width={iconWidth} alt={icon}/>
+                typeof iconSrc === 'string' ? (
+                    <img
+                        className={styles['btn-icon']}
+                        src={iconSrc}
+                        width={iconWidth}
+                        alt={icon}
+                    />
+                ) : (
+                    React.createElement(iconSrc, {
+                        width: iconWidth,
+                    })
+                )
             )}
         </Link>
     );
