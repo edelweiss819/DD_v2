@@ -12,6 +12,8 @@ import {AppDispatch, RootState} from '../../../../store/store';
 import StarFavArticleIcon
     from '../../../../assets/FavIcons/StarFavArticleIcon.tsx';
 import {useToggleFavArticleStatus} from '../../hooks';
+import {useFetchUserAvatar} from '../../../auth/hooks';
+import UserAvatar from '../../../auth/components/UserAvatar/UserAvatar.tsx';
 
 const SingleArticle: React.FC<IArticle> = ({
                                                content,
@@ -26,6 +28,12 @@ const SingleArticle: React.FC<IArticle> = ({
         token: userToken,
         isAuthorized
     } = useSelector((state: RootState) => state.user);
+
+    // Аватар
+    const {data: avatarData} = useFetchUserAvatar(author.index);
+    const avatarUrl = avatarData?.avatarUrl || 'defaultAvatar';
+    const userIndex = avatarData?.userIndex || -1;
+
 
     const isFavorite = () => {
         return favoriteArticles.some(article => Number(article.index) === index);
@@ -58,7 +66,9 @@ const SingleArticle: React.FC<IArticle> = ({
     return (
         <div className={styles['single-article-container']}>
             <div className={styles['single-article-title']}>
-                Avatar "{title}" by&nbsp;
+                {avatarData && <UserAvatar avatarUrl={avatarUrl}
+										   userIndex={userIndex}/>} "{title}"
+                by&nbsp;
                 {author?.name || 'Неизвестный автор'}
             </div>
             <div className={styles['single-article-genres']}>

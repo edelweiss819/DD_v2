@@ -13,9 +13,12 @@
 
   &-title {
     @include font-main;
+    display: flex;
     font-size: 20px;
     font-weight: 500;
-    line-height: 28px
+    line-height: 28px;
+    align-items: center;
+
 
   }
 

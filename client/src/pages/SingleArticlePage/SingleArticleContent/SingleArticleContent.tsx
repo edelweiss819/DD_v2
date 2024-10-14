@@ -11,10 +11,17 @@ import {
     splitContentIntoParagraphs
 } from '../../../shared/utils';
 import {GENRES_DIR} from '../../../constants';
+import UserAvatar
+    from '../../../features/auth/components/UserAvatar/UserAvatar.tsx';
+import {useFetchUserAvatar} from '../../../features/auth/hooks';
 
 const SingleArticleContent: React.FC = () => {
     const {singleArticle} = useSelector((state: RootState) => state.singleArticle);
     const paragraphs = (singleArticle.content && splitContentIntoParagraphs(singleArticle.content, 10));
+
+    const {data: avatarData} = singleArticle.author ? useFetchUserAvatar(singleArticle.author.index) : {data: null};
+    const avatarUrl = avatarData?.avatarUrl || 'defaultAvatar';
+    const userIndex = avatarData?.userIndex || -1;
 
     return (
         <main className={styles['main-section']}>
@@ -23,7 +30,9 @@ const SingleArticleContent: React.FC = () => {
                     className={styles['main-section-content-container-author-block']}>
                     {singleArticle.author ? (
                         <>
-                            Avatar {singleArticle.author.name}
+                            <UserAvatar avatarUrl={avatarUrl}
+                                        userIndex={userIndex}/>
+                            {singleArticle.author.name}
                         </>
                     ) : (
                         <span>Author not found</span>
