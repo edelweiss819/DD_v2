@@ -14,6 +14,7 @@ import {GENRES_DIR} from '../../../constants';
 import UserAvatar
     from '../../../features/auth/components/UserAvatar/UserAvatar.tsx';
 import {useFetchUserAvatar} from '../../../features/auth/hooks';
+import AuthorLink from '../../../shared/ui/AuthorLink/AuthorLink.tsx';
 
 const SingleArticleContent: React.FC = () => {
     const {singleArticle} = useSelector((state: RootState) => state.singleArticle);
@@ -32,7 +33,8 @@ const SingleArticleContent: React.FC = () => {
                         <>
                             <UserAvatar avatarUrl={avatarUrl}
                                         userIndex={userIndex}/>
-                            {singleArticle.author.name}
+                            <AuthorLink index={singleArticle.author.index}
+                                        name={singleArticle.author.name}/>
                         </>
                     ) : (
                         <span>Author not found</span>
