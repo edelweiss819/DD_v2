@@ -10,19 +10,26 @@ import ProfilePageContent from './ProfilePageContent/ProfilePageContent.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/store.ts';
 import {useGetUser} from '../../features/auth/hooks';
+import {decodeUserToken} from '../../shared/utils';
+
 
 const ProfilePage: React.FC = () => {
     const {token} = useSelector((state: RootState) => state.user);
+
 
     useEffect(() => {
         document.title = 'DD || Мой профиль';
     }, []);
 
+    const decodedUserToken = decodeUserToken(token!);
+    const decodedCurrentUserIndex = decodedUserToken.index;
+
+
     const {isLoading} = useGetUser(token!, [
         'firstName',
         'lastName',
         'registrationDate',
-    ]);
+    ], decodedCurrentUserIndex);
 
 
     const user = useSelector((state: RootState) => ({
