@@ -32,7 +32,11 @@ const AppRoutes: React.FC = () => {
                 <Route path={'/sign_in'} element={<SignInPage/>}/>
                 <Route path={'/wheel'} element={<WheelPage/>}/>
                 <Route path={'/user/:index'}
-                       element={<OtheUsersProfilePage/>}/>
+                       element={
+                           <PrivateRoute>
+                               <OtheUsersProfilePage/>
+                           </PrivateRoute>
+                       }/>
                 <Route
                     path={'/profile'}
                     element={
