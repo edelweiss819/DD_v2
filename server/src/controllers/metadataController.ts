@@ -19,7 +19,7 @@ export const getMetadata = async (): Promise<IMetadata | null> => {
 export const getArticlesTotalCount = async (req: Request,
                                             res: Response): Promise<void> => {
     try {
-        console.log('Fetching metadata for total articles count...');
+        // console.log('Fetching metadata for total articles count...');
 
         const metadata = await Metadata.findOne();
         // console.log('Fetched metadata:', metadata);

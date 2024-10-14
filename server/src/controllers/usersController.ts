@@ -30,7 +30,7 @@ export class UsersController {
                                          password: hashedPassword,
                                          role: 'user',
                                          registrationDate: Math.floor(Date.now() / 1000),
-                                         avatar: ''
+                                         avatar: 'defaultAvatar'
                                      });
 
             const maxIndexUser = await User.findOne().sort('-index').lean().exec();
@@ -350,6 +350,38 @@ export class UsersController {
             return res.status(500).json({message: 'Ошибка сервера.'});
         }
     }
+
+    async getUserAvatar(req: Request, res: Response) {
+        try {
+            const userIndex = Number(req.query.index);
+
+
+            if (!userIndex) {
+                return res.status(400).json({message: 'Индекс автора обязателен.'});
+            }
+
+
+            const user = await User.findOne({index: userIndex});
+
+            if (!user) {
+                return res.status(404).json({message: 'Автор по индексу не найден.'});
+            }
+
+
+            const avatarUrl = user.avatar;
+
+            return res.status(200).json({
+                                            userIndex,
+                                            avatarUrl,
+                                        });
+
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({message: 'Ошибка сервера.'});
+        }
+
+    }
 }
+
 
 export const usersController = new UsersController();

@@ -64,5 +64,6 @@ router.get('/users/lastArticles/getLastArticlesList',
                              ]),
            (req, res) => usersController.getUserLastArticlesList(req, res)
 );
-
+router.get('/users/avatar/getUserAvatar', (req,
+                                           res) => usersController.getUserAvatar(req, res))
 export default router;

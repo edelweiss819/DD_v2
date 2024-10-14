@@ -33,7 +33,7 @@ export const useFetchUserLastArticlesList = (token: string | undefined) => {
 
     useEffect(() => {
         if (data) {
-            console.log(data.message);
+            // console.log(data.message);
             dispatch(setUserLastArticlesList(data.lastArticles));
         }
     }, [
@@ -44,6 +44,6 @@ export const useFetchUserLastArticlesList = (token: string | undefined) => {
     return {
         data,
         error,
-        isLoading, // Добавлено
+        isLoading,
     }
 }

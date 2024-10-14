@@ -20,5 +20,6 @@ export const API_ROUTES = {
     'POST_TOGGLE_ARTICLE_STATUS': '/users/favorites/toggle',
     'GET_USER_FAV_ARTICLES_LIST': '/users/favorites/getUserFavoriteArticlesList',
     'POST_USER_LAST_ARTICLE': '/users/lastsArticles/postLastArticle',
-    'GET_USER_LAST_ARTICLES_LIST': '/users/lastArticles/getLastArticlesList'
+    'GET_USER_LAST_ARTICLES_LIST': '/users/lastArticles/getLastArticlesList',
+    'GET_USER_AVATAR': '/users/avatar/getUserAvatar',
 }
