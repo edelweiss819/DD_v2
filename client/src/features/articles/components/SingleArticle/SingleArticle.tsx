@@ -14,6 +14,7 @@ import StarFavArticleIcon
 import {useToggleFavArticleStatus} from '../../hooks';
 import {useFetchUserAvatar} from '../../../auth/hooks';
 import UserAvatar from '../../../auth/components/UserAvatar/UserAvatar.tsx';
+import AuthorLink from '../../../../shared/ui/AuthorLink/AuthorLink.tsx';
 
 const SingleArticle: React.FC<IArticle> = ({
                                                content,
@@ -66,10 +67,14 @@ const SingleArticle: React.FC<IArticle> = ({
     return (
         <div className={styles['single-article-container']}>
             <div className={styles['single-article-title']}>
-                {avatarData && <UserAvatar avatarUrl={avatarUrl}
-										   userIndex={userIndex}/>} "{title}"
-                by&nbsp;
-                {author?.name || 'Неизвестный автор'}
+                {avatarData &&
+					<div>
+						<UserAvatar avatarUrl={avatarUrl}
+									userIndex={userIndex}/> "{title}"
+						от&nbsp;
+						<AuthorLink index={author.index}
+									name={author.name}/>
+					</div>}
             </div>
             <div className={styles['single-article-genres']}>
                 {genres?.join(', ').toUpperCase()}
