@@ -10,7 +10,7 @@ export interface IGetUserReq {
 
 export interface IGetUserRes {
     message: string;
-    user: Partial<IUser>;
+    user: IUser;
 }
 
 export const getUser = async ({

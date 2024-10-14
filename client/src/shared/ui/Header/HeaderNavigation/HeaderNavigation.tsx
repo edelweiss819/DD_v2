@@ -6,7 +6,7 @@ import {
     HEADER_NAVIGATION_AUTHORIZED_PAGES,
     HEADER_NAVIGATION_PAGES
 } from '../../../../constants';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../../store/store.ts';
 import {removeUser} from '../../../../features/auth/slice/userSlice.ts';
@@ -15,9 +15,12 @@ const HeaderNavigation: React.FC = () => {
 
     const {isAuthorized} = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     const handleExitButton = () => {
         dispatch(removeUser());
+        navigate('/');
+
     }
 
 

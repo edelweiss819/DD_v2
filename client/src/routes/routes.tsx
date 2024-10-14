@@ -13,6 +13,7 @@ const SignUpPage = React.lazy(() => import('../pages/SignUpPage/SignUpPage.tsx')
 const SignInPage = React.lazy(() => import('../pages/SignInPage/SignInPage.tsx'));
 const ProfilePage = React.lazy(() => import('../pages/ProfilePage/ProfilePage.tsx'));
 const WheelPage = React.lazy(() => import('../pages/WheelPage/WheelPage.tsx'));
+const OtheUsersProfilePage = React.lazy(() => import('../pages/OtherUsersProfilePage/OtherUsersProfilePage.tsx'));
 
 const AppRoutes: React.FC = () => {
 
@@ -30,6 +31,8 @@ const AppRoutes: React.FC = () => {
                 <Route path={'/sign_up'} element={<SignUpPage/>}/>
                 <Route path={'/sign_in'} element={<SignInPage/>}/>
                 <Route path={'/wheel'} element={<WheelPage/>}/>
+                <Route path={'/user/:index'}
+                       element={<OtheUsersProfilePage/>}/>
                 <Route
                     path={'/profile'}
                     element={
