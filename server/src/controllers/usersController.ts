@@ -94,18 +94,22 @@ export class UsersController {
         console.log('Получен запрос на получение пользователя.');
 
         const token = req.headers.authorization?.split(' ')[1];
-        const userIndexByAdmin = Number(req.headers['user-index']);
-        console.log(`Индекс запрашиваемого пользователя: ${userIndexByAdmin}`);
+        const userRequestIndex = Number(req.headers['user-index']);
+        console.log(`Индекс запрашиваемого пользователя: ${userRequestIndex}`);
         const userFields = req.headers['user-fields'] as string;
 
 
-        if (!token && isNaN(userIndexByAdmin)) {
-            console.warn('Ошибка авторизации: отсутствует токен или ID.');
-            return res.status(401).json({message: 'Токен или айди обязателен.'});
+        if (!token) {
+            console.warn('Ошибка авторизации: отсутствует токен.');
+            return res.status(401).json({message: 'Токен обязателен.'});
+        }
+
+        if (isNaN(userRequestIndex)) {
+            console.warn('Передано некорректное значение для индекса пользователя.');
+            return res.status(400).json({message: 'Некорректный индекс пользователя.'});
         }
 
         try {
-
             const decoded: any = jwt.verify(token!, process.env.JWT_SECRET as string);
             console.log('Токен успешно декодирован:', decoded);
 
@@ -114,22 +118,19 @@ export class UsersController {
 
             let user;
 
-            if (userRole === 'admin' && userIndexByAdmin) {
-                user = await User.findOne({index: userIndexByAdmin});
-                console.log(`Пользователь по индексу ${userIndexByAdmin} найден (Поиск от имени администратора).`);
-            } else if (userRole === 'admin' && !userIndexByAdmin) {
-                user = await User.findOne({index: userIndex});
-                console.log(`Пользователь с индексом ${userIndex} найден (Администратор).`);
-            } else {
-                user = await User.findOne({index: userIndex});
-                console.log(`Пользователь с индексом ${userIndex} найден (обычный пользователь).`);
+            if (userIndex) {
+                user = await User.findOne({index: userRequestIndex});
+                console.log(`Пользователь по индексу ${userRequestIndex} найден.`);
+            } else if (userRole === 'admin' && !userRequestIndex) {
+                user = await User.findOne({index: userRequestIndex});
+                console.log(`Пользователь с индексом ${userRequestIndex} найден (Администратор).`);
             }
+
 
             if (!user) {
-                console.warn(`Пользователь с индексом ${userIndex} не найден.`);
+                console.warn(`Пользователь с индексом ${userRequestIndex} не найден.`);
                 return res.status(404).json({message: 'Пользователь не найден.'});
             }
-
 
             if (!userFields) {
                 console.warn('Ошибка: user-fields не передан в заголовках.');
@@ -137,28 +138,32 @@ export class UsersController {
             }
 
             const splitedData = userFields.split(',');
-            console.log('Запрошенные поля пользователя:', splitedData);
+            console.log(`Запрошенные поля пользователя с индексом ${userRequestIndex}:`, {splitedData});
 
-            if (splitedData.length === 1 && splitedData[0].trim() === 'fullUser') {
-                console.log('Возвращаются все данные пользователя.');
-                return res.status(200).json({
-                                                message: 'Пользователь получен:',
-                                                user
-                                            });
-            } else {
-                const resFields = splitedData.reduce((result: any,
-                                                      field: string) => {
-                    if (field.trim() in user) {
-                        result[field.trim() as keyof IUser] = user[field.trim() as keyof IUser];
-                    }
-                    return result;
-                }, {});
+            const protectedFields = [
+                'password',
+                'email',
+                'lastArticles'
+            ];
+            const resFields: any = {};
 
-                return res.status(200).json({
-                                                message: 'Данные пользователя:',
-                                                user: resFields
-                                            });
+            for (const field of splitedData) {
+                const trimmedField = field.trim() as keyof IUser;
+
+                if (protectedFields.includes(trimmedField) && (userRole !== 'admin' && userIndex !== userRequestIndex)) {
+                    console.warn(`Пользователь ${userIndex} не имеет доступа к полю: ${trimmedField} пользователя ${userRequestIndex}`);
+                    continue;
+                }
+
+                if (trimmedField in user) {
+                    resFields[trimmedField] = user[trimmedField];
+                }
             }
+
+            return res.status(200).json({
+                                            message: 'Данные пользователя:',
+                                            user: resFields,
+                                        });
 
         } catch (error) {
             console.error('Ошибка при получении пользователя:', error);

@@ -6,7 +6,7 @@ import Button, {
 } from '../../../shared/ui/Button/Button.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
-import {timestampToLocalDate} from '../../../shared/utils';
+import {decodeUserToken, timestampToLocalDate} from '../../../shared/utils';
 import {useGetUser} from '../../../features/auth/hooks';
 import FavoriteArticlesList
     from './FavoriteArticlesList/FavoriteArticlesList.tsx';
@@ -22,10 +22,14 @@ const ProfilePageContent: React.FC = () => {
         lastArticles
     } = useSelector((state: RootState) => state.user);
 
+    const decodedUserToken = decodeUserToken(token!);
+    const decodedCurrentUserIndex = decodedUserToken.index;
+
+
     useGetUser(token!, [
         'lastArticles',
         'favoriteArticles'
-    ]);
+    ], decodedCurrentUserIndex);
 
     const sortedLastArticles = Array.isArray(lastArticles) ? lastArticles.slice().sort((a,
                                                                                         b) => {
