@@ -16,7 +16,7 @@ export const useFetchArticlesListByGenreAndWords = (
 ) => {
     return useQuery<IFetchArticlesResponse, Error>({
                                                        queryKey: [
-                                                           fetchArticlesListByGenreAndWords,
+                                                           'fetchArticlesListByGenreAndWords',
                                                            params
                                                        ],
                                                        queryFn: async () => fetchArticlesListByGenreAndWords(params),

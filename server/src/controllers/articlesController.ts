@@ -1,7 +1,10 @@
 import {Request, Response} from 'express';
 import Article from '../models/Article';
+import User from '../models/User';
 import dotenv from 'dotenv';
 import Metadata from '../models/Metadata';
+import {decodeToken} from '../utils';
+
 
 dotenv.config();
 
@@ -31,7 +34,7 @@ export const getArticleByIndex = async (req: Request,
 
         const article = await Article.findOne({index});
         if (!article) {
-            return res.status(404).json({message: 'Article not found'});
+            return res.status(404).json({message: 'Статья не найдена.'});
         }
 
 
@@ -52,7 +55,7 @@ export const getArticlesListByGenre = async (req: Request,
     const page = parseInt(req.query.page as string) || 1;
 
     if (!genre) {
-        return res.status(400).json({message: 'Genre parameter is required'});
+        return res.status(400).json({message: 'Жанр обязателен!'});
     }
 
     console.log('Поиск по жанру:', genre);
@@ -78,10 +81,10 @@ export const getArticlesListByGenre = async (req: Request,
         if (filteredArticlesByGenre.length > 0) {
             return res.status(200).json(filteredArticlesByGenre);
         } else {
-            return res.status(404).json({message: 'No articles found for this genre'});
+            return res.status(404).json({message: 'Статьи по жанру не найдены.'});
         }
     } catch (error) {
-        console.error('Error fetching filtered articles:', error);
+        console.error('Ошибка при получение статей по жанру:', error);
         const errorMessage = (error as Error).message;
         return res.status(500).json({message: errorMessage});
     }
@@ -218,7 +221,7 @@ export const getArticlesByGenreAndWords = async (req: Request,
         return res.status(400).json({message: 'Не указаны жанры или слова для поиска.'});
 
     } catch (error) {
-        console.error('Ошибка при получении статей:', error);
+        console.error('Ошибка при получении статей по поиску:', error);
         const errorMessage = (error as Error).message;
         return res.status(500).json({message: errorMessage});
     }
@@ -263,7 +266,7 @@ export const getTotalArticlesCountByGenresAndWords = async (req: Request,
         console.log('Всего статей параметрам запроса:', total)
         return res.status(200).json(total);
     } catch (error) {
-        console.error('Ошибка при получении общего количества статей:', error);
+        console.error('Ошибка при получении общего количества статей по параметрам поиска:', error);
         const errorMessage = (error as Error).message;
         return res.status(500).json({message: errorMessage});
     }
@@ -314,8 +317,70 @@ export const getRandomArticlesList = async (req: Request, res: Response) => {
                                         randomArticlesList
                                     });
     } catch (error) {
-        console.error('Ошибка при получении общего количества статей:', error);
+        console.error('Ошибка при получении случайных статей:', error);
         const errorMessage = (error as Error).message;
         return res.status(500).json({message: errorMessage});
     }
 };
+
+// Удаление статьи
+export const deleteArticleByIndex = async (req: Request, res: Response) => {
+    try {
+        const token = req.headers['authorization']?.split(' ')[1];
+        const articleIndex = Number(req.params.index);
+        const decoded = decodeToken(token!);
+        const userIndex = Number(decoded.index);
+        const userRole = decoded.role;
+
+        const article = await Article.findOne({index: articleIndex});
+
+        if (!article) {
+            console.error(`Статья с индексом ${articleIndex} не найдена.`);
+            return res.status(404).json({message: 'Статья не найдена.'});
+        }
+
+        if (userRole !== 'admin' && userIndex !== article.author.index) {
+            console.error(`Ошибка доступа. Пользователь с индексом ${userIndex} не имеет прав для удаления статей.`);
+            return res.status(403).json({message: 'Отказано в доступе.'});
+        }
+
+        const articleGenres = article.genres;
+
+        const updatePromises = articleGenres.map(genre => {
+            return Metadata.findOneAndUpdate(
+                {},
+                {
+                    $inc: {
+                        [`metadata.genresCount.${genre}`]: -1
+                    },
+                    $set: {'metadata.lastUpdated': Date.now()}
+                },
+                {new: true}
+            );
+        });
+
+        await Promise.all(updatePromises);
+
+        await article.deleteOne();
+
+        await User.updateMany(
+            {},
+            {
+                $pull: {
+                    favoriteArticles: {index: articleIndex},
+                    lastArticles: {index: articleIndex}
+                }
+            }
+        );
+
+        console.log(`Статья под номером ${articleIndex} успешно удалена.`);
+        return res.status(200).json({message: `Статья под номером ${articleIndex} успешно удалена.`});
+
+    } catch (error) {
+        console.error('Ошибка при удалении статьи:', error);
+        const errorMessage = (error as Error).message;
+        return res.status(500).json({message: errorMessage});
+    }
+}
+
+

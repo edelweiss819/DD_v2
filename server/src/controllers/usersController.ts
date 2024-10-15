@@ -138,7 +138,7 @@ export class UsersController {
             }
 
             const splitedData = userFields.split(',');
-            console.log(`Запрошенные поля пользователя с индексом ${userRequestIndex}:`, {splitedData});
+            console.log(`Запрошенные поля пользователя с индексом ${userRequestIndex}:`, splitedData);
 
             const protectedFields = [
                 'password',

@@ -2,7 +2,7 @@ import {useQuery} from '@tanstack/react-query';
 import {fetchUserAvatar, IFetchUserAvatarRes} from '../../articles/api';
 
 
-export const useFetchUserAvatar = (index: number) => {
+export const useFetchUserAvatar = (index: number | undefined) => {
     const {
         data,
         isLoading,

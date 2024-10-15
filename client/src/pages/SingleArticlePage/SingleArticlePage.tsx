@@ -54,7 +54,9 @@ const SingleArticlePage: React.FC = () => {
               ]);
 
     useEffect(() => {
-        document.title = ` DD || ${singleArticle.title}`;
+        if (singleArticle.title) {
+            document.title = ` DD || ${singleArticle.title}`;
+        } else document.title = ` DD || Статья не найдена`;
     }, [singleArticle.title]);
 
     useEffect(() => {
@@ -65,7 +67,7 @@ const SingleArticlePage: React.FC = () => {
     useAddArticleToUserLastArticlesList(token!, Number(indexFromParams))
 
     return (
-        <div>
+        <>
             <Element name="single-article-top">
                 <Header>
                     <HeaderNavigation/>
@@ -77,7 +79,7 @@ const SingleArticlePage: React.FC = () => {
                 <SingleArticleContent/>
             </Content>
             <Footer/>
-        </div>
+        </>
     );
 };
 
