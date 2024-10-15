@@ -73,7 +73,7 @@ aside > hr {
   @include respond(tablet) {
     padding-left: 0;
     @include respond(extra-small) {
-      max-width: 350px;
+      max-width: 370px;
     }
   }
 

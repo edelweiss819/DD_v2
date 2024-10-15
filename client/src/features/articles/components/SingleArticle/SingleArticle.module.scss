@@ -19,7 +19,9 @@
     line-height: 28px;
     align-items: center;
 
-
+    &-avatar-container {
+      display: flex;
+    }
   }
 
   &-genres {

@@ -28,13 +28,14 @@ const SingleArticle: React.FC<IArticle> = ({
         favoriteArticles,
         token: userToken,
         isAuthorized
-    } = useSelector((state: RootState) => state.user);
+    } = useSelector(
+        (state: RootState) => state.user
+    );
 
-    // Аватар
+    // Fetch avatar data for the author
     const {data: avatarData} = useFetchUserAvatar(author.index);
     const avatarUrl = avatarData?.avatarUrl || 'defaultAvatar';
     const userIndex = avatarData?.userIndex || -1;
-
 
     const isFavorite = () => {
         return favoriteArticles.some(article => Number(article.index) === index);
@@ -51,7 +52,7 @@ const SingleArticle: React.FC<IArticle> = ({
     const handleFavIconClick = async () => {
         if (!userToken) {
             console.error('User token is not available');
-            return;
+            return; // Return to prevent further execution
         }
 
         try {
@@ -66,16 +67,20 @@ const SingleArticle: React.FC<IArticle> = ({
 
     return (
         <div className={styles['single-article-container']}>
-            <div className={styles['single-article-title']}>
-                {avatarData &&
-					<div>
-						<UserAvatar avatarUrl={avatarUrl}
-									userIndex={userIndex}/> "{title}"
-						от&nbsp;
-						<AuthorLink index={author.index}
-									name={author.name}/>
-					</div>}
-            </div>
+            {avatarData && (
+                <div className={styles['single-article-title']}>
+                        <span
+                            className={styles['single-article-title-avatar-container']}>
+                            <UserAvatar avatarUrl={avatarUrl}
+                                        userIndex={userIndex}/>
+                        </span>
+                    <div>
+                        "{title}" от&nbsp;
+                        <AuthorLink index={author.index} name={author.name}/>
+                    </div>
+
+                </div>
+            )}
             <div className={styles['single-article-genres']}>
                 {genres?.join(', ').toUpperCase()}
             </div>
@@ -93,7 +98,9 @@ const SingleArticle: React.FC<IArticle> = ({
                                                     onClick={handleFavIconClick}/>
                             </div>
                             <span
-                                className={styles['single-article-button-container-fav-block-text']}>Уже в избранном</span>
+                                className={styles['single-article-button-container-fav-block-text']}>
+                                Уже в избранном
+                            </span>
                         </div>
                     ) : (
                         <div
@@ -104,7 +111,9 @@ const SingleArticle: React.FC<IArticle> = ({
                                     onClick={handleFavIconClick}/>
                             </div>
                             <span
-                                className={styles['single-article-button-container-fav-block-text']}>Добавить в избранное</span>
+                                className={styles['single-article-button-container-fav-block-text']}>
+                                Добавить в избранное
+                            </span>
                         </div>
                     )
                 )}
@@ -118,7 +127,6 @@ const SingleArticle: React.FC<IArticle> = ({
             </div>
         </div>
     );
-
 };
 
 export default SingleArticle;
