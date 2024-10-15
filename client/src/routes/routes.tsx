@@ -3,6 +3,7 @@ import {Routes, Route} from 'react-router-dom';
 import {HEADER_NAVIGATION_PAGES} from '../constants';
 import PrivateRoute
     from '../features/privateRoutes/components/PrivateRoutes.tsx';
+import PageLoader from '../shared/ui/Loaders/PageLoader/PageLoader.tsx';
 
 const MainPage = React.lazy(() => import('../pages/MainPage/MainPage.tsx'));
 const SingleArticlePage = React.lazy(() => import('../pages/SingleArticlePage/SingleArticlePage.tsx'));
@@ -13,13 +14,13 @@ const SignUpPage = React.lazy(() => import('../pages/SignUpPage/SignUpPage.tsx')
 const SignInPage = React.lazy(() => import('../pages/SignInPage/SignInPage.tsx'));
 const ProfilePage = React.lazy(() => import('../pages/ProfilePage/ProfilePage.tsx'));
 const WheelPage = React.lazy(() => import('../pages/WheelPage/WheelPage.tsx'));
-const OtheUsersProfilePage = React.lazy(() => import('../pages/OtherUsersProfilePage/OtherUsersProfilePage.tsx'));
+const OtherUsersProfilePage = React.lazy(() => import('../pages/OtherUsersProfilePage/OtherUsersProfilePage.tsx'));
 
 const AppRoutes: React.FC = () => {
 
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<PageLoader/>}>
             <Routes>
                 <Route path={HEADER_NAVIGATION_PAGES['Главная']}
                        element={<MainPage/>}/>
@@ -34,7 +35,7 @@ const AppRoutes: React.FC = () => {
                 <Route path={'/user/:index'}
                        element={
                            <PrivateRoute>
-                               <OtheUsersProfilePage/>
+                               <OtherUsersProfilePage/>
                            </PrivateRoute>
                        }/>
                 <Route

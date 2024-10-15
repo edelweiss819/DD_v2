@@ -18,7 +18,9 @@ const WheelPageContent: React.FC = () => {
     }, []);
     const [winningArticleIndex, setWinningArticleIndex] = useState<number | undefined>(undefined);
 
-    const {data: article} = useFetchSingleArticleByIndex(winningArticleIndex);
+    const {
+        data: article,
+    } = useFetchSingleArticleByIndex(winningArticleIndex);
     const {
         data,
         refetch

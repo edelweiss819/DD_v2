@@ -4,6 +4,8 @@ import {truncateText} from '../../../shared/utils';
 import {useNavigate} from 'react-router';
 import Konva from 'konva';
 import KonvaEventObject = Konva.KonvaEventObject;
+import WheelLoader
+    from '../../../shared/ui/Loaders/WheelLoader/WheelLoader.tsx';
 
 export interface WheelProps {
     setWinningArticleIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
@@ -29,7 +31,7 @@ const Wheel: React.FC<WheelProps> = ({
         }
     }, [fetchedRandomArticles]);
 
-    if (randomArticles.length === 0) return <div>No articles available</div>;
+    if (randomArticles.length === 0) return <WheelLoader/>
 
     const radius = 350;
     const centerX = 400;

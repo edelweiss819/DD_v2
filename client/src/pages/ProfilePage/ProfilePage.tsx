@@ -17,13 +17,12 @@ const ProfilePage: React.FC = () => {
     const {token} = useSelector((state: RootState) => state.user);
 
 
-    useEffect(() => {
-        document.title = 'DD || Мой профиль';
-    }, []);
-
     const decodedUserToken = decodeUserToken(token!);
     const decodedCurrentUserIndex = decodedUserToken.index;
 
+    useEffect(() => {
+        document.title = 'DD || Мой профиль';
+    }, []);
 
     const {isLoading} = useGetUser(token!, [
         'firstName',
