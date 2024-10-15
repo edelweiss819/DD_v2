@@ -3,7 +3,7 @@ import styles from './Footer.module.scss';
 import Logo from '../Logo/Logo.tsx';
 
 const Footer: React.FC = () => (
-    <footer className={styles.footer}>
+    <footer className={styles['footer']}>
         <div className={styles['footer-content']}>
             <div className={styles['footer-content-logo']}>
                 <Logo firstPartColor={'dark'} secondPartColor={'blue'}

@@ -3,6 +3,7 @@ export const API_ROUTES = {
     'GET_ARTICLES_LIST': '/articles',
     'GET_ARTICLES_LIST_BY_GENRE': '/articles/search/getArticlesListByGenre/:genre',
     'GET_SINGLE_ARTICLE_BY_INDEX': '/articles/:index',
+    'DELETE_SINGLE_ARTICLE_BY_INDEX': '/articles/:index',
     'GET_SEARCH_ARTICLES_BY_GENRE_AND_WORDS': '/articles/search/getArticlesByGenreAndWords',
     'GET_TOTAL_ARTICLES_COUNT_BY_GENRE_AND_WORDS': '/articles/search/getTotalArticlesCountByGenresAndWords',
     'GET_RANDOM_ARTICLES_LIST': '/articles/randomArticles/getRandomArticlesList',

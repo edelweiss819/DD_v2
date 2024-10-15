@@ -2,7 +2,7 @@ import React, {Suspense} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {HEADER_NAVIGATION_PAGES} from '../constants';
 import PrivateRoute
-    from '../features/privateRoutes/components/PrivateRoutes.tsx';
+    from '../features/protectedRoutes/components/PrivateRoutes.tsx';
 import PageLoader from '../shared/ui/Loaders/PageLoader/PageLoader.tsx';
 
 const MainPage = React.lazy(() => import('../pages/MainPage/MainPage.tsx'));
