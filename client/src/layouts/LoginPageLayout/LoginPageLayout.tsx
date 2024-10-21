@@ -6,6 +6,7 @@ import Button, {
     ButtonIcon,
     ButtonType
 } from '../../shared/ui/Button/Button.tsx';
+import {handleGoogleAuthWindow} from '../../shared/utils/authGoogleHelper.ts';
 
 export interface LoginPageLayoutProps {
     children?: React.ReactNode;
@@ -38,7 +39,8 @@ const LoginPageLayout: React.FC<LoginPageLayoutProps> = ({
                                     color={ButtonColor.WHITE}
                                     type={ButtonType.MEDIUM_FLEX}
                                     icon={ButtonIcon.GOOGLE}
-                                    iconWidth={'24'}/>
+                                    iconWidth={'24'}
+                                    onClick={() => handleGoogleAuthWindow()}/>
                             <Button text={'Facebook'}
                                     color={ButtonColor.DARK_BLUE}
                                     type={ButtonType.MEDIUM_FLEX}

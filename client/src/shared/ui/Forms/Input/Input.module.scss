@@ -9,6 +9,10 @@
     font-size: 25px;
     padding: 8px;
     flex-grow: 1;
+    flex-shrink: 1;
+    @include respond(mobile) {
+      font-size: 16px !important;
+    }
   }
 
   &-registration-form {

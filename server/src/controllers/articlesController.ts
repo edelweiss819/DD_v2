@@ -355,11 +355,23 @@ export const deleteArticleByIndex = async (req: Request, res: Response) => {
                     },
                     $set: {'metadata.lastUpdated': Date.now()}
                 },
-                {new: true}
+                {
+                    new: true,
+                    upsert: true
+                }
             );
         });
 
         await Promise.all(updatePromises);
+
+        await Metadata.findOneAndUpdate(
+            {},
+            {
+                $inc: {'metadata.totalArticlesCount': -1},
+                $set: {'metadata.lastUpdated': Date.now()}
+            },
+            {new: true}
+        );
 
         await article.deleteOne();
 

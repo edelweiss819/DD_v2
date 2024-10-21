@@ -11,20 +11,33 @@ import {UPDATE_GENRES_COUNT, UPDATE_TOTAL_ARTICLES} from './constants';
 import usersRouter from './routes/usersRouter';
 import authRouter from './routes/authRouter';
 import dotenv from 'dotenv';
+import googleAuthRouter from './routes/googleAuthRouter';
+import session from 'express-session';
+import passport from 'passport';
 
 dotenv.config();
 
 const app = express();
-const PORT = Number(process.env.PORT) || 10000;
+const PORT = Number(process.env.PORT);
 
 app.use(express.json());
 app.use(cors());
+
+app.use(session({
+                    secret: process.env.SESSION_SECRET!,
+                    resave: false,
+                    saveUninitialized: true,
+                }));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(articlesRouter);
 app.use(metadataRouter);
 app.use(usersRouter);
 app.use(authRouter);
-
+app.use(googleAuthRouter)
 
 const uri = process.env.MONGODB_URI;
 

@@ -11,6 +11,14 @@
       padding-left: 22px;
     }
 
+    &-delete-button-block {
+      display: flex;
+      justify-content: flex-end;
+      @include respond(mobile) {
+        display: none;
+      }
+    }
+
     &-author-block {
       @include grid;
       @include align-middle;
