@@ -15,6 +15,10 @@ import {useFetchTotalArticlesCount} from '../../features/pagination/hooks';
 import Content from '../../shared/ui/Content/Content.tsx';
 import MainHeaderLayout
     from '../../layouts/MainHeaderLayout/MainHeaderLayout.tsx';
+import {useLocation} from 'react-router';
+import {setAuthorized, setToken} from '../../features/auth/slice/userSlice.ts';
+import {useNavigate} from 'react-router-dom';
+
 
 const MainPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -42,6 +46,23 @@ const MainPage: React.FC = () => {
                   dispatch,
                   defaultList,
                   defaultTotalCount,
+              ]);
+
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const token = queryParams.get('token');
+        if (token) {
+            dispatch(setToken(token));
+            dispatch(setAuthorized(true));
+            navigate('/');
+        }
+
+    }, [
+                  dispatch,
+                  location.search,
               ]);
 
 

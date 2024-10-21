@@ -1,13 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import styles from './Button.module.scss';
 import classNames from 'classnames';
 
-
 import SignUpArrow from '../../../assets/ButtonIcons/SignUpArrow.svg?react';
 import Google from '../../../assets/ButtonIcons/Google.svg?react';
 import Facebook from '../../../assets/ButtonIcons/Facebook.svg?react';
-
 
 export enum ButtonColor {
     BLUE = 'blue',
@@ -57,6 +55,17 @@ const Button: React.FC<ButtonProps> = ({
                                            type,
                                            onClick,
                                        }) => {
+    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const colorClass = classNames({
                                       [styles['btn-blue']]: color === ButtonColor.BLUE,
                                       [styles['btn-red']]: color === ButtonColor.RED,
@@ -82,6 +91,9 @@ const Button: React.FC<ButtonProps> = ({
             : icon === ButtonIcon.FACEBOOK ? Facebook
                 : undefined;
 
+    const iconClass = classNames(styles['btn-icon'], {
+        [styles['btn-icon-no-margin']]: textRespond && isMobile,
+    });
 
     return (
         <Link
@@ -94,7 +106,7 @@ const Button: React.FC<ButtonProps> = ({
             {iconSrc && (
                 typeof iconSrc === 'string' ? (
                     <img
-                        className={styles['btn-icon']}
+                        className={iconClass}
                         src={iconSrc}
                         width={iconWidth}
                         alt={icon}
@@ -110,4 +122,3 @@ const Button: React.FC<ButtonProps> = ({
 };
 
 export default Button;
-

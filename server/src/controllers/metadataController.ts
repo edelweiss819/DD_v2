@@ -8,7 +8,7 @@ export const getMetadata = async (): Promise<IMetadata | null> => {
         const metadata = await Metadata.findOne();
         return metadata;
     } catch (error) {
-        console.error('Error fetching metadata:', error);
+        console.error('Ошибка получение метаданных:', error);
         return null;
     }
 };
@@ -30,10 +30,10 @@ export const getArticlesTotalCount = async (req: Request,
         if (totalArticlesCount !== null) {
             res.status(200).json(totalArticlesCount);
         } else {
-            res.status(404).json({error: 'Total articles count not found'});
+            res.status(404).json({error: 'Метаданные для общего количества статей не найдена.'});
         }
     } catch (error) {
-        console.error('Error fetching total articles count:', error);
+        console.error('Ошибка получения общего количества статей:', error);
         res.status(500).json({error: 'Internal Server Error'});
     }
 };
@@ -62,7 +62,7 @@ export const updateTotalArticlesCount = async (shouldUpdate: boolean): Promise<I
             console.log('Количество статей обновлено. Всего статей в базе:', totalArticlesCount);
             return metadata;
         } catch (error) {
-            console.error('Error updating articles:', error);
+            console.error('Ошибка обновления количества статей:', error);
             return null;
         }
     } else {

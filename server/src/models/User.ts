@@ -14,13 +14,13 @@ export interface IUser extends Document {
     lastName: string;
     email: string;
     password: string;
-    gender: string;
     favoriteArticles: IFavoriteArticle[];
     lastArticles: ILastArticles[];
     index: number;
     role: string;
     registrationDate: number;
     avatar: string;
+    googleId?: string;
 }
 
 const userSchema: Schema = new Schema({
@@ -37,9 +37,10 @@ const userSchema: Schema = new Schema({
                                               required: true,
                                               unique: true,
                                           },
+                                          //TODO Подумать над тем как все таки правильно сделать для OAuth
                                           password: {
                                               type: String,
-                                              required: true
+                                              required: false
                                           },
                                           favoriteArticles: [
                                               {
@@ -91,6 +92,10 @@ const userSchema: Schema = new Schema({
                                               type: String,
                                               required: true
 
+                                          },
+                                          googleId: {
+                                              type: String,
+                                              required: false
                                           }
                                       });
 

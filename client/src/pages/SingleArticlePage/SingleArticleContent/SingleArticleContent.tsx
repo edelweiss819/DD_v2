@@ -31,7 +31,7 @@ const SingleArticleContent: React.FC = () => {
 
     const handleDeleteButtonClick = () => {
         setDeleteModalOpen(true);
-        console.log(deleteModalOpen)
+        // console.log(deleteModalOpen)
     }
 
 
@@ -57,9 +57,13 @@ const SingleArticleContent: React.FC = () => {
             <div className={styles['main-section-content-container']}>
                 {singleArticle.content ? <>
                     {(canDelete) && (
-                        <Button text={'Удалить'} type={ButtonType.MEDIUM}
-                                color={ButtonColor.DARK_BLUE}
-                                onClick={handleDeleteButtonClick}/>)}
+                        <div
+                            className={styles['main-section-content-container-delete-button-block']}>
+                            <Button text={'Удалить'} type={ButtonType.MEDIUM}
+                                    color={ButtonColor.DARK_BLUE}
+                                    onClick={handleDeleteButtonClick}/>
+                        </div>)
+                    }
                     <div
                         className={styles['main-section-content-container-author-block']}>
                         {singleArticle.author ? (

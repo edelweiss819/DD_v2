@@ -11,6 +11,7 @@ export const API_ROUTES = {
     'GET_AUTH_USER_DATA': '/getUserData',
     'AUTH': '/login',
     'REFRESH_TOKEN': '/refreshToken',
+    'GET_GOOGLE_AUTH': import.meta.env.VITE_BACKEND_URI + '/auth/google',
     // Metadata
     'GET_METADATA': '/metadata',
     'GET_ARTICLES_TOTAL_COUNT': '/metadata/getArticlesTotalCount',

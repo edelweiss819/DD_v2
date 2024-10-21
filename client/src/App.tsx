@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import {AppDispatch} from './store/store.ts';
 import {setAuthorized} from './features/auth/slice/userSlice.ts';
 import TokenManager from './features/tokenManager/TokenManager.ts';
+import {GoogleOAuthProvider} from '@react-oauth/google';
 
 
 const App: React.FC = () => {
@@ -21,10 +22,13 @@ const App: React.FC = () => {
 
     return (
         <BrowserRouter>
-            <TokenManager/>
-            <div className={styles['app']}>
-                <AppRoutes/>
-            </div>
+            <GoogleOAuthProvider
+                clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
+                <TokenManager/>
+                <div className={styles['app']}>
+                    <AppRoutes/>
+                </div>
+            </GoogleOAuthProvider>
         </BrowserRouter>
     );
 };
