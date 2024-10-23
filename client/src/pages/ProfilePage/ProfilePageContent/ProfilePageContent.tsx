@@ -27,6 +27,9 @@ const ProfilePageContent: React.FC = () => {
     const decodedCurrentUserIndex = decodedUserToken.index;
     const userRole = decodedUserToken.role;
     const navigate = useNavigate();
+    const handleAdminPanelButtonClick = () => {
+        navigate('/admin-panel')
+    }
 
 
     useFetchUser(token!, [
@@ -64,7 +67,7 @@ const ProfilePageContent: React.FC = () => {
                     {userRole === 'admin' &&
 						<Button text={'Админ панель'} type={ButtonType.MEDIUM}
 								color={ButtonColor.GREY}
-								onClick={() => navigate('/admin-panel')}/>}
+								onClick={handleAdminPanelButtonClick}/>}
                 </div>
             </div>
             <div className={styles['main-section-content-container']}>
