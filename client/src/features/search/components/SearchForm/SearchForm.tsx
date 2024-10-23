@@ -19,7 +19,7 @@ import {
     setSearchParams,
     setSortOrder,
     updateLastCursor,
-} from '../../../articles/slice/articlesListSlice.ts';
+} from '../../../../entities/articles';
 import BaseSelect
     from '../../../../shared/ui/Selects/BaseSelects/BaseSelect.tsx';
 import {GENRES} from '../../../../constants';

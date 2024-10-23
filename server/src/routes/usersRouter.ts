@@ -13,12 +13,10 @@ router.delete('/users/:index', authenticateToken(['admin']), (req, res) => {
     usersController.deleteUser(req, res);
 });
 
-router.put('/users/:index', authenticateToken([
-                                                  'user',
-                                                  'admin'
-                                              ]), (req, res) => {
-    const index = parseInt(req.params.index);
-    usersController.updateUser(index, req.body, res);
+router.patch('/users/:index', authenticateToken([
+                                                    'admin'
+                                                ]), (req, res) => {
+    usersController.updateUser(req, res);
 });
 
 router.get('/users', authenticateToken([

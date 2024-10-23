@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../store/store.ts';
 import {
     setCurrentPage, setSortOrder, updateLastCursor
-} from '../../articles/slice/articlesListSlice.ts';
+} from '../../../entities/articles';
 import {arrayRange} from '../../../shared/utils';
 import classNames from 'classnames';
 import {scrollToElement} from '../../../shared/utils';

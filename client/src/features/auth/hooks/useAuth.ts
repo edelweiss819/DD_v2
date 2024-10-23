@@ -2,7 +2,7 @@ import {useMutation, UseMutationResult} from '@tanstack/react-query';
 import {auth, AuthResponse, AuthResult} from '../api';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../store/store';
-import {setAuthorized, setToken} from '../slice/userSlice';
+import {setAuthorized, setToken} from '../../../entities/users';
 
 interface AuthSuccessResponse {
     token: string;

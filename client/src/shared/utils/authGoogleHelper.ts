@@ -1,4 +1,4 @@
-import {API_ROUTES} from '../../config/endpoints.ts';
+import {API_ROUTES} from '../../config';
 
 
 export const handleGoogleAuthWindow = () => {

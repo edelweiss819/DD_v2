@@ -7,7 +7,7 @@ import Button, {
 } from '../../Button/Button.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../../store/store.ts';
-import {handleGoogleAuthWindow} from '../../../utils/authGoogleHelper.ts';
+import {handleGoogleAuthWindow} from '../../../utils';
 
 
 const HeaderContent: React.FC = () => {

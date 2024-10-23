@@ -4,7 +4,7 @@ import {BrowserRouter} from 'react-router-dom';
 import styles from './App.module.scss'
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from './store/store.ts';
-import {setAuthorized} from './features/auth/slice/userSlice.ts';
+import {setAuthorized} from './entities/users';
 import TokenManager from './features/tokenManager/TokenManager.ts';
 import {GoogleOAuthProvider} from '@react-oauth/google';
 

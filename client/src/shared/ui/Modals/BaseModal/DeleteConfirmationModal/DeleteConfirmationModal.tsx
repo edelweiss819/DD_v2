@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../../../../store/store.ts';
 import {
     useDeleteSingleArticleByIndex
-} from '../../../../../features/articles/hooks';
+} from '../../../../../entities/articles';
 import {useNavigate} from 'react-router-dom';
 
 

@@ -7,7 +7,7 @@ import Button, {
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
 import {decodeUserToken, timestampToLocalDate} from '../../../shared/utils';
-import {useGetUser} from '../../../features/auth/hooks';
+import {useFetchUser} from '../../../entities/users';
 import FavoriteArticlesList
     from './FavoriteArticlesList/FavoriteArticlesList.tsx';
 import LastArticlesList from './LastArticlesList/LastArticlesList.tsx';
@@ -26,7 +26,7 @@ const ProfilePageContent: React.FC = () => {
     const decodedCurrentUserIndex = decodedUserToken.index;
 
 
-    useGetUser(token!, [
+    useFetchUser(token!, [
         'lastArticles',
         'favoriteArticles'
     ], decodedCurrentUserIndex);

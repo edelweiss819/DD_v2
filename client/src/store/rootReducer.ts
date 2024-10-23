@@ -1,8 +1,8 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import articlesListSlice from '../features/articles/slice/articlesListSlice.ts';
+import articlesListSlice from '../entities/articles/slice/articlesListSlice.ts';
 import singleArticleSlice
-    from '../features/articles/slice/singleArticleSlice';
-import userSlice from '../features/auth/slice/userSlice.ts';
+    from '../entities/articles/slice/singleArticleSlice';
+import userSlice from '../entities/users/slice/userSlice.ts';
 
 const rootReducer = combineReducers({
                                         singleArticle: singleArticleSlice,

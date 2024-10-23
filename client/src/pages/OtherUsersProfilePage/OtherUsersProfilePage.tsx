@@ -8,7 +8,7 @@ import SimpleHeaderContentTemplate
     from '../../templates/SimpleHeaderContentTemplate/SimpleHeaderContentTemplate.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/store.ts';
-import {useGetOtherUser} from '../../features/auth/hooks';
+import {useFetchOtherUser} from '../../entities/users';
 import {useParams} from 'react-router';
 import OtherUsersProfilePageContent
     from './OtherUsersProfilePageContent/OtherUsersProfilePageContent.tsx';
@@ -26,7 +26,7 @@ const OtherUsersProfilePage: React.FC = () => {
     const {
         data: otherUser,
         isLoading
-    } = useGetOtherUser(token!, [
+    } = useFetchOtherUser(token!, [
         'firstName',
         'lastName',
         'registrationDate',

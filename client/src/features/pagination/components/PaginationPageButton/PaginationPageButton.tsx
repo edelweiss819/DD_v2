@@ -1,6 +1,8 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCurrentPage} from '../../../articles/slice/articlesListSlice.ts';
+import {
+    setCurrentPage
+} from '../../../../entities/articles';
 import classNames from 'classnames';
 import styles from './PaginationPageButton.module.scss'
 import {AppDispatch, RootState} from '../../../../store/store.ts';

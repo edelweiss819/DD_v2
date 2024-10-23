@@ -4,19 +4,19 @@ import MainContentLayout
 import Footer from '../../shared/ui/Footer/Footer.tsx';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../store/store.ts';
-import {useFetchArticlesList} from '../../features/articles/hooks';
+import {useFetchArticlesList} from '../../entities/articles';
 import {
     resetSearchParams,
     setArticlesList,
     setTotalPages
-} from '../../features/articles/slice/articlesListSlice.ts';
+} from '../../entities/articles';
 import {articlesCountToPagesCount} from '../../shared/utils';
-import {useFetchTotalArticlesCount} from '../../features/pagination/hooks';
+import {useFetchTotalArticlesCount} from '../../features/pagination';
 import Content from '../../shared/ui/Content/Content.tsx';
 import MainHeaderLayout
     from '../../layouts/MainHeaderLayout/MainHeaderLayout.tsx';
 import {useLocation} from 'react-router';
-import {setAuthorized, setToken} from '../../features/auth/slice/userSlice.ts';
+import {setAuthorized, setToken} from '../../entities/users';
 import {useNavigate} from 'react-router-dom';
 
 

@@ -6,7 +6,7 @@ import Button, {
     ButtonIcon,
     ButtonType
 } from '../../shared/ui/Button/Button.tsx';
-import {handleGoogleAuthWindow} from '../../shared/utils/authGoogleHelper.ts';
+import {handleGoogleAuthWindow} from '../../shared/utils';
 
 export interface LoginPageLayoutProps {
     children?: React.ReactNode;

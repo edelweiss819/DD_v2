@@ -10,12 +10,12 @@ import Content from '../../shared/ui/Content/Content.tsx';
 import {
     useFetchArticlesListByGenreAndWords,
     useFetchTotalArticlesCountByGenreAndWords
-} from '../../features/search/hooks';
+} from '../../features/search';
 import {
     resetArticlesList,
     setArticlesList, setLastCursor,
     setTotalPages,
-} from '../../features/articles/slice/articlesListSlice.ts';
+} from '../../entities/articles';
 import {articlesCountToPagesCount} from '../../shared/utils';
 
 const SearchPage: React.FC = () => {

@@ -8,7 +8,7 @@ import Button, {
 } from '../../../../shared/ui/Button/Button.tsx';
 import {Link} from 'react-router-dom';
 import ErrorMessage from '../ErrorMessage/ErrorMessage.tsx';
-import {IRegistrationForm} from '../RegistationForm/RegistrationForm.tsx';
+import {IRegistrationForm} from '../RegistationForm';
 import {useAuth} from '../../hooks';
 import {useNavigate} from 'react-router';
 

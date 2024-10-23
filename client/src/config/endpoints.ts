@@ -25,4 +25,6 @@ export const API_ROUTES = {
     'POST_USER_LAST_ARTICLE': '/users/lastsArticles/postLastArticle',
     'GET_USER_LAST_ARTICLES_LIST': '/users/lastArticles/getLastArticlesList',
     'GET_USER_AVATAR': '/users/avatar/getUserAvatar',
+    'DELETE_USER_BY_INDEX': '/users/:index',
+    'PATCH_USER_DATA': '/users/:index',
 }

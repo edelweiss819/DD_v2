@@ -6,7 +6,7 @@ import Button, {
 } from '../../../shared/ui/Button/Button.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
-import {useGetOtherUser} from '../../../features/auth/hooks';
+import {useFetchOtherUser} from '../../../entities/users';
 import OthersFavoriteArticlesList
     from './OthersFavoriteArticlesList/OthersFavoriteArticlesList.tsx';
 import {useParams} from 'react-router';
@@ -15,7 +15,7 @@ const OtherUsersProfilePageContent: React.FC = () => {
     const {token} = useSelector((state: RootState) => state.user);
     const {index} = useParams();
 
-    const {data: otherUser} = useGetOtherUser(token!, [
+    const {data: otherUser} = useFetchOtherUser(token!, [
         'favoriteArticles',
         'firstName'
     ], Number(index));
