@@ -11,6 +11,7 @@ import {useFetchUser} from '../../../entities/users';
 import FavoriteArticlesList
     from './FavoriteArticlesList/FavoriteArticlesList.tsx';
 import LastArticlesList from './LastArticlesList/LastArticlesList.tsx';
+import {useNavigate} from 'react-router-dom';
 
 
 const ProfilePageContent: React.FC = () => {
@@ -24,6 +25,8 @@ const ProfilePageContent: React.FC = () => {
 
     const decodedUserToken = decodeUserToken(token!);
     const decodedCurrentUserIndex = decodedUserToken.index;
+    const userRole = decodedUserToken.role;
+    const navigate = useNavigate();
 
 
     useFetchUser(token!, [
@@ -58,6 +61,10 @@ const ProfilePageContent: React.FC = () => {
                     <Button text={'Последние'} type={ButtonType.MEDIUM}
                             color={ButtonColor.DARK_BLUE}
                             onClick={() => setIsFavoriteViewMode(false)}/>
+                    {userRole === 'admin' &&
+						<Button text={'Админ панель'} type={ButtonType.MEDIUM}
+								color={ButtonColor.GREY}
+								onClick={() => navigate('/admin-panel')}/>}
                 </div>
             </div>
             <div className={styles['main-section-content-container']}>

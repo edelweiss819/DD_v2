@@ -73,7 +73,6 @@ const columns = (
         sortable: false,
         renderEditCell: (params) => {
             return (
-
                 <select
                     value={params.value}
                     onChange={(e) => {
