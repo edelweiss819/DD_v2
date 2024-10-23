@@ -11,7 +11,6 @@ import {useFetchUser} from '../../../entities/users';
 import FavoriteArticlesList
     from './FavoriteArticlesList/FavoriteArticlesList.tsx';
 import LastArticlesList from './LastArticlesList/LastArticlesList.tsx';
-import {useNavigate} from 'react-router-dom';
 
 
 const ProfilePageContent: React.FC = () => {
