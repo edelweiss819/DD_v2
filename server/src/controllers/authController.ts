@@ -1,8 +1,9 @@
 import {Request, Response} from 'express';
 import bcrypt from 'bcryptjs';
-import jwt, {JwtPayload} from 'jsonwebtoken'; // Импортируем JwtPayload
+import jwt, {JwtPayload} from 'jsonwebtoken';
 import User from '../models/User';
 import dotenv from 'dotenv';
+import {createUserToken} from '../utils';
 
 dotenv.config();
 
@@ -26,14 +27,10 @@ export class AuthController {
                 return res.status(401).json({message: 'Неверный пароль.'});
             }
 
-            const token = jwt.sign(
-                {
-                    index: user.index,
-                    role: user.role
-                },
-                process.env.JWT_SECRET!,
-                {expiresIn: '30d'}
-            );
+            const token = createUserToken({
+                                              index: user.index,
+                                              role: user.role
+                                          });
 
             return res.status(200).json({token});
         } catch (error) {
@@ -56,14 +53,10 @@ export class AuthController {
 
             const user = decoded as JwtPayload;
 
-            const newToken = jwt.sign(
-                {
-                    index: user.index,
-                    role: user.role
-                },
-                process.env.JWT_SECRET!,
-                {expiresIn: '30d'}
-            );
+            const newToken = createUserToken({
+                                                 index: user.index,
+                                                 role: user.role
+                                             });
 
             return res.status(200).json({token: newToken});
         });

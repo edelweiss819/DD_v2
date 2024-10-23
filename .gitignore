@@ -351,5 +351,6 @@ nbactions.xml
 
 
 .env
+.env_prod
 TODO.md
 #client/src/config/axiosConfig.ts

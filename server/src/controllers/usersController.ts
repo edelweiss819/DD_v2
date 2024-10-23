@@ -1,13 +1,10 @@
 import User, {IUser} from '../models/User';
 import {Response, Request} from 'express';
 import bcrypt from 'bcryptjs';
-import jwt, {JwtPayload} from 'jsonwebtoken';
 import Article from '../models/Article';
 import dotenv from 'dotenv';
+import {decodeToken} from '../utils';
 
-export interface DecodedToken extends JwtPayload {
-    index: number;
-}
 
 dotenv.config();
 
@@ -56,8 +53,18 @@ export class UsersController {
         }
     }
 
-    async deleteUser(index: number, req: Request, res: Response) {
+    async deleteUser(req: Request, res: Response) {
         try {
+            const index = req.params.index;
+            const token = req.headers['authorization']?.split(' ')[1];
+            const decoded = decodeToken(token!);
+            const role = decoded.role;
+
+            if (role !== 'admin') {
+                console.warn('Недостаточно прав для удаление пользователя.')
+                return res.status(403).json({message: 'Недостаточно прав для удаление пользователя.'})
+            }
+
             const deletedUser = await User.findOneAndDelete({index});
             if (!deletedUser) {
                 return res.status(404).json({message: 'Пользователь не найден.'});
@@ -94,15 +101,9 @@ export class UsersController {
         console.log('Получен запрос на получение пользователя.');
 
         const token = req.headers.authorization?.split(' ')[1];
-        const userRequestIndex = Number(req.headers['user-index']);
+        const userRequestIndex = Number(req.query['user-index']);
+        const userFields = req.query['user-fields'] as string;
         console.log(`Индекс запрашиваемого пользователя: ${userRequestIndex}`);
-        const userFields = req.headers['user-fields'] as string;
-
-
-        if (!token) {
-            console.warn('Ошибка авторизации: отсутствует токен.');
-            return res.status(401).json({message: 'Токен обязателен.'});
-        }
 
         if (isNaN(userRequestIndex)) {
             console.warn('Передано некорректное значение для индекса пользователя.');
@@ -110,7 +111,7 @@ export class UsersController {
         }
 
         try {
-            const decoded: any = jwt.verify(token!, process.env.JWT_SECRET as string);
+            const decoded = decodeToken(token!)
             console.log('Токен успешно декодирован:', decoded);
 
             const userRole = decoded.role;
@@ -126,14 +127,13 @@ export class UsersController {
                 console.log(`Пользователь с индексом ${userRequestIndex} найден (Администратор).`);
             }
 
-
             if (!user) {
                 console.warn(`Пользователь с индексом ${userRequestIndex} не найден.`);
                 return res.status(404).json({message: 'Пользователь не найден.'});
             }
 
             if (!userFields) {
-                console.warn('Ошибка: user-fields не передан в заголовках.');
+                console.warn('Ошибка: user-fields не передан в параметрах запроса.');
                 return res.status(400).json({message: 'Отсутствуют данные пользователя.'});
             }
 
@@ -150,7 +150,10 @@ export class UsersController {
             for (const field of splitedData) {
                 const trimmedField = field.trim() as keyof IUser;
 
-                if (protectedFields.includes(trimmedField) && (userRole !== 'admin' && userIndex !== userRequestIndex)) {
+                if (
+                    protectedFields.includes(trimmedField) &&
+                    (userRole !== 'admin' && userIndex !== userRequestIndex)
+                ) {
                     console.warn(`Пользователь ${userIndex} не имеет доступа к полю: ${trimmedField} пользователя ${userRequestIndex}`);
                     continue;
                 }
@@ -172,16 +175,67 @@ export class UsersController {
     }
 
 
-    async getAllUsers(res: Response) {
+    async getAllUsers(req: Request, res: Response) {
         try {
-            const allUsers = await User.find();
+            const limit = Number(req.query.limit) || 25;
+            const page = Number(req.query.page) || 1;
+            const token = req.headers.authorization?.split(' ')[1];
+
+            if (!token) {
+                console.warn('Токен отсутствует.');
+                return res.status(401).json({message: 'Необходима авторизация.'});
+            }
+
+            const decoded = decodeToken(token!);
+            const role = decoded.role;
+            const sortBy: keyof IUser = req.query.sortBy as keyof IUser;
+            const sortIndex = Number(req.query.sortIndex) === 1 ? 1 : -1;
+            const userFields = req.query['user-fields'] as string;
+
+            if (role !== 'admin') {
+                console.warn('Нет прав для доступа.');
+                return res.status(403).json({message: 'Ошибка доступа. Недостаточно прав.'});
+            }
+
+            if (!userFields) {
+                console.warn('Ошибка: user-fields не передан в параметрах запроса.');
+                return res.status(400).json({message: 'Отсутствуют данные пользователя.'});
+            }
+
+            let allUsers;
+            if (sortBy) {
+                allUsers = await User.find()
+                    .sort({[sortBy]: sortIndex})
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+            } else {
+                allUsers = await User.find()
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+            }
+
             if (allUsers.length === 0) {
                 return res.status(404).json({message: 'Пользователей не найдено.'});
             }
 
+            const resUsers = allUsers.map(user => {
+                const resFields: any = {};
+                const splitedData = userFields.split(',');
+
+                for (const field of splitedData) {
+                    const trimmedField = field.trim() as keyof IUser;
+
+                    if (trimmedField in user) {
+                        resFields[trimmedField] = user[trimmedField];
+                    }
+                }
+
+                return resFields;
+            });
+
             return res.status(200).json({
                                             message: 'Пользователи получены:',
-                                            users: allUsers
+                                            users: resUsers,
                                         });
         } catch (error) {
             console.error('Ошибка при получении пользователей:', error);
@@ -189,16 +243,12 @@ export class UsersController {
         }
     }
 
+
     async getUserFavoriteArticlesList(req: Request, res: Response) {
         const token = req.headers.authorization?.split(' ')[1];
 
-        if (!token) {
-            return res.status(401).json({message: 'Токен обязателен.'});
-        }
-
         try {
-            const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string);
-
+            const decoded = decodeToken(token!)
             const userRole = decoded.role;
             const userIndex = Number(decoded.index);
 
@@ -240,7 +290,7 @@ export class UsersController {
         }
 
         try {
-            const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string) as DecodedToken;
+            const decoded = decodeToken(token!);
             const userIndex = decoded.index;
 
             const user = await User.findOne({index: userIndex});
@@ -293,7 +343,7 @@ export class UsersController {
         }
 
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as DecodedToken;
+            const decoded = decodeToken(token!);
             const userIndex = Number(decoded.index);
             const user = await User.findOne({index: userIndex});
 
@@ -335,7 +385,7 @@ export class UsersController {
         }
 
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as DecodedToken;
+            const decoded = decodeToken(token!);
             const userIndex = Number(decoded.index);
             const user = await User.findOne({index: userIndex});
 

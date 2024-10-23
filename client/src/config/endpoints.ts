@@ -19,6 +19,7 @@ export const API_ROUTES = {
     // Users
     'POST_USER': '/users',
     'GET_USER': '/users',
+    'GET_ALL_USERS': '/users/all',
     'POST_TOGGLE_ARTICLE_STATUS': '/users/favorites/toggle',
     'GET_USER_FAV_ARTICLES_LIST': '/users/favorites/getUserFavoriteArticlesList',
     'POST_USER_LAST_ARTICLE': '/users/lastsArticles/postLastArticle',

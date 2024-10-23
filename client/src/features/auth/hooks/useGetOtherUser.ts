@@ -9,10 +9,7 @@ export const useGetOtherUser = (
     fields: UserFieldKeys[],
     userIndex?: number
 ) => {
-
-
     let fieldsString: string;
-
 
     if (fields.includes('fullUser')) {
         fieldsString = 'fullUser';

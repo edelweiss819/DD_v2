@@ -21,6 +21,8 @@ export const getUser = async ({
     const response = await axiosInstance.get(API_ROUTES.GET_USER, {
         headers: {
             Authorization: `Bearer ${token}`,
+        },
+        params: {
             'user-fields': fields,
             ...(userIndex !== undefined && {'user-index': userIndex.toString()})
         }
