@@ -10,8 +10,7 @@ router.post('/users', (req, res) => {
 });
 
 router.delete('/users/:index', authenticateToken(['admin']), (req, res) => {
-    const index = parseInt(req.params.index);
-    usersController.deleteUser(index, req, res);
+    usersController.deleteUser(req, res);
 });
 
 router.put('/users/:index', authenticateToken([
@@ -29,14 +28,13 @@ router.get('/users', authenticateToken([
     usersController.getUser(req, res);
 });
 
-router.get('/users', authenticateToken([
-                                           'user',
-                                           'admin'
-                                       ]), (req, res) => {
-    usersController.getAllUsers(res);
+router.get('/users/all', authenticateToken([
+                                               'user',
+                                               'admin'
+                                           ]), (req, res) => {
+    usersController.getAllUsers(req, res);
 });
 router.get('/users/favorites/getUserFavoriteArticlesList', authenticateToken([
-                                                                                 'user',
                                                                                  'admin'
                                                                              ]), (req,
                                                                                   res) => {

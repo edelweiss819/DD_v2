@@ -4,6 +4,9 @@ import {HEADER_NAVIGATION_PAGES} from '../constants';
 import PrivateRoute
     from '../features/protectedRoutes/components/PrivateRoutes.tsx';
 import PageLoader from '../shared/ui/Loaders/PageLoader/PageLoader.tsx';
+import AdminRoutes
+    from '../features/protectedRoutes/components/AdminRoutes.tsx';
+
 
 const MainPage = React.lazy(() => import('../pages/MainPage/MainPage.tsx'));
 const SingleArticlePage = React.lazy(() => import('../pages/SingleArticlePage/SingleArticlePage.tsx'));
@@ -15,6 +18,7 @@ const SignInPage = React.lazy(() => import('../pages/SignInPage/SignInPage.tsx')
 const ProfilePage = React.lazy(() => import('../pages/ProfilePage/ProfilePage.tsx'));
 const WheelPage = React.lazy(() => import('../pages/WheelPage/WheelPage.tsx'));
 const OtherUsersProfilePage = React.lazy(() => import('../pages/OtherUsersProfilePage/OtherUsersProfilePage.tsx'));
+const AdminPanelPage = React.lazy(() => import('../pages/AdminPanelPage/AdminPanelPage.tsx'));
 
 const AppRoutes: React.FC = () => {
 
@@ -46,6 +50,11 @@ const AppRoutes: React.FC = () => {
                         </PrivateRoute>
                     }
                 />
+                <Route path={'/admin-panel'} element={
+                    <AdminRoutes>
+                        <AdminPanelPage/>
+                    </AdminRoutes>
+                }/>
             </Routes>
         </Suspense>
     );
