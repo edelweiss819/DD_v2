@@ -9,7 +9,7 @@ import SimpleHeaderContentTemplate
 import ProfilePageContent from './ProfilePageContent/ProfilePageContent.tsx';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/store.ts';
-import {useGetUser} from '../../features/auth/hooks';
+import {useFetchUser} from '../../entities/users';
 import {decodeUserToken} from '../../shared/utils';
 
 
@@ -24,7 +24,7 @@ const ProfilePage: React.FC = () => {
         document.title = 'DD || Мой профиль';
     }, []);
 
-    const {isLoading} = useGetUser(token!, [
+    const {isLoading} = useFetchUser(token!, [
         'firstName',
         'lastName',
         'registrationDate',

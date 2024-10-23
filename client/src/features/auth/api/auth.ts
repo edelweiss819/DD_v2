@@ -1,8 +1,8 @@
 import {
     IRegistrationForm
-} from '../components/RegistationForm/RegistrationForm.tsx';
-import {axiosInstance} from '../../../config/axiosConfig.ts';
-import {API_ROUTES} from '../../../config/endpoints.ts';
+} from '../components';
+import {axiosInstance} from '../../../config';
+import {API_ROUTES} from '../../../config';
 import axios from 'axios';
 
 

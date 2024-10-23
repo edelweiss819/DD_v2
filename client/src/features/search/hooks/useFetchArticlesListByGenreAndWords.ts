@@ -1,5 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
-import {IArticle} from '../../../types';
+import {IArticle} from '../../../entities/articles';
 import {
     fetchArticlesListByGenreAndWords,
     IFetchArticlesListByGenreAndWordsParams

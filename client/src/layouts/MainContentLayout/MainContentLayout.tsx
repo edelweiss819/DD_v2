@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './MainContentLayout.module.scss';
 import ArticlesList
-    from '../../features/articles/components/ArticlesList/ArticlesList.tsx';
-import {IArticlesList} from '../../types';
+    from '../../entities/articles/components/ArticlesList/ArticlesList.tsx';
+import {IArticlesList} from '../../entities/articles';
 import Pagination from '../../features/pagination/components/Pagination.tsx';
 import {Element} from 'react-scroll';
 import {GENRES, GENRES_DIR} from '../../constants';

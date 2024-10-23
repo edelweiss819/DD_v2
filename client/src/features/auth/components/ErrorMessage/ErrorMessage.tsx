@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ErrorMesage.module.scss';
-import {IRegistrationForm} from '../RegistationForm/RegistrationForm.tsx';
+import {IRegistrationForm} from '../RegistationForm';
 
 const ErrorMessage: React.FC<{
     field: keyof IRegistrationForm;

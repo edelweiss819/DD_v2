@@ -13,10 +13,10 @@ import {AppDispatch, RootState} from '../../store/store.ts';
 import {
     useAddArticleToUserLastArticlesList,
     useFetchSingleArticleByIndex
-} from '../../features/articles/hooks';
+} from '../../entities/articles';
 import {
     setSingleArticle
-} from '../../features/articles/slice/singleArticleSlice.ts';
+} from '../../entities/articles';
 import {useParams} from 'react-router';
 import {Element} from 'react-scroll';
 import {scrollToElement} from '../../shared/utils';

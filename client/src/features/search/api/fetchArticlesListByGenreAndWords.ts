@@ -1,6 +1,6 @@
-import {axiosInstance} from '../../../config/axiosConfig.ts';
-import {API_ROUTES} from '../../../config/endpoints.ts';
-import {IFetchArticlesListParams} from '../../articles/api';
+import {axiosInstance} from '../../../config';
+import {API_ROUTES} from '../../../config';
+import {IFetchArticlesListParams} from '../../../entities/articles';
 import {IFetchArticlesResponse} from '../hooks';
 
 export interface IFetchArticlesListByGenreAndWordsParams extends IFetchArticlesListParams {

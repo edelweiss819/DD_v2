@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import styles from './WheelPageContent.module.scss';
-import Wheel from '../../../features/wheel/components/Wheel.tsx';
+import Wheel from '../../../entities/wheel/components/Wheel.tsx';
 import {
     useFetchRandomArticlesList,
     useFetchSingleArticleByIndex
-} from '../../../features/articles/hooks';
+} from '../../../entities/articles';
 import ArticleLink from '../../../shared/ui/ArticleLink/ArticleLink.tsx';
 import Button, {
     ButtonColor,

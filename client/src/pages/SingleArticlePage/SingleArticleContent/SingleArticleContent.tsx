@@ -13,8 +13,8 @@ import {
 } from '../../../shared/utils';
 import {GENRES_DIR} from '../../../constants';
 import UserAvatar
-    from '../../../features/auth/components/UserAvatar/UserAvatar';
-import {useFetchUserAvatar} from '../../../features/auth/hooks';
+    from '../../../entities/users/components/UserAvatar/UserAvatar';
+import {useFetchUserAvatar} from '../../../entities/users';
 import AuthorLink from '../../../shared/ui/AuthorLink/AuthorLink';
 import DeleteConfirmationModal
     from '../../../shared/ui/Modals/BaseModal/DeleteConfirmationModal/DeleteConfirmationModal.tsx';
@@ -79,7 +79,7 @@ const SingleArticleContent: React.FC = () => {
                     </div>
                     <div
                         className={styles['main-section-content-container-genres-block']}>
-                        {singleArticle.genres?.map((genre) => (
+                        {singleArticle.genres?.map((genre: string) => (
                             <Button
                                 text={genre}
                                 type={ButtonType.ROUNDED_SMALL}

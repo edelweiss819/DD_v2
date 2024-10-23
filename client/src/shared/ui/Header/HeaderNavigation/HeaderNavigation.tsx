@@ -9,7 +9,7 @@ import {
 import {Link, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppDispatch, RootState} from '../../../../store/store.ts';
-import {removeUser} from '../../../../features/auth/slice/userSlice.ts';
+import {removeUser} from '../../../../entities/users';
 
 const HeaderNavigation: React.FC = () => {
 

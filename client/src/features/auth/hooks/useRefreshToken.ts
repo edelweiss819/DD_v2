@@ -1,7 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 import {IRefreshTokenResponse, refreshToken} from '../api';
 import {useEffect} from 'react';
-import {setToken} from '../slice/userSlice.ts';
+import {setToken} from '../../../entities/users';
 import {useDispatch} from 'react-redux';
 import {AppDispatch} from '../../../store/store.ts';
 

@@ -55,10 +55,11 @@ export class UsersController {
 
     async deleteUser(req: Request, res: Response) {
         try {
-            const index = req.params.index;
+            const index = Number(req.params.index);
             const token = req.headers['authorization']?.split(' ')[1];
             const decoded = decodeToken(token!);
             const role = decoded.role;
+            console.log(`Запрос на удаление пользователя с индексом ${index}`)
 
             if (role !== 'admin') {
                 console.warn('Недостаточно прав для удаление пользователя.')
@@ -67,6 +68,7 @@ export class UsersController {
 
             const deletedUser = await User.findOneAndDelete({index});
             if (!deletedUser) {
+                console.log(`Пользователь с индексом ${index} успешно удален!`)
                 return res.status(404).json({message: 'Пользователь не найден.'});
             }
 
@@ -80,22 +82,42 @@ export class UsersController {
         }
     }
 
-    async updateUser(index: number, updateData: Partial<IUser>, res: Response) {
+    async updateUser(req: Request, res: Response) {
         try {
-            const updatedUser = await User.findOneAndUpdate({index}, updateData, {new: true});
-            if (!updatedUser) {
+            const token = req.headers['authorization']?.split(' ')[1];
+            const decoded = decodeToken(token!);
+            const role = decoded.role;
+            const index = Number(req.params.index);
+            const updatedData: Partial<IUser> = req.body.updatedData;
+            // console.log('Данные для обновления:', updatedData)
+
+            if (role !== 'admin') {
+                console.warn('Недостаточно прав для изменения пользователя.')
+                return res.status(403).json({message: 'Недостаточно прав для изменения пользователя.'});
+            }
+
+            const newUserData: Partial<IUser> = {};
+            if (updatedData.firstName) newUserData.firstName = updatedData.firstName;
+            if (updatedData.lastName) newUserData.lastName = updatedData.lastName;
+            if (updatedData.email) newUserData.email = updatedData.email;
+            if (updatedData.role) newUserData.role = updatedData.role;
+
+            const user = await User.findOneAndUpdate({index: index}, newUserData, {new: true});
+
+            if (!user) {
                 return res.status(404).json({message: 'Пользователь не найден.'});
             }
 
             return res.status(200).json({
                                             message: 'Пользователь обновлен:',
-                                            updatedUser
+                                            user
                                         });
         } catch (error) {
             console.error('Ошибка при обновлении пользователя:', error);
             return res.status(500).json({message: 'Ошибка при обновлении пользователя.'});
         }
     }
+
 
     async getUser(req: Request, res: Response) {
         console.log('Получен запрос на получение пользователя.');

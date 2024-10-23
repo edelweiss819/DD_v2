@@ -10,13 +10,13 @@ import {AppDispatch, RootState} from '../../store/store.ts';
 import {useParams} from 'react-router';
 import {
     useFetchArticlesListByGenre
-} from '../../features/articles/hooks';
+} from '../../entities/articles';
 import {
     setArticlesList, setCurrentPage, setTotalPages
-} from '../../features/articles/slice/articlesListSlice.ts';
+} from '../../entities/articles';
 import {
     useFetchTotalArticlesCountByGenre
-} from '../../features/pagination/hooks';
+} from '../../features/pagination';
 import {
     articlesCountToPagesCount,
     generateGenreByLink

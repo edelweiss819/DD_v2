@@ -1,5 +1,5 @@
-import {axiosInstance} from '../../../config/axiosConfig.ts';
-import {API_ROUTES} from '../../../config/endpoints.ts';
+import {axiosInstance} from '../../../config';
+import {API_ROUTES} from '../../../config';
 
 
 export interface IRefreshTokenResponse {

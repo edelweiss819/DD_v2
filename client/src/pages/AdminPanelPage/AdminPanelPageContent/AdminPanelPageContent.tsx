@@ -3,14 +3,24 @@ import Paper from '@mui/material/Paper';
 import {DataGrid, GridColDef} from '@mui/x-data-grid';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/store.ts';
-import {useGetAllUsers} from '../../../features/auth/hooks';
+import {
+    IUser,
+    useDeleteUser,
+    useFetchAllUsers,
+    usePatchUserData
+} from '../../../entities/users';
 import {timestampToLocalDate} from '../../../shared/utils';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-const columns: (handleEdit: (user: any) => void,
-                handleDelete: (userId: number) => void) => GridColDef[] = (handleEdit,
-                                                                           handleDelete) => [
+const roles = [
+    'admin',
+    'user'
+];
+
+const columns = (
+    handleDelete: (userId: number) => void,
+    handleRowEdit: (newRow: Partial<IUser>, oldRow: Partial<IUser>) => void
+): GridColDef[] => [
     {
         field: 'index',
         headerName: 'Index',
@@ -50,6 +60,9 @@ const columns: (handleEdit: (user: any) => void,
         editable: false,
         sortable: false,
         disableColumnMenu: true,
+        renderCell: (params) => {
+            return <span>{timestampToLocalDate(params.value)} </span>;
+        }
     },
     {
         field: 'role',
@@ -57,40 +70,51 @@ const columns: (handleEdit: (user: any) => void,
         flex: 1,
         editable: true,
         disableColumnMenu: true,
-        sortable: false
+        sortable: false,
+        renderEditCell: (params) => {
+            return (
+
+                <select
+                    value={params.value}
+                    onChange={(e) => {
+                        const newRole = e.target.value;
+                        params.api.setEditCellValue({
+                                                        id: params.id,
+                                                        field: 'role',
+                                                        value: newRole,
+                                                    });
+
+                        const updatedRow = {
+                            ...params.row,
+                            role: newRole
+                        };
+                        handleRowEdit(updatedRow, params.row);
+                    }}
+                    style={{width: '100%'}}
+                >
+                    {roles.map((role) => (
+                        <option key={role} value={role}>
+                            {role}
+                        </option>
+                    ))}
+                </select>
+            );
+        }
     },
     {
         field: 'control',
         headerName: '',
-        flex: 1,
         sortable: false,
         disableColumnMenu: true,
         renderCell: (params) => (
-            <Box
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    height: '100%',
-                }}
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleDelete(params.row.id)}
+                size="small"
             >
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleEdit(params.row)}
-                    sx={{marginRight: 1}}
-                    size="small"
-                >
-                    Изменить
-                </Button>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleDelete(params.row.id)}
-                    size="small"
-                >
-                    Удалить
-                </Button>
-            </Box>
+                Удалить
+            </Button>
         ),
     }
 ];
@@ -110,25 +134,38 @@ const AdminPanelPageContent: React.FC = () => {
         data,
         isLoading,
         error
-    } = useGetAllUsers({
-                           token,
-                           fields,
-                           limit,
-                           page,
-                           sortBy: 'index',
-                           sortIndex: 1,
-                       });
+    } = useFetchAllUsers({
+                             token: token!,
+                             fields,
+                             limit,
+                             page,
+                             sortBy: 'index',
+                             sortIndex: 1,
+                         });
 
-    const handleRowEdit = async (newRow: any) => {
+    const editUserMutation = usePatchUserData();
+
+    const handleRowEdit = (newRow: Partial<IUser>, oldRow: Partial<IUser>) => {
+        const isRowChanged = Object.keys(newRow).some(
+            (key) => newRow[key as keyof IUser] !== oldRow[key as keyof IUser]
+        );
+        if (isRowChanged) {
+            editUserMutation.mutate({
+                                        token: token!,
+                                        index: newRow.index!.toString(),
+                                        updatedData: newRow
+                                    });
+        }
+
         return newRow;
     };
 
-    const handleEdit = (user: any) => {
-        console.log('Редактировать пользователя:', user);
-    };
-
-    const handleDelete = (userId: number) => {
-        console.log('Удалить пользователя с ID:', userId);
+    const deleteUserMutation = useDeleteUser();
+    const handleDelete = (userIndex: number) => {
+        deleteUserMutation.mutate({
+                                      token: token!,
+                                      index: userIndex.toString()
+                                  });
     };
 
     if (isLoading) {
@@ -145,7 +182,7 @@ const AdminPanelPageContent: React.FC = () => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        registrationDate: timestampToLocalDate(user.registrationDate!),
+        registrationDate: user.registrationDate,
         role: user.role,
     })) || [];
 
@@ -156,8 +193,9 @@ const AdminPanelPageContent: React.FC = () => {
         }}>
             <DataGrid
                 rows={rows}
-                columns={columns(handleEdit, handleDelete)}
+                columns={columns(handleDelete, handleRowEdit)}
                 disableRowSelectionOnClick
+                disableColumnResize
                 paginationModel={paginationModel}
                 pageSizeOptions={[
                     25,

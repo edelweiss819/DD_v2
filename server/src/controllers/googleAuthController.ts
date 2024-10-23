@@ -28,7 +28,7 @@ passport.use(new GoogleStrategy({
                     familyName,
                     givenName
                 } = profile.name;
-                firstName = familyName || givenName || profile.displayName;
+                firstName = givenName || familyName || profile.displayName;
                 lastName = familyName ? familyName : givenName ? givenName : profile.displayName;
             } else {
                 firstName = profile.displayName;
