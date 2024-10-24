@@ -202,12 +202,6 @@ export class UsersController {
             const limit = Number(req.query.limit) || 25;
             const page = Number(req.query.page) || 1;
             const token = req.headers.authorization?.split(' ')[1];
-
-            if (!token) {
-                console.warn('Токен отсутствует.');
-                return res.status(401).json({message: 'Необходима авторизация.'});
-            }
-
             const decoded = decodeToken(token!);
             const role = decoded.role;
             const sortBy: keyof IUser = req.query.sortBy as keyof IUser;

@@ -27,8 +27,9 @@ export const useDeleteSingleArticleByIndex = () => {
                                                                                                       queryClient.invalidateQueries({queryKey: ['fetchSingleArticleByIndex']});
                                                                                                       queryClient.invalidateQueries({queryKey: ['fetchUserLastArticlesList']});
                                                                                                       queryClient.invalidateQueries({queryKey: ['fetchArticlesListByGenreAndWords']});
-                                                                                                      queryClient.invalidateQueries({queryKey: ['fetchTotalArticlesCount']})
-                                                                                                      queryClient.invalidateQueries({queryKey: ['fetchTotalArticlesCountByGenre']})
+                                                                                                      queryClient.invalidateQueries({queryKey: ['fetchTotalArticlesCount']});
+                                                                                                      queryClient.invalidateQueries({queryKey: ['fetchTotalArticlesCountByGenre']});
+                                                                                                      queryClient.invalidateQueries({queryKey: ['fetchAllArticlesAsAdmin']});
                                                                                                   },
                                                                                                   onError: (error) => {
                                                                                                       console.error('Ошибка при удалении статьи:', error);

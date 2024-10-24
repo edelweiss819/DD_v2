@@ -2,7 +2,7 @@ import {axiosInstance} from '../../../config';
 import {IArticle} from '../model';
 import {API_ROUTES} from '../../../config';
 
-export interface IFetchArticlesListParams {
+export interface IFetchArticlesListReq {
     page: number;
     limit?: number;
 }
@@ -10,17 +10,12 @@ export interface IFetchArticlesListParams {
 export const fetchArticlesList = async ({
                                             page,
                                             limit
-                                        }: IFetchArticlesListParams): Promise<IArticle[]> => {
+                                        }: IFetchArticlesListReq): Promise<IArticle[]> => {
     const response = await axiosInstance.get(API_ROUTES.GET_ARTICLES_LIST, {
         params: {
             page,
             limit: limit ?? 10,
         },
     });
-
-    if (Array.isArray(response.data)) {
-        return response.data;
-    } else {
-        throw new Error('Invalid response format');
-    }
+    return response.data;
 };

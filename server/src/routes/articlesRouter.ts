@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {
     deleteArticleByIndex,
-    getAllArticles,
+    getAllArticles, getAllArticlesAsAdmin,
     getArticleByIndex,
     getArticlesByGenreAndWords,
     getArticlesListByGenre, getRandomArticlesList,
@@ -13,6 +13,7 @@ import {authenticateToken} from '../middlewares/authMiddleware';
 const router = Router();
 
 router.get('/articles', getAllArticles);
+router.get('/articles/admin', authenticateToken(['admin']), getAllArticlesAsAdmin)
 router.get('/articles/:index', getArticleByIndex);
 router.get('/articles/search/getArticlesListByGenre/:genre', getArticlesListByGenre);
 router.get('/articles/search/getArticlesByGenreAndWords', getArticlesByGenreAndWords);

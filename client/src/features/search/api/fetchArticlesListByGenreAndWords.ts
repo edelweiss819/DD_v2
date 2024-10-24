@@ -1,9 +1,9 @@
 import {axiosInstance} from '../../../config';
 import {API_ROUTES} from '../../../config';
-import {IFetchArticlesListParams} from '../../../entities/articles';
+import {IFetchArticlesListReq} from '../../../entities/articles';
 import {IFetchArticlesResponse} from '../hooks';
 
-export interface IFetchArticlesListByGenreAndWordsParams extends IFetchArticlesListParams {
+export interface IFetchArticlesListByGenreAndWordsParams extends IFetchArticlesListReq {
     genres?: string | undefined;
     s?: string | undefined;
     lastCursor?: number;

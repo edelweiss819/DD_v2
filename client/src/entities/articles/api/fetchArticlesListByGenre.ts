@@ -1,9 +1,9 @@
 import {axiosInstance} from '../../../config';
 import {API_ROUTES} from '../../../config';
 import {IArticle} from '../model';
-import {IFetchArticlesListParams} from './fetchArticlesList.ts';
+import {IFetchArticlesListReq} from './fetchArticlesList.ts';
 
-export interface IFetchArticlesListByGenreParams extends IFetchArticlesListParams {
+export interface IFetchArticlesListByGenreParams extends IFetchArticlesListReq {
     genre: string;
 }
 

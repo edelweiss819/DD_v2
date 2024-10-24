@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import Article from '../models/Article';
+import Article, {IArticle} from '../models/Article';
 import User from '../models/User';
 import dotenv from 'dotenv';
 import Metadata from '../models/Metadata';
@@ -11,8 +11,8 @@ dotenv.config();
 
 export const getAllArticles = async (req: Request,
                                      res: Response): Promise<Response> => {
-    const limit = parseInt(req.query.limit as string) || 10;
-    const page = parseInt(req.query.page as string) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const page = Number(req.query.page) || 1;
 
     try {
         const articles = await Article.find()
@@ -50,9 +50,9 @@ export const getArticleByIndex = async (req: Request,
 
 export const getArticlesListByGenre = async (req: Request,
                                              res: Response): Promise<Response> => {
-    const genre = decodeURIComponent(req.params.genre as string);
-    const limit = parseInt(req.query.limit as string) || 10;
-    const page = parseInt(req.query.page as string) || 1;
+    const genre = decodeURIComponent(req.params.genre);
+    const limit = Number(req.query.limit) || 10;
+    const page = Number(req.query.page) || 1;
 
     if (!genre) {
         return res.status(400).json({message: 'Жанр обязателен!'});
@@ -95,12 +95,12 @@ export const getArticlesListByGenre = async (req: Request,
 
 export const getArticlesByGenreAndWords = async (req: Request,
                                                  res: Response): Promise<Response> => {
-    const genres = req.query.genres as string | undefined;
-    const limit = parseInt(req.query.limit as string) || 10;
-    const cursor = parseInt(req.query.lastCursor as string) || 0;
-    const searchWords = (req.query.s as string) || '';
+    const genres = req.query.genres as string;
+    const limit = Number(req.query.limit as string) || 10;
+    const cursor = Number(req.query.lastCursor) || 0;
+    const searchWords = (req.query.s) as string || '';
     const words = searchWords.trim().split(' ').filter(Boolean);
-    const sortOrder = parseInt(req.query.sortOrder as string) || 1;
+    const sortOrder = Number(req.query.sortOrder) || 1;
 
     try {
         let articles: any[] = [];
@@ -231,7 +231,7 @@ export const getArticlesByGenreAndWords = async (req: Request,
 // Всего статей в поиске
 export const getTotalArticlesCountByGenresAndWords = async (req: Request,
                                                             res: Response): Promise<Response> => {
-    const genres = req.query.genres as string | undefined;
+    const genres = req.query.genres as string;
     const searchWords = (req.query.s as string) || '';
     const words = searchWords.trim().split(' ').filter(Boolean);
     let query: any = {};
@@ -395,4 +395,45 @@ export const deleteArticleByIndex = async (req: Request, res: Response) => {
     }
 }
 
+// Получение статей в админке
+export const getAllArticlesAsAdmin = async (req: Request,
+                                            res: Response) => {
+
+
+    try {
+        const limit = Number(req.query.limit);
+        const page = Number(req.query.page);
+        const token = req.headers['authorization']?.split(' ')[1];
+        const role = decodeToken(token!).role;
+        const sortBy: keyof IArticle = req.query.sortBy as keyof IArticle;
+        const sortIndex = Number(req.query.sortIndex) === 1 ? 1 : -1;
+
+        console.log('Запрос на получение и сортировку статей.')
+        if (role !== 'admin') {
+            console.warn('Недостаточно прав для получение статей.');
+            return res.status(403).json({message: 'Недостаточно прав для загрузки статей'})
+        }
+        const foundArticles = await Article.find()
+            .sort({[sortBy]: sortIndex})
+            .skip((page - 1) * limit)
+            .limit(limit);
+        const articles = foundArticles.map(article => ({
+            index: article.index,
+            author: article.author,
+            title: article.title,
+            publishedDate: article.publishedDate,
+            characterCount: article.characterCount,
+            genres: article.genres,
+            estimatedReadingTime: article.estimatedReadingTime
+        }));
+        return res.status(200).json({
+                                        message: `Список статей для страницы ${page}`,
+                                        articles
+                                    });
+
+    } catch (error) {
+        const errorMessage = (error as Error).message;
+        return res.status(500).json({message: errorMessage});
+    }
+};
 

@@ -7,6 +7,7 @@ export const API_ROUTES = {
     'GET_SEARCH_ARTICLES_BY_GENRE_AND_WORDS': '/articles/search/getArticlesByGenreAndWords',
     'GET_TOTAL_ARTICLES_COUNT_BY_GENRE_AND_WORDS': '/articles/search/getTotalArticlesCountByGenresAndWords',
     'GET_RANDOM_ARTICLES_LIST': '/articles/randomArticles/getRandomArticlesList',
+    'GET_ALL_ARTICLES_AS_ADMIN': '/articles/admin',
     // Auth
     'GET_AUTH_USER_DATA': '/getUserData',
     'AUTH': '/login',
